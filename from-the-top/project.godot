@@ -42,6 +42,16 @@ folder_colors={
 "res://components/": "yellow"
 }
 
+[layer_names]
+
+2d_physics/layer_1="world"
+2d_physics/layer_2="world_colliders"
+2d_physics/layer_3="player"
+2d_physics/layer_4="enemies"
+2d_physics/layer_5="player_attacks"
+2d_physics/layer_6="enemy_attacks"
+2d_physics/layer_7="global_attacks"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
