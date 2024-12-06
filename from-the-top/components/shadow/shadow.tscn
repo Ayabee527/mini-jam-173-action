@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0h3spmyp72xm"]
+
+[ext_resource type="Shader" path="res://components/shadow/shadow.gdshader" id="1_m1d72"]
+[ext_resource type="Script" path="res://components/shadow/shadow.gd" id="2_gr2cp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fgq88"]
+resource_local_to_scene = true
+shader = ExtResource("1_m1d72")
+shader_parameter/color = Color(0, 0, 0, 1)
+
+[node name="Shadow" type="Sprite2D"]
+z_index = -1
+z_as_relative = false
+material = SubResource("ShaderMaterial_fgq88")
+offset = Vector2(-4, 4)
+script = ExtResource("2_gr2cp")

@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://cvpu2owuwl1li"]
+
+[ext_resource type="Script" path="res://components/weapon/attacks/lightning/lightning_bolt.gd" id="1_x01af"]
+[ext_resource type="PackedScene" uid="uid://bd83v7x2q3o7f" path="res://components/hitbox/hitbox.tscn" id="2_g2n74"]
+
+[sub_resource type="Curve" id="Curve_bh0vy"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.251064, 1), 0.0, 0.0, 0, 0, Vector2(0.502128, 1), 0.0, 0.0, 0, 0, Vector2(0.753192, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="Curve" id="Curve_l1opu"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.251064, 1), 0.0, 0.0, 0, 0, Vector2(0.502128, 1), 0.0, 0.0, 0, 0, Vector2(0.753192, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[node name="LightningBolt" type="Node2D" node_paths=PackedStringArray("hitbox", "bolt", "shadow")]
+script = ExtResource("1_x01af")
+hitbox = NodePath("Hitbox")
+bolt = NodePath("Bolt")
+shadow = NodePath("Shadow")
+
+[node name="Shadow" type="Line2D" parent="."]
+z_index = -1
+z_as_relative = false
+width = 2.0
+width_curve = SubResource("Curve_bh0vy")
+default_color = Color(0, 0, 0, 1)
+
+[node name="Bolt" type="Line2D" parent="."]
+width = 2.0
+width_curve = SubResource("Curve_l1opu")
+
+[node name="Hitbox" parent="." instance=ExtResource("2_g2n74")]

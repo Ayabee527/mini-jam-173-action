@@ -1,0 +1,111 @@
+[gd_scene load_steps=18 format=3 uid="uid://c7aeni8wqem5v"]
+
+[ext_resource type="Script" path="res://components/weapon/attacks/projectile/projectile.gd" id="1_7n0r6"]
+[ext_resource type="PackedScene" uid="uid://b0h3spmyp72xm" path="res://components/shadow/shadow.tscn" id="1_xf07n"]
+[ext_resource type="Script" path="res://components/health/health.gd" id="2_611jr"]
+[ext_resource type="PackedScene" uid="uid://ck7giesvc1amw" path="res://components/height_sprite/height_sprite.tscn" id="2_lfhux"]
+[ext_resource type="Texture2D" uid="uid://buqowpr04xvu4" path="res://assets/textures/bullet_out.png" id="3_edewb"]
+[ext_resource type="Shader" path="res://components/shadow/shadow.gdshader" id="3_rrar6"]
+[ext_resource type="PackedScene" uid="uid://bw8338ilrtcwc" path="res://components/trail/trail.tscn" id="4_rmoac"]
+[ext_resource type="Texture2D" uid="uid://cskb633sejnhj" path="res://assets/textures/light_bullet_turned.png" id="4_sckh2"]
+[ext_resource type="PackedScene" uid="uid://bd83v7x2q3o7f" path="res://components/hitbox/hitbox.tscn" id="6_be8xx"]
+[ext_resource type="Shader" path="res://components/flash.gdshader" id="8_pspcb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gotf8"]
+resource_local_to_scene = true
+shader = ExtResource("3_rrar6")
+shader_parameter/color = Color(0, 0, 0, 1)
+
+[sub_resource type="Curve" id="Curve_w76bd"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_qwe5f"]
+curve = SubResource("Curve_w76bd")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2msos"]
+lifetime_randomness = 0.5
+particle_flag_align_y = true
+particle_flag_disable_z = true
+angle_min = 1.07288e-05
+angle_max = 360.0
+direction = Vector3(-1, 0, 0)
+spread = 180.0
+flatness = 1.0
+initial_velocity_min = 24.0
+initial_velocity_max = 48.0
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = 150.0
+linear_accel_max = 150.0
+damping_min = 200.0
+damping_max = 200.0
+scale_min = 0.25
+scale_curve = SubResource("CurveTexture_qwe5f")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ahjql"]
+resource_local_to_scene = true
+shader = ExtResource("8_pspcb")
+shader_parameter/active = false
+shader_parameter/tint = Color(1, 1, 1, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ps6y6"]
+radius = 3.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bod3x"]
+radius = 3.0
+
+[node name="Projectile" type="Area2D" node_paths=PackedStringArray("sprite", "shadow", "trail_holder", "trail", "expire_particles", "life_timer", "hitbox", "collision", "hitbox_collision")]
+script = ExtResource("1_7n0r6")
+sprite = NodePath("Sprite")
+shadow = NodePath("Shadow")
+trail_holder = NodePath("TrailHolder")
+trail = NodePath("TrailHolder/Trail")
+expire_particles = NodePath("Expire")
+life_timer = NodePath("LifeTimer")
+hitbox = NodePath("Hitbox")
+collision = NodePath("CollisionShape2D")
+hitbox_collision = NodePath("Hitbox/CollisionShape2D")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2_611jr")
+
+[node name="Shadow" parent="." node_paths=PackedStringArray("caster") instance=ExtResource("1_xf07n")]
+material = SubResource("ShaderMaterial_gotf8")
+texture = ExtResource("3_edewb")
+caster = NodePath("../Sprite")
+
+[node name="Expire" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 25
+process_material = SubResource("ParticleProcessMaterial_2msos")
+texture = ExtResource("4_sckh2")
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+
+[node name="TrailHolder" type="Marker2D" parent="."]
+
+[node name="Trail" parent="TrailHolder" instance=ExtResource("4_rmoac")]
+width = 6.0
+
+[node name="Sprite" parent="." instance=ExtResource("2_lfhux")]
+modulate = Color(0, 1, 1, 1)
+material = SubResource("ShaderMaterial_ahjql")
+texture = ExtResource("3_edewb")
+
+[node name="LifeTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ps6y6")
+
+[node name="Hitbox" parent="." instance=ExtResource("6_be8xx")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_bod3x")
+
+[connection signal="height_changed" from="Sprite" to="." method="_on_sprite_height_changed"]
+[connection signal="timeout" from="LifeTimer" to="." method="_on_life_timer_timeout"]
+[connection signal="hit" from="Hitbox" to="." method="_on_hitbox_hit"]

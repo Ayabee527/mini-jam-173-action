@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://dvvktbgt1ayca"]
+
+[ext_resource type="Script" path="res://components/hurtbox/hurtbox.gd" id="1_fqwwk"]
+
+[node name="Hurtbox" type="Area2D" node_paths=PackedStringArray("invinc_timer")]
+collision_layer = 8
+collision_mask = 80
+script = ExtResource("1_fqwwk")
+invinc_timer = NodePath("InvincTimer")
+
+[node name="InvincTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]

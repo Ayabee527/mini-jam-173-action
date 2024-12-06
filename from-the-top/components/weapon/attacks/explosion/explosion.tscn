@@ -1,0 +1,62 @@
+[gd_scene load_steps=7 format=3 uid="uid://tymv7bs6vjd2"]
+
+[ext_resource type="Script" path="res://components/weapon/attacks/explosion/explosion.gd" id="1_avu07"]
+[ext_resource type="PackedScene" uid="uid://bd83v7x2q3o7f" path="res://components/hitbox/hitbox.tscn" id="1_ei4tm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_drdi0"]
+radius = 32.0
+
+[sub_resource type="Curve" id="Curve_ohbu0"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_eoesv"]
+curve = SubResource("Curve_ohbu0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pt7an"]
+lifetime_randomness = 1.0
+particle_flag_align_y = true
+particle_flag_disable_z = true
+particle_flag_damping_as_friction = true
+spread = 180.0
+initial_velocity_min = 128.0
+initial_velocity_max = 256.0
+gravity = Vector3(0, 0, 0)
+scale_min = 4.0
+scale_max = 8.0
+scale_curve = SubResource("CurveTexture_eoesv")
+
+[node name="Explosion" type="Node2D" node_paths=PackedStringArray("outline", "hitbox", "hitbox_collision", "sustain_timer", "debri")]
+script = ExtResource("1_avu07")
+outline = NodePath("Outline")
+hitbox = NodePath("Hitbox")
+hitbox_collision = NodePath("Hitbox/CollisionShape2D")
+sustain_timer = NodePath("SustainTimer")
+debri = NodePath("Debri")
+
+[node name="Hitbox" parent="." instance=ExtResource("1_ei4tm")]
+scale = Vector2(1e-05, 1e-05)
+collision_layer = 64
+collision_mask = 12
+height_radius = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_drdi0")
+disabled = true
+
+[node name="Outline" type="Line2D" parent="."]
+closed = true
+width = 4.0
+
+[node name="SustainTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Debri" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_pt7an")
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+
+[connection signal="timeout" from="SustainTimer" to="." method="_on_sustain_timer_timeout"]

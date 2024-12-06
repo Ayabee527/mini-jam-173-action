@@ -1,0 +1,48 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="from the top"
+run/main_scene="res://main/main.tscn"
+config/features=PackedStringArray("4.3", "GL Compatibility")
+config/icon="res://icon.svg"
+
+[autoload]
+
+MainCam="*res://autoloads/MainCam.tscn"
+SceneSwitcher="*res://autoloads/SceneSwitcher.tscn"
+Util="*res://autoloads/Util.gd"
+
+[display]
+
+window/size/viewport_width=256
+window/size/viewport_height=256
+window/size/window_width_override=768
+window/size/window_height_override=768
+window/stretch/mode="viewport"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/kanban_tasks/plugin.cfg")
+
+[file_customization]
+
+folder_colors={
+"res://addons/": "gray",
+"res://assets/": "purple",
+"res://autoloads/": "yellow",
+"res://components/": "yellow"
+}
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

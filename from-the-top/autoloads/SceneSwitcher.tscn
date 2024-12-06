@@ -1,0 +1,85 @@
+[gd_scene load_steps=8 format=3 uid="uid://nlf4lohsjgld"]
+
+[ext_resource type="Shader" path="res://autoloads/scene_switch.gdshader" id="1_la747"]
+[ext_resource type="Script" path="res://autoloads/SceneSwitcher.gd" id="2_sejnh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hlaq1"]
+shader = ExtResource("1_la747")
+shader_parameter/progress = 0.0
+shader_parameter/diamondPixelSize = 16.0
+
+[sub_resource type="Animation" id="Animation_51sd7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_5c8b6"]
+resource_name = "switch_in"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_dsoq5"]
+resource_name = "switch_out"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_48hl2"]
+_data = {
+"RESET": SubResource("Animation_51sd7"),
+"switch_in": SubResource("Animation_5c8b6"),
+"switch_out": SubResource("Animation_dsoq5")
+}
+
+[node name="SceneSwitcher" type="CanvasLayer" node_paths=PackedStringArray("color_rect", "animation_player")]
+layer = 100
+script = ExtResource("2_sejnh")
+color_rect = NodePath("ColorRect")
+animation_player = NodePath("AnimationPlayer")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_hlaq1")
+custom_minimum_size = Vector2(256, 256)
+offset_right = 40.0
+offset_bottom = 40.0
+pivot_offset = Vector2(128, 128)
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_48hl2")
+}
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

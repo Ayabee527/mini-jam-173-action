@@ -1,0 +1,104 @@
+[gd_scene load_steps=17 format=3 uid="uid://dojg0abx5v5dt"]
+
+[ext_resource type="Script" path="res://components/weapon/attacks/fall_projectile/fall_projectile.gd" id="1_2we8y"]
+[ext_resource type="PackedScene" uid="uid://b0h3spmyp72xm" path="res://components/shadow/shadow.tscn" id="1_4bt7i"]
+[ext_resource type="Texture2D" uid="uid://8d4csx4mnxb7" path="res://assets/textures/circle.png" id="3_7dtlx"]
+[ext_resource type="Texture2D" uid="uid://b42w0mxgqlx8s" path="res://assets/textures/fat_bullet_out.png" id="3_rh75g"]
+[ext_resource type="Shader" path="res://components/shadow/shadow.gdshader" id="3_wvebr"]
+[ext_resource type="PackedScene" uid="uid://bw8338ilrtcwc" path="res://components/trail/trail.tscn" id="4_itmfh"]
+[ext_resource type="PackedScene" uid="uid://ck7giesvc1amw" path="res://components/height_sprite/height_sprite.tscn" id="5_im8le"]
+[ext_resource type="PackedScene" uid="uid://bd83v7x2q3o7f" path="res://components/hitbox/hitbox.tscn" id="7_l3q56"]
+[ext_resource type="Shader" path="res://components/flash.gdshader" id="8_gawhd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_otvbn"]
+resource_local_to_scene = true
+shader = ExtResource("3_wvebr")
+shader_parameter/color = Color(0, 0, 0, 1)
+
+[sub_resource type="Curve" id="Curve_rf5jd"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_l7ej8"]
+curve = SubResource("Curve_rf5jd")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_c4ma1"]
+lifetime_randomness = 0.5
+particle_flag_disable_z = true
+angle_min = 1.07288e-05
+angle_max = 360.0
+spread = 180.0
+flatness = 1.0
+initial_velocity_min = 24.0
+initial_velocity_max = 48.0
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = 150.0
+linear_accel_max = 150.0
+damping_min = 200.0
+damping_max = 200.0
+scale_min = 0.1
+scale_max = 0.2
+scale_curve = SubResource("CurveTexture_l7ej8")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o3fdi"]
+resource_local_to_scene = true
+shader = ExtResource("8_gawhd")
+shader_parameter/active = false
+shader_parameter/tint = Color(1, 1, 1, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7gsbw"]
+radius = 4.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2d7rp"]
+radius = 4.0
+
+[node name="FallProjectile" type="Area2D" node_paths=PackedStringArray("sprite", "shadow", "trail_holder", "trail", "expire_particles", "hitbox", "collision", "hitbox_collision")]
+script = ExtResource("1_2we8y")
+sprite = NodePath("Sprite")
+shadow = NodePath("Shadow")
+trail_holder = NodePath("TrailHolder")
+trail = NodePath("TrailHolder/Trail")
+expire_particles = NodePath("Expire")
+hitbox = NodePath("Hitbox")
+collision = NodePath("CollisionShape2D")
+hitbox_collision = NodePath("Hitbox/CollisionShape2D")
+
+[node name="Shadow" parent="." node_paths=PackedStringArray("caster") instance=ExtResource("1_4bt7i")]
+material = SubResource("ShaderMaterial_otvbn")
+texture = ExtResource("3_rh75g")
+offset = Vector2(-1, 1)
+caster = NodePath("../Sprite")
+
+[node name="Expire" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 25
+process_material = SubResource("ParticleProcessMaterial_c4ma1")
+texture = ExtResource("3_7dtlx")
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+
+[node name="TrailHolder" type="Marker2D" parent="."]
+
+[node name="Trail" parent="TrailHolder" instance=ExtResource("4_itmfh")]
+visible = false
+width = 6.0
+length = 0
+
+[node name="Sprite" parent="." instance=ExtResource("5_im8le")]
+modulate = Color(0, 1, 1, 1)
+material = SubResource("ShaderMaterial_o3fdi")
+texture = ExtResource("3_rh75g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_7gsbw")
+
+[node name="Hitbox" parent="." instance=ExtResource("7_l3q56")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_2d7rp")
+
+[connection signal="bounced" from="Sprite" to="." method="_on_sprite_bounced"]
+[connection signal="height_changed" from="Sprite" to="." method="_on_sprite_height_changed"]

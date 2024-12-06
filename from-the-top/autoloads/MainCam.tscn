@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cuodx0rieolff"]
+
+[ext_resource type="Script" path="res://autoloads/MainCam.gd" id="1_ubem2"]
+
+[node name="MainCam" type="Camera2D"]
+ignore_rotation = false
+limit_left = 0
+limit_top = 0
+limit_right = 256
+limit_bottom = 256
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
+script = ExtResource("1_ubem2")
