@@ -1,6 +1,8 @@
 class_name EnemyBouncer
 extends RigidBody2D
 
+@export var radius: float = 8.0
+
 @export_group("Inner Dependencies")
 @export var health: Health
 
@@ -13,7 +15,13 @@ func _process(delta: float) -> void:
 	queue_redraw()
 
 func _draw() -> void:
-	var tri := Util.generate_polygon(3, 8.0, true)
+	var tri := Util.generate_polygon(3, radius, true)
+	var outline: PackedVector2Array = Util.generate_polygon(
+		3, radius + 2.0, true
+	)
+	draw_colored_polygon(
+		outline, Util.BG_COLOR
+	)
 	draw_polyline(
 		tri, Color.RED, 1.0
 	)

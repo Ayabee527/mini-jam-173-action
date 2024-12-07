@@ -5,9 +5,10 @@
 [ext_resource type="Script" path="res://main/bg.gd" id="2_hh7fp"]
 [ext_resource type="Script" path="res://main/game.gd" id="3_135qt"]
 [ext_resource type="FontFile" uid="uid://c5uoss2arncxu" path="res://assets/fonts/m6x11.ttf" id="3_qb8u1"]
+[ext_resource type="PackedScene" uid="uid://b7rau732u3yvy" path="res://player/player.tscn" id="4_dgrix"]
+[ext_resource type="Script" path="res://main/planet.gd" id="4_dqm6x"]
 [ext_resource type="Texture2D" uid="uid://cskb633sejnhj" path="res://assets/textures/light_bullet_turned.png" id="5_r0j82"]
 [ext_resource type="Script" path="res://main/wave_handler.gd" id="6_s0fku"]
-[ext_resource type="PackedScene" uid="uid://bd83v7x2q3o7f" path="res://components/hitbox/hitbox.tscn" id="8_220ob"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pfaio"]
 draw_center = false
@@ -16,17 +17,6 @@ border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0.890366, 0.785107, 0.207156, 1)
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qc0gq"]
-normal = Vector2(1, 0)
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ok0dn"]
-normal = Vector2(0, 1)
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3t2gl"]
-normal = Vector2(-1, 0)
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ik24e"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_64mfy"]
 particle_flag_align_y = true
@@ -42,8 +32,16 @@ tangential_accel_min = -5.0
 tangential_accel_max = 5.0
 scale_min = 0.25
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_o3sii"]
-size = Vector2(8, 224)
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qc0gq"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ok0dn"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3t2gl"]
+normal = Vector2(-1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ik24e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_23rif"]
 shader = ExtResource("1_0ct5x")
@@ -95,8 +93,44 @@ theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
 [node name="Border" type="Panel" parent="Back/BG/MarginContainer"]
+clip_contents = true
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_pfaio")
+
+[node name="Mask" type="MarginContainer" parent="Back/BG/MarginContainer/Border"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="Control" type="Control" parent="Back/BG/MarginContainer/Border/Mask"]
+clip_contents = true
+layout_mode = 2
+
+[node name="Wind" type="GPUParticles2D" parent="Back/BG/MarginContainer/Border/Mask/Control"]
+modulate = Color(0.890366, 0.785107, 0.207156, 1)
+position = Vector2(110, 238)
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_64mfy")
+texture = ExtResource("5_r0j82")
+lifetime = 2.0
+preprocess = 2.0
+explosiveness = 0.1
+randomness = 1.0
+
+[node name="Planet" type="Node2D" parent="Back/BG/MarginContainer/Border/Mask/Control" node_paths=PackedStringArray("timer")]
+position = Vector2(-16, -16)
+script = ExtResource("4_dqm6x")
+time_to_crash = 30.0
+timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="Back/BG/MarginContainer/Border/Mask/Control/Planet"]
 
 [node name="MarginContainer" type="MarginContainer" parent="Back/BG/MarginContainer/Border"]
 layout_mode = 1
@@ -157,9 +191,9 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall4"]
 shape = SubResource("WorldBoundaryShape2D_ik24e")
-disabled = true
 
 [node name="Mask" type="Control" parent="."]
+clip_contents = true
 layout_mode = 3
 anchors_preset = 0
 offset_left = 20.0
@@ -167,43 +201,17 @@ offset_top = 20.0
 offset_right = 236.0
 offset_bottom = 236.0
 
-[node name="Game" type="Node2D" parent="Mask" node_paths=PackedStringArray("player")]
+[node name="Game" type="Node2D" parent="Mask"]
 position = Vector2(-20, -20)
 script = ExtResource("3_135qt")
-player = NodePath("")
-
-[node name="Wind" type="GPUParticles2D" parent="Mask/Game"]
-modulate = Color(0.890366, 0.785107, 0.207156, 1)
-position = Vector2(128, 256)
-amount = 50
-process_material = SubResource("ParticleProcessMaterial_64mfy")
-texture = ExtResource("5_r0j82")
-lifetime = 2.0
-preprocess = 2.0
-explosiveness = 0.1
-randomness = 1.0
 
 [node name="WaveHandler" type="Node2D" parent="Mask/Game"]
 script = ExtResource("6_s0fku")
+active = false
 time_before_start = 1.0
 
-[node name="Kill1" parent="Mask/Game" instance=ExtResource("8_220ob")]
-position = Vector2(16, 128)
-collision_layer = 16
-collision_mask = 8
-damage = 50
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Mask/Game/Kill1"]
-shape = SubResource("RectangleShape2D_o3sii")
-
-[node name="Kill2" parent="Mask/Game" instance=ExtResource("8_220ob")]
-position = Vector2(240, 128)
-collision_layer = 16
-collision_mask = 8
-damage = 50
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Mask/Game/Kill2"]
-shape = SubResource("RectangleShape2D_o3sii")
+[node name="Player" parent="Mask/Game" instance=ExtResource("4_dgrix")]
+position = Vector2(136, 154)
 
 [node name="Front" type="CanvasLayer" parent="."]
 

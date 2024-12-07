@@ -1,99 +1,126 @@
-[gd_scene load_steps=13 format=3 uid="uid://cf688xkwibywe"]
+[gd_scene load_steps=18 format=3 uid="uid://b7rau732u3yvy"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_424ix"]
 [ext_resource type="Script" path="res://components/health/health.gd" id="2_lqdup"]
 [ext_resource type="Script" path="res://components/states/state_machine.gd" id="2_xjmny"]
 [ext_resource type="Script" path="res://player/states/move.gd" id="4_55glh"]
-[ext_resource type="Script" path="res://player/states/hook.gd" id="4_v8dfm"]
+[ext_resource type="Script" path="res://player/states/idle.gd" id="4_ohpdi"]
+[ext_resource type="Texture2D" uid="uid://cqgaoh3so0ind" path="res://assets/textures/fat_bullet_in.png" id="6_gy2fa"]
 [ext_resource type="PackedScene" uid="uid://dvvktbgt1ayca" path="res://components/hurtbox/hurtbox.tscn" id="7_fxvxo"]
 [ext_resource type="PackedScene" uid="uid://bd83v7x2q3o7f" path="res://components/hitbox/hitbox.tscn" id="7_lufw8"]
+[ext_resource type="PackedScene" uid="uid://b1lcu4cgm3hjd" path="res://components/weapon/weapon_handler.tscn" id="9_pa5tq"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_empsr"]
-bounce = 5.0
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2hwk8"]
+bounce = 1.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_1w726"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_ef1m4"]
 radius = 8.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_8to0u"]
-radius = 9.0
+[sub_resource type="Curve" id="Curve_ebfmr"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_l1s4d"]
-radius = 12.0
+[sub_resource type="CurveTexture" id="CurveTexture_sccgb"]
+curve = SubResource("Curve_ebfmr")
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_7adch"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lkbo8"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, -12, 0)
+emission_shape = 1
+emission_sphere_radius = 4.0
+angle_min = 1.07288e-05
+angle_max = 360.0
+inherit_velocity_ratio = 0.5
+direction = Vector3(0, -1, 0)
+spread = 5.0
+gravity = Vector3(0, -1000, 0)
+radial_accel_min = 100.0
+radial_accel_max = 100.0
+scale_min = 0.5
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_sccgb")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tkhu0"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, -12, 0)
+emission_shape = 1
+emission_sphere_radius = 4.0
+angle_min = 1.07288e-05
+angle_max = 360.0
+inherit_velocity_ratio = 0.5
+direction = Vector3(0, -1, 0)
+spread = 5.0
+gravity = Vector3(0, -1000, 0)
+radial_accel_min = 100.0
+radial_accel_max = 100.0
+scale_min = 0.5
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_sccgb")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kqhwy"]
 radius = 8.0
 
-[node name="Player" type="RigidBody2D" node_paths=PackedStringArray("coll_shape", "floor_detect", "grapple_detect", "bouncer", "health", "hitbox_coll") groups=["player"]]
+[sub_resource type="CircleShape2D" id="CircleShape2D_e7hgq"]
+radius = 16.0
+
+[node name="Player" type="RigidBody2D" node_paths=PackedStringArray("coll_shape", "health", "hitbox_coll", "trail", "smoke") groups=["player"]]
 collision_layer = 6
 mass = 0.5
-physics_material_override = SubResource("PhysicsMaterial_empsr")
-contact_monitor = true
-max_contacts_reported = 4
+physics_material_override = SubResource("PhysicsMaterial_2hwk8")
+gravity_scale = 0.0
+lock_rotation = true
 linear_damp = 2.5
 angular_damp = 2.5
 script = ExtResource("1_424ix")
 coll_shape = NodePath("CollisionShape2D")
-floor_detect = NodePath("FloorDetect")
-grapple_detect = NodePath("GrappleDetect")
-bouncer = NodePath("Bouncer")
 health = NodePath("Health")
 hitbox_coll = NodePath("Hitbox/CollisionShape2D")
+trail = NodePath("Trail")
+smoke = NodePath("Smoke")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("2_lqdup")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_xjmny")
-initial_state = NodePath("Move")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("4_ohpdi")
 
 [node name="Move" type="Node" parent="StateMachine"]
 script = ExtResource("4_55glh")
 
-[node name="Hook" type="Node" parent="StateMachine" node_paths=PackedStringArray("grapple_line")]
-script = ExtResource("4_v8dfm")
-grapple_line = NodePath("../../GrappleLine")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_1w726")
+shape = SubResource("CircleShape2D_ef1m4")
 
-[node name="FloorDetect" type="RayCast2D" parent="."]
-target_position = Vector2(0, 20)
-
-[node name="GrappleLine" type="Line2D" parent="."]
+[node name="Trail" type="GPUParticles2D" parent="."]
+modulate = Color(0.890366, 0.785107, 0.207156, 1)
 z_index = -1
-width = 1.0
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_lkbo8")
+texture = ExtResource("6_gy2fa")
 
-[node name="GrappleDetect" type="RayCast2D" parent="."]
-target_position = Vector2(0, 128)
-collision_mask = 3
-
-[node name="BonkCheck" type="Area2D" parent="."]
-collision_layer = 4
-collision_mask = 8
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BonkCheck"]
-shape = SubResource("CircleShape2D_8to0u")
-
-[node name="Bouncer" type="RayCast2D" parent="."]
-target_position = Vector2(32, 0)
-collision_mask = 8
-
-[node name="Hitbox" parent="." instance=ExtResource("7_lufw8")]
-collision_layer = 16
-collision_mask = 8
-height_based = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-shape = SubResource("CircleShape2D_l1s4d")
-disabled = true
+[node name="Smoke" type="GPUParticles2D" parent="."]
+modulate = Color(0.890196, 0, 0.207843, 1)
+z_index = -1
+amount = 100
+amount_ratio = 0.0
+process_material = SubResource("ParticleProcessMaterial_tkhu0")
+texture = ExtResource("6_gy2fa")
+explosiveness = 0.5
+randomness = 1.0
 
 [node name="Hurtbox" parent="." instance=ExtResource("7_fxvxo")]
-collision_layer = 4
-collision_mask = 96
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
-shape = SubResource("CircleShape2D_7adch")
+shape = SubResource("CircleShape2D_kqhwy")
 
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="body_entered" from="BonkCheck" to="." method="_on_bonk_check_body_entered"]
-[connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
+[node name="Hitbox" parent="." instance=ExtResource("7_lufw8")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_e7hgq")
+
+[node name="WeaponHandler" parent="." instance=ExtResource("9_pa5tq")]
