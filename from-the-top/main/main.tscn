@@ -1,28 +1,53 @@
-[gd_scene load_steps=11 format=3 uid="uid://636cy22ryael"]
+[gd_scene load_steps=19 format=3 uid="uid://636cy22ryael"]
 
 [ext_resource type="Shader" path="res://main/crt.gdshader" id="1_0ct5x"]
 [ext_resource type="Script" path="res://main/main.gd" id="1_7u45d"]
 [ext_resource type="Script" path="res://main/bg.gd" id="2_hh7fp"]
 [ext_resource type="Script" path="res://main/game.gd" id="3_135qt"]
+[ext_resource type="FontFile" uid="uid://c5uoss2arncxu" path="res://assets/fonts/m6x11.ttf" id="3_qb8u1"]
+[ext_resource type="PackedScene" uid="uid://cf688xkwibywe" path="res://player/player.tscn" id="4_dgrix"]
+[ext_resource type="PackedScene" uid="uid://8rbpdqqg6omd" path="res://main/platform/platform.tscn" id="5_kriqv"]
+[ext_resource type="Texture2D" uid="uid://cskb633sejnhj" path="res://assets/textures/light_bullet_turned.png" id="5_r0j82"]
+[ext_resource type="Texture2D" uid="uid://b52daiy5tav68" path="res://assets/textures/volleyball.png" id="8_aanbn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pfaio"]
 draw_center = false
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.890366, 0.785107, 0.207156, 1)
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_fymnr"]
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qc0gq"]
 normal = Vector2(1, 0)
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_badji"]
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ok0dn"]
 normal = Vector2(0, 1)
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_rwro3"]
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3t2gl"]
 normal = Vector2(-1, 0)
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_se4y1"]
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ik24e"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_64mfy"]
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(128, 1, 1)
+direction = Vector3(0, -1, 0)
+spread = 5.0
+initial_velocity_min = 250.0
+initial_velocity_max = 500.0
+gravity = Vector3(0, 0, 0)
+tangential_accel_min = -5.0
+tangential_accel_max = 5.0
+scale_min = 0.25
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_pnjxk"]
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_l5apn"]
+radius = 8.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_23rif"]
 shader = ExtResource("1_0ct5x")
@@ -51,14 +76,17 @@ shader_parameter/vignette_opacity = 0.5
 [node name="Main" type="Node2D"]
 script = ExtResource("1_7u45d")
 
-[node name="BG" type="ColorRect" parent="."]
+[node name="Back" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="BG" type="ColorRect" parent="Back"]
 custom_minimum_size = Vector2(256, 256)
-offset_right = 40.0
-offset_bottom = 40.0
-color = Color(0, 0, 0, 1)
+offset_right = 256.0
+offset_bottom = 256.0
+color = Color(0.0511875, 0.0281353, 0.160591, 1)
 script = ExtResource("2_hh7fp")
 
-[node name="MarginContainer" type="MarginContainer" parent="BG"]
+[node name="MarginContainer" type="MarginContainer" parent="Back/BG"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -70,9 +98,39 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="Border" type="Panel" parent="BG/MarginContainer"]
+[node name="Border" type="Panel" parent="Back/BG/MarginContainer"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_pfaio")
+
+[node name="MarginContainer" type="MarginContainer" parent="Back/BG/MarginContainer/Border"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="Score" type="RichTextLabel" parent="Back/BG/MarginContainer/Border/MarginContainer"]
+clip_contents = false
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/default_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.438117, 0.382412, 0.0726647, 1)
+theme_override_constants/outline_size = 5
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_offset_x = 1
+theme_override_fonts/normal_font = ExtResource("3_qb8u1")
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "[wave][shake]SCORE: 42069"
+fit_content = true
+autowrap_mode = 0
 
 [node name="Walls" type="Node2D" parent="."]
 
@@ -81,28 +139,28 @@ position = Vector2(16, 128)
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall1"]
-shape = SubResource("WorldBoundaryShape2D_fymnr")
+shape = SubResource("WorldBoundaryShape2D_qc0gq")
 
 [node name="Wall2" type="StaticBody2D" parent="Walls"]
 position = Vector2(128, 16)
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall2"]
-shape = SubResource("WorldBoundaryShape2D_badji")
+shape = SubResource("WorldBoundaryShape2D_ok0dn")
 
 [node name="Wall3" type="StaticBody2D" parent="Walls"]
 position = Vector2(240, 128)
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall3"]
-shape = SubResource("WorldBoundaryShape2D_rwro3")
+shape = SubResource("WorldBoundaryShape2D_3t2gl")
 
 [node name="Wall4" type="StaticBody2D" parent="Walls"]
 position = Vector2(128, 240)
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall4"]
-shape = SubResource("WorldBoundaryShape2D_se4y1")
+shape = SubResource("WorldBoundaryShape2D_ik24e")
 
 [node name="Mask" type="Control" parent="."]
 clip_contents = true
@@ -113,11 +171,59 @@ offset_top = 20.0
 offset_right = 236.0
 offset_bottom = 236.0
 
-[node name="Game" type="Node2D" parent="Mask"]
+[node name="Game" type="Node2D" parent="Mask" node_paths=PackedStringArray("player")]
 position = Vector2(-20, -20)
 script = ExtResource("3_135qt")
+player = NodePath("Player")
 
-[node name="CRT" type="ColorRect" parent="."]
+[node name="Wind" type="GPUParticles2D" parent="Mask/Game"]
+modulate = Color(0.890366, 0.785107, 0.207156, 1)
+position = Vector2(128, 256)
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_64mfy")
+texture = ExtResource("5_r0j82")
+lifetime = 2.0
+preprocess = 2.0
+explosiveness = 0.1
+randomness = 1.0
+
+[node name="Platform" parent="Mask/Game" instance=ExtResource("5_kriqv")]
+position = Vector2(128, 0)
+
+[node name="Platform2" parent="Mask/Game" instance=ExtResource("5_kriqv")]
+width = 32.0
+start_pos = Vector2(192, 256)
+end_pos = Vector2(192, 128)
+move_time = 5.0
+
+[node name="Platform3" parent="Mask/Game" instance=ExtResource("5_kriqv")]
+width = 32.0
+start_pos = Vector2(64, 256)
+end_pos = Vector2(64, 128)
+move_time = 5.0
+
+[node name="Player" parent="Mask/Game" instance=ExtResource("4_dgrix")]
+position = Vector2(128, 0)
+
+[node name="RigidBody2D" type="RigidBody2D" parent="Mask/Game"]
+position = Vector2(128, 64)
+collision_layer = 10
+collision_mask = 3
+mass = 100.0
+physics_material_override = SubResource("PhysicsMaterial_pnjxk")
+gravity_scale = 0.0
+linear_damp = 2.5
+angular_damp = 2.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mask/Game/RigidBody2D"]
+shape = SubResource("CircleShape2D_l5apn")
+
+[node name="Sprite2D" type="Sprite2D" parent="Mask/Game/RigidBody2D"]
+texture = ExtResource("8_aanbn")
+
+[node name="Front" type="CanvasLayer" parent="."]
+
+[node name="CRT" type="ColorRect" parent="Front"]
 material = SubResource("ShaderMaterial_23rif")
 custom_minimum_size = Vector2(256, 256)
 offset_right = 256.0

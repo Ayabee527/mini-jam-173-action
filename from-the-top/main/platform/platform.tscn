@@ -1,0 +1,58 @@
+[gd_scene load_steps=7 format=3 uid="uid://8rbpdqqg6omd"]
+
+[ext_resource type="Script" path="res://main/platform/platform.gd" id="1_kkg83"]
+[ext_resource type="Texture2D" uid="uid://dmaxs0h5utqgr" path="res://assets/textures/cross.png" id="2_gqlea"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nyxsb"]
+size = Vector2(64, 4)
+
+[sub_resource type="Curve" id="Curve_o2ib3"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_denta"]
+curve = SubResource("Curve_o2ib3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1v8bm"]
+resource_local_to_scene = true
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(32, 1, 1)
+angle_min = 1.07288e-05
+angle_max = 360.0
+direction = Vector3(0, -1, 0)
+spread = 5.0
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 98, 0)
+scale_min = 0.5
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_denta")
+
+[node name="Platform" type="AnimatableBody2D" node_paths=PackedStringArray("shape", "coll_shape", "collapse")]
+modulate = Color(0.890366, 0.785107, 0.207156, 1)
+collision_mask = 2
+script = ExtResource("1_kkg83")
+shape = NodePath("Shape")
+coll_shape = NodePath("CollisionShape2D")
+collapse = NodePath("Collapse")
+
+[node name="Pillar" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 0, 384)
+width = 2.0
+default_color = Color(1, 1, 1, 0.501961)
+
+[node name="Shape" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-32, -2, 32, -2, 32, 2, -32, 2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_nyxsb")
+one_way_collision = true
+
+[node name="Collapse" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 25
+process_material = SubResource("ParticleProcessMaterial_1v8bm")
+texture = ExtResource("2_gqlea")
+one_shot = true
+explosiveness = 1.0

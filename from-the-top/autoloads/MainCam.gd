@@ -8,11 +8,12 @@ signal hitstop_done()
 @export var default_shake_speed: float = 15.0
 @export var default_shake_strength: float = 4.0
 @export var default_decay_rate: float = 5.0
+@export var min_shake_stength: float = 1.0
 
 var noise_i: float = 0.0
-var shake_strength: float = 0.0
-var shake_speed: float
-var shake_decay_rate: float
+var shake_strength: float = 1.0
+var shake_speed: float = 15.0
+var shake_decay_rate: float = 5.0
 
 var target: Node2D
 
@@ -30,11 +31,11 @@ func _process(delta: float) -> void:
 	if is_instance_valid(target):
 		global_position = target.global_position
 	
-	shake_strength = lerp(shake_strength, 0.0, shake_decay_rate * delta)
+	shake_strength = lerp(shake_strength, min_shake_stength, shake_decay_rate * delta)
 	offset = get_noise_offset(delta)
 
 func shake(strength: float, speed: float, decay: float) -> void:
-	shake_strength = strength
+	shake_strength += strength
 	shake_speed = speed
 	shake_decay_rate = decay
 

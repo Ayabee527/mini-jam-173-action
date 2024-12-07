@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://c34n2jxjb8voo"]
-
-[ext_resource type="Script" path="res://components/molecule/molecule.gd" id="1_04d65"]
-
-[node name="Molecule" type="Node2D"]
-script = ExtResource("1_04d65")

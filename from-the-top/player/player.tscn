@@ -1,0 +1,68 @@
+[gd_scene load_steps=8 format=3 uid="uid://cf688xkwibywe"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_424ix"]
+[ext_resource type="Script" path="res://components/states/state_machine.gd" id="2_xjmny"]
+[ext_resource type="Script" path="res://player/states/move.gd" id="4_55glh"]
+[ext_resource type="Script" path="res://player/states/hook.gd" id="4_v8dfm"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_empsr"]
+bounce = 5.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1w726"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8to0u"]
+radius = 9.0
+
+[node name="Player" type="RigidBody2D" node_paths=PackedStringArray("coll_shape", "floor_detect", "grapple_detect", "bouncer")]
+collision_layer = 6
+mass = 0.5
+physics_material_override = SubResource("PhysicsMaterial_empsr")
+contact_monitor = true
+max_contacts_reported = 4
+linear_damp = 2.5
+angular_damp = 2.5
+script = ExtResource("1_424ix")
+coll_shape = NodePath("CollisionShape2D")
+floor_detect = NodePath("FloorDetect")
+grapple_detect = NodePath("GrappleDetect")
+bouncer = NodePath("Bouncer")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_xjmny")
+initial_state = NodePath("Move")
+
+[node name="Move" type="Node" parent="StateMachine"]
+script = ExtResource("4_55glh")
+
+[node name="Hook" type="Node" parent="StateMachine" node_paths=PackedStringArray("grapple_line")]
+script = ExtResource("4_v8dfm")
+grapple_line = NodePath("../../GrappleLine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1w726")
+
+[node name="FloorDetect" type="RayCast2D" parent="."]
+target_position = Vector2(0, 20)
+
+[node name="GrappleLine" type="Line2D" parent="."]
+z_index = -1
+width = 1.0
+
+[node name="GrappleDetect" type="RayCast2D" parent="."]
+target_position = Vector2(0, 128)
+collision_mask = 3
+
+[node name="BonkCheck" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BonkCheck"]
+shape = SubResource("CircleShape2D_8to0u")
+
+[node name="Bouncer" type="RayCast2D" parent="."]
+target_position = Vector2(32, 0)
+collision_mask = 8
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="BonkCheck" to="." method="_on_bonk_check_body_entered"]
