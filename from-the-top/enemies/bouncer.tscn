@@ -1,0 +1,62 @@
+[gd_scene load_steps=12 format=3 uid="uid://d1vrds84rcdqu"]
+
+[ext_resource type="Script" path="res://enemies/bouncer.gd" id="1_rcdco"]
+[ext_resource type="Script" path="res://components/health/health.gd" id="2_4a3j6"]
+[ext_resource type="Script" path="res://components/states/state_machine.gd" id="3_e2c77"]
+[ext_resource type="PackedScene" uid="uid://dvvktbgt1ayca" path="res://components/hurtbox/hurtbox.tscn" id="3_ujb5w"]
+[ext_resource type="Script" path="res://enemies/states/chase.gd" id="4_7hdej"]
+[ext_resource type="Script" path="res://enemies/states/die.gd" id="5_f8mdx"]
+[ext_resource type="PackedScene" uid="uid://bd83v7x2q3o7f" path="res://components/hitbox/hitbox.tscn" id="7_0cqbd"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ng7h"]
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kd2pn"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_usn48"]
+radius = 12.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5ytdr"]
+radius = 8.0
+
+[node name="Bouncer" type="RigidBody2D" node_paths=PackedStringArray("health")]
+collision_layer = 10
+collision_mask = 5
+physics_material_override = SubResource("PhysicsMaterial_3ng7h")
+gravity_scale = 0.0
+contact_monitor = true
+max_contacts_reported = 4
+script = ExtResource("1_rcdco")
+health = NodePath("Health")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2_4a3j6")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_e2c77")
+initial_state = NodePath("Chase")
+
+[node name="Chase" type="Node" parent="StateMachine"]
+script = ExtResource("4_7hdej")
+
+[node name="Die" type="Node" parent="StateMachine"]
+script = ExtResource("5_f8mdx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_kd2pn")
+
+[node name="Hurtbox" parent="." instance=ExtResource("3_ujb5w")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_usn48")
+
+[node name="Hitbox" parent="." instance=ExtResource("7_0cqbd")]
+damage = 0
+knockback_strength = 512.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_5ytdr")
+
+[connection signal="has_died" from="Health" to="." method="_on_health_has_died"]
+[connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]

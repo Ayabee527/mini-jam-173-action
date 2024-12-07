@@ -1,9 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://cf688xkwibywe"]
+[gd_scene load_steps=13 format=3 uid="uid://cf688xkwibywe"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_424ix"]
+[ext_resource type="Script" path="res://components/health/health.gd" id="2_lqdup"]
 [ext_resource type="Script" path="res://components/states/state_machine.gd" id="2_xjmny"]
 [ext_resource type="Script" path="res://player/states/move.gd" id="4_55glh"]
 [ext_resource type="Script" path="res://player/states/hook.gd" id="4_v8dfm"]
+[ext_resource type="PackedScene" uid="uid://dvvktbgt1ayca" path="res://components/hurtbox/hurtbox.tscn" id="7_fxvxo"]
+[ext_resource type="PackedScene" uid="uid://bd83v7x2q3o7f" path="res://components/hitbox/hitbox.tscn" id="7_lufw8"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_empsr"]
 bounce = 5.0
@@ -14,7 +17,13 @@ radius = 8.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_8to0u"]
 radius = 9.0
 
-[node name="Player" type="RigidBody2D" node_paths=PackedStringArray("coll_shape", "floor_detect", "grapple_detect", "bouncer")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_l1s4d"]
+radius = 12.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7adch"]
+radius = 8.0
+
+[node name="Player" type="RigidBody2D" node_paths=PackedStringArray("coll_shape", "floor_detect", "grapple_detect", "bouncer", "health", "hitbox_coll") groups=["player"]]
 collision_layer = 6
 mass = 0.5
 physics_material_override = SubResource("PhysicsMaterial_empsr")
@@ -27,6 +36,11 @@ coll_shape = NodePath("CollisionShape2D")
 floor_detect = NodePath("FloorDetect")
 grapple_detect = NodePath("GrappleDetect")
 bouncer = NodePath("Bouncer")
+health = NodePath("Health")
+hitbox_coll = NodePath("Hitbox/CollisionShape2D")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2_lqdup")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_xjmny")
@@ -64,5 +78,22 @@ shape = SubResource("CircleShape2D_8to0u")
 target_position = Vector2(32, 0)
 collision_mask = 8
 
+[node name="Hitbox" parent="." instance=ExtResource("7_lufw8")]
+collision_layer = 16
+collision_mask = 8
+height_based = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_l1s4d")
+disabled = true
+
+[node name="Hurtbox" parent="." instance=ExtResource("7_fxvxo")]
+collision_layer = 4
+collision_mask = 96
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_7adch")
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_entered" from="BonkCheck" to="." method="_on_bonk_check_body_entered"]
+[connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]

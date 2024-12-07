@@ -2,7 +2,7 @@ class_name Player
 extends RigidBody2D
 
 @export var grapple_reach: float = 128.0
-@export var grapple_speed: float = 1024.0
+@export var grapple_speed: float = 2048.0
 @export var move_speed: float = 275.0
 
 @export var sides: int = 5
@@ -13,6 +13,8 @@ extends RigidBody2D
 @export var floor_detect: RayCast2D
 @export var grapple_detect: RayCast2D
 @export var bouncer: RayCast2D
+@export var health: Health
+@export var hitbox_coll: CollisionShape2D
 
 var grapple_point: Vector2
 
@@ -71,6 +73,12 @@ func draw_grapple_point() -> void:
 		global_position - grapple_point + (Vector2.DOWN * 6.0),
 		Color.WHITE, 1.0
 	)
+	
+	if grapple_point != Vector2.ZERO:
+		draw_dashed_line(
+			Vector2.ZERO, global_position - grapple_point,
+			Color.WHITE, 1.0, 6.0
+		)
 
 func get_move_axis() -> float:
 	return Input.get_axis("move_left", "move_right")
@@ -87,3 +95,7 @@ func _on_bonk_check_body_entered(body: Node2D) -> void:
 	
 	MainCam.shake(10.0, 10.0, 3.0)
 	MainCam.hitstop(0.05, 0.5)
+
+
+func _on_hurtbox_hurt(hitbox: Hitbox, damage: int, invinc_time: float) -> void:
+	health.hurt(damage)

@@ -41,8 +41,13 @@ folder_colors={
 "res://assets/": "purple",
 "res://autoloads/": "yellow",
 "res://components/": "yellow",
+"res://enemies/": "red",
 "res://player/": "teal"
 }
+
+[global_group]
+
+player=""
 
 [input]
 

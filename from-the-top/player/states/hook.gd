@@ -8,6 +8,7 @@ func enter(_msg:={}) -> void:
 	player.gravity_scale = 0.0
 	player.physics_material_override.bounce = 5.0
 	MainCam.shake(5.0, 10.0, 3.0)
+	player.hitbox_coll.set_deferred("disabled", false)
 
 func physics_update(delta: float) -> void:
 	var dir_to_grapple_point = player.global_position.direction_to(player.grapple_point)
@@ -34,3 +35,4 @@ func physics_update(delta: float) -> void:
 func exit() -> void:
 	player.gravity_scale = 1.0
 	grapple_line.clear_points()
+	player.hitbox_coll.set_deferred("disabled", true)
