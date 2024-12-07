@@ -62,7 +62,10 @@ func spawn_wave() -> void:
 	for name: String in chosens:
 		var enemy: Node2D = ENEMIES[name].instantiate()
 		spawned_enemies.append(enemy)
-		enemy.global_position = Vector2.from_angle(TAU * randf()) * 300.0
+		enemy.global_position = (
+			Vector2.ONE * 128.0
+			+ Vector2.from_angle(TAU * randf()) * 256.0
+		)
 		if enemy.has_signal("died"):
 			enemy.died.connect(kill_enemy.bind(enemy))
 		else:

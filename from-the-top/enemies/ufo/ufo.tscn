@@ -47,7 +47,7 @@ scale_max = 2.0
 scale_curve = SubResource("CurveTexture_sccgb")
 
 [node name="UFO" type="RigidBody2D" node_paths=PackedStringArray("coll_shape", "hurt_coll", "hit_coll", "trail", "health") groups=["enemies"]]
-collision_layer = 10
+collision_layer = 8
 collision_mask = 4
 physics_material_override = SubResource("PhysicsMaterial_m30yn")
 gravity_scale = 0.0

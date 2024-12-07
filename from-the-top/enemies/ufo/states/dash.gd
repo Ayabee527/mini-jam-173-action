@@ -1,6 +1,6 @@
 extends EnemyUFOState
 
-@export var chase_speed: float = 500.0
+@export var chase_speed: float = 300.0
 @export var turn_speed: float = 20.0
 
 @export var steering: Marker2D

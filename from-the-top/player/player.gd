@@ -37,10 +37,10 @@ func _draw() -> void:
 
 func draw_shape() -> void:
 	var shape: PackedVector2Array = Util.generate_polygon(
-		sides, radius, true, Vector2.ZERO, 90
+		sides, radius, true
 	)
 	var outline: PackedVector2Array = Util.generate_polygon(
-		sides, radius + 4.0, true, Vector2.ZERO, 90
+		sides, radius + 4.0, true
 	)
 	draw_colored_polygon(
 		outline, Util.BG_COLOR
@@ -51,10 +51,10 @@ func draw_shape() -> void:
 
 func draw_engine() -> void:
 	draw_circle(
-		Vector2.UP * 6.0, 3.0, Util.BG_COLOR, true
+		Vector2.LEFT * 6.0, 3.0, Util.BG_COLOR, true
 	)
 	draw_circle(
-		Vector2.UP * 6.0, 1.0, Color.WHITE, true
+		Vector2.LEFT * 6.0, 1.0, Color.WHITE, true
 	)
 
 func get_move_vector() -> Vector2:

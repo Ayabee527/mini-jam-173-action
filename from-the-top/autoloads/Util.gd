@@ -13,3 +13,11 @@ func generate_polygon(detail: int, radius: float, closed: bool = true, offset: V
 		points.append(points[0])
 	
 	return points
+
+func scale_polygon(polygon: PackedVector2Array, scale: float = 1.0) -> PackedVector2Array:
+	var new_polygon := PackedVector2Array()
+	for point: Vector2 in polygon:
+		var new_point: Vector2 = point * scale
+		new_polygon.append(new_point)
+	
+	return new_polygon

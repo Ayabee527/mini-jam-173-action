@@ -27,7 +27,8 @@
 				"88448fee-9f09-41b9-bdb2-30383d9fbaa7",
 				"15438866-f09b-40b6-8b7f-25d4776028e3",
 				"fe6eede3-0b25-475f-8e5c-67f9bc0d8a02",
-				"f3aff417-85b9-41ac-b3f9-fdd8ec8d38e8"
+				"f3aff417-85b9-41ac-b3f9-fdd8ec8d38e8",
+				"ca63f12b-f45b-4a7e-8e5d-34b9020b4bff"
 			]
 		}
 	],
@@ -70,6 +71,13 @@
 		{
 			"uuid": "bf4cd5b1-993c-4fed-bd67-773e88f72e8e",
 			"title": "player death scene",
+			"description": "",
+			"category": "993c00fd-4d42-43cc-9bda-15ee26b2ec0d",
+			"steps": []
+		},
+		{
+			"uuid": "ca63f12b-f45b-4a7e-8e5d-34b9020b4bff",
+			"title": "meteors",
 			"description": "",
 			"category": "993c00fd-4d42-43cc-9bda-15ee26b2ec0d",
 			"steps": []

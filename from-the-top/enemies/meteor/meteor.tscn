@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://41pgxhmcu558"]
+
+[ext_resource type="Script" path="res://enemies/meteor/meteor.gd" id="1_quj7e"]
+[ext_resource type="PackedScene" uid="uid://dvvktbgt1ayca" path="res://components/hurtbox/hurtbox.tscn" id="3_cfou1"]
+[ext_resource type="PackedScene" uid="uid://bd83v7x2q3o7f" path="res://components/hitbox/hitbox.tscn" id="4_sloyh"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3fxb6"]
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gypsu"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_seep3"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lgl8e"]
+radius = 8.0
+
+[node name="Meteor" type="RigidBody2D" node_paths=PackedStringArray("coll_shape", "hit_coll", "hurt_coll") groups=["enemies"]]
+collision_layer = 10
+collision_mask = 6
+mass = 5.0
+physics_material_override = SubResource("PhysicsMaterial_3fxb6")
+gravity_scale = 0.0
+contact_monitor = true
+max_contacts_reported = 4
+script = ExtResource("1_quj7e")
+coll_shape = NodePath("CollisionShape2D")
+hit_coll = NodePath("Hitbox/CollisionShape2D")
+hurt_coll = NodePath("Hurtbox/CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_gypsu")
+
+[node name="Hitbox" parent="." instance=ExtResource("4_sloyh")]
+knockback_strength = 512.0
+height_based = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_seep3")
+
+[node name="Hurtbox" parent="." instance=ExtResource("3_cfou1")]
+knockback_modifier = 5.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_lgl8e")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-24, -24, 48, 48)
+
+[connection signal="knocked_back" from="Hurtbox" to="." method="_on_hurtbox_knocked_back"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
