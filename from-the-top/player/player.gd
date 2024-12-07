@@ -85,4 +85,5 @@ func _on_bonk_check_body_entered(body: Node2D) -> void:
 		var normal := bouncer.get_collision_normal()
 		linear_velocity = linear_velocity.bounce(normal)
 	
-	MainCam.shake(15.0, 10.0, 3.0)
+	MainCam.shake(10.0, 10.0, 3.0)
+	MainCam.hitstop(0.05, 0.5)

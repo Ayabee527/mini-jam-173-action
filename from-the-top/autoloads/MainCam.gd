@@ -35,7 +35,7 @@ func _process(delta: float) -> void:
 	offset = get_noise_offset(delta)
 
 func shake(strength: float, speed: float, decay: float) -> void:
-	shake_strength += strength
+	shake_strength = max(strength, shake_strength)
 	shake_speed = speed
 	shake_decay_rate = decay
 
