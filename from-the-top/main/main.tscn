@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://636cy22ryael"]
+[gd_scene load_steps=19 format=3 uid="uid://636cy22ryael"]
 
 [ext_resource type="Shader" path="res://main/crt.gdshader" id="1_0ct5x"]
 [ext_resource type="Script" path="res://main/main.gd" id="1_7u45d"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cskb633sejnhj" path="res://assets/textures/light_bullet_turned.png" id="5_r0j82"]
 [ext_resource type="Script" path="res://main/wave_handler.gd" id="6_s0fku"]
 [ext_resource type="Script" path="res://main/meteor_spawner.gd" id="7_f7hff"]
+[ext_resource type="AudioStream" uid="uid://copj2gbi2c82i" path="res://assets/music/stardust_crusader.ogg" id="11_5hwod"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pfaio"]
 draw_center = false
@@ -215,7 +216,7 @@ script = ExtResource("6_s0fku")
 time_before_start = 1.0
 
 [node name="Player" parent="Mask/Game" instance=ExtResource("4_dgrix")]
-position = Vector2(128, 128)
+position = Vector2(128, 0)
 
 [node name="Front" type="CanvasLayer" parent="."]
 
@@ -224,5 +225,10 @@ material = SubResource("ShaderMaterial_23rif")
 custom_minimum_size = Vector2(256, 256)
 offset_right = 256.0
 offset_bottom = 256.0
+
+[node name="Musik" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_5hwod")
+autoplay = true
+bus = &"music"
 
 [connection signal="wave_cleared" from="Mask/Game/WaveHandler" to="Mask/Game/MeteorSpawner" method="_on_wave_handler_wave_cleared"]

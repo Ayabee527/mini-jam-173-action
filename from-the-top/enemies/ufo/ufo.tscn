@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://2kybsu8y3n5p"]
+[gd_scene load_steps=18 format=3 uid="uid://2kybsu8y3n5p"]
 
 [ext_resource type="Script" path="res://components/health/health.gd" id="1_hlsch"]
 [ext_resource type="Script" path="res://enemies/ufo/ufo.gd" id="1_tyetn"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://enemies/ufo/states/dash.gd" id="4_oib1y"]
 [ext_resource type="Script" path="res://enemies/ufo/states/die.gd" id="5_pmoc5"]
 [ext_resource type="Script" path="res://components/states/state_machine.gd" id="8_iqxap"]
+[ext_resource type="AudioStream" uid="uid://baqxxk85yhxr3" path="res://assets/sounds/ow3.wav" id="9_vmgyx"]
 [ext_resource type="PackedScene" uid="uid://bd83v7x2q3o7f" path="res://components/hitbox/hitbox.tscn" id="11_rr7fh"]
 [ext_resource type="Texture2D" uid="uid://cqgaoh3so0ind" path="res://assets/textures/fat_bullet_in.png" id="12_ntnd8"]
 
@@ -46,7 +47,12 @@ scale_min = 0.5
 scale_max = 2.0
 scale_curve = SubResource("CurveTexture_sccgb")
 
-[node name="UFO" type="RigidBody2D" node_paths=PackedStringArray("coll_shape", "hurt_coll", "hit_coll", "trail", "health") groups=["enemies"]]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lqr55"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("9_vmgyx")
+
+[node name="UFO" type="RigidBody2D" node_paths=PackedStringArray("coll_shape", "hurt_coll", "hit_coll", "trail", "health", "hurt_sound", "die_sound") groups=["enemies"]]
 collision_layer = 8
 collision_mask = 4
 physics_material_override = SubResource("PhysicsMaterial_m30yn")
@@ -63,6 +69,8 @@ hurt_coll = NodePath("Hurtbox/CollisionShape2D")
 hit_coll = NodePath("Hitbox/CollisionShape2D")
 trail = NodePath("Trail")
 health = NodePath("Health")
+hurt_sound = NodePath("Hurt")
+die_sound = NodePath("Die")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("1_hlsch")
@@ -105,6 +113,17 @@ visibility_rect = Rect2(-256, -256, 512, 512)
 rect = Rect2(-16, -16, 32, 32)
 
 [node name="Steering" type="Marker2D" parent="."]
+
+[node name="Hurt" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_lqr55")
+volume_db = 10.0
+max_polyphony = 5
+bus = &"sound"
+
+[node name="Die" type="AudioStreamPlayer" parent="."]
+volume_db = 10.0
+max_polyphony = 5
+bus = &"sound"
 
 [connection signal="has_died" from="Health" to="StateMachine/Die" method="_on_health_has_died"]
 [connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]

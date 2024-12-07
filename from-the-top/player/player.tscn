@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://b7rau732u3yvy"]
+[gd_scene load_steps=33 format=3 uid="uid://b7rau732u3yvy"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_424ix"]
 [ext_resource type="Script" path="res://components/health/health.gd" id="2_lqdup"]
@@ -6,13 +6,16 @@
 [ext_resource type="Script" path="res://player/states/move.gd" id="4_55glh"]
 [ext_resource type="Script" path="res://player/states/idle.gd" id="4_ohpdi"]
 [ext_resource type="Texture2D" uid="uid://cqgaoh3so0ind" path="res://assets/textures/fat_bullet_in.png" id="6_gy2fa"]
+[ext_resource type="Script" path="res://player/states/die.gd" id="6_wsy3u"]
 [ext_resource type="PackedScene" uid="uid://dvvktbgt1ayca" path="res://components/hurtbox/hurtbox.tscn" id="7_fxvxo"]
-[ext_resource type="PackedScene" uid="uid://bd83v7x2q3o7f" path="res://components/hitbox/hitbox.tscn" id="7_lufw8"]
 [ext_resource type="PackedScene" uid="uid://b1lcu4cgm3hjd" path="res://components/weapon/weapon_handler.tscn" id="9_pa5tq"]
 [ext_resource type="Script" path="res://components/weapon/collision_data/collision_data.gd" id="10_ljc0d"]
 [ext_resource type="Script" path="res://player/autoshooter.gd" id="10_xhogc"]
 [ext_resource type="Script" path="res://components/weapon/weapon.gd" id="11_a0st4"]
 [ext_resource type="Resource" uid="uid://cobm6mn20u0v0" path="res://player/player_weapon.tres" id="12_svuvc"]
+[ext_resource type="AudioStream" uid="uid://dqqa1c0uotkl8" path="res://assets/sounds/ow.wav" id="15_1ruj8"]
+[ext_resource type="AudioStream" uid="uid://cb5qb5emx8023" path="res://assets/sounds/playerboom.wav" id="15_ghdh0"]
+[ext_resource type="Texture2D" uid="uid://cskb633sejnhj" path="res://assets/textures/light_bullet_turned.png" id="15_u5yt6"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2hwk8"]
 bounce = 1.0
@@ -49,7 +52,7 @@ scale_curve = SubResource("CurveTexture_pm1dg")
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_sccgb"]
+[sub_resource type="CurveTexture" id="CurveTexture_kli0v"]
 curve = SubResource("Curve_4ua05")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tkhu0"]
@@ -68,13 +71,10 @@ radial_accel_min = 100.0
 radial_accel_max = 100.0
 scale_min = 0.5
 scale_max = 2.0
-scale_curve = SubResource("CurveTexture_sccgb")
+scale_curve = SubResource("CurveTexture_kli0v")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kqhwy"]
 radius = 8.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_e7hgq"]
-radius = 16.0
 
 [sub_resource type="Resource" id="Resource_x2ktd"]
 script = ExtResource("10_ljc0d")
@@ -84,7 +84,35 @@ collision_mask = 8
 [sub_resource type="CircleShape2D" id="CircleShape2D_8o1mv"]
 radius = 64.0
 
-[node name="Player" type="RigidBody2D" node_paths=PackedStringArray("coll_shape", "health", "hitbox_coll", "trail", "smoke") groups=["player"]]
+[sub_resource type="Curve" id="Curve_e7ki4"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_78eoj"]
+curve = SubResource("Curve_e7ki4")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fnrnh"]
+lifetime_randomness = 1.0
+particle_flag_align_y = true
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 100.0
+initial_velocity_max = 200.0
+gravity = Vector3(0, 0, 0)
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_78eoj")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_n7rge"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("15_1ruj8")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_2ewyn"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("15_ghdh0")
+
+[node name="Player" type="RigidBody2D" node_paths=PackedStringArray("coll_shape", "health", "hurt_coll", "trail", "smoke", "hurt_sound", "die_sound") groups=["player"]]
 rotation = 1.5708
 collision_layer = 6
 collision_mask = 9
@@ -96,9 +124,11 @@ linear_damp = 2.5
 script = ExtResource("1_424ix")
 coll_shape = NodePath("CollisionShape2D")
 health = NodePath("Health")
-hitbox_coll = NodePath("Hitbox/CollisionShape2D")
+hurt_coll = NodePath("Hurtbox/CollisionShape2D")
 trail = NodePath("Trail")
 smoke = NodePath("Smoke")
+hurt_sound = NodePath("Hurt")
+die_sound = NodePath("Die")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("2_lqdup")
@@ -113,8 +143,13 @@ script = ExtResource("4_ohpdi")
 [node name="Move" type="Node" parent="StateMachine"]
 script = ExtResource("4_55glh")
 
+[node name="Die" type="Node" parent="StateMachine" node_paths=PackedStringArray("burst")]
+script = ExtResource("6_wsy3u")
+burst = NodePath("../../Burst")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ef1m4")
+disabled = true
 
 [node name="Trail" type="GPUParticles2D" parent="."]
 modulate = Color(0.890366, 0.785107, 0.207156, 1)
@@ -140,13 +175,6 @@ collision_mask = 96
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource("CircleShape2D_kqhwy")
 
-[node name="Hitbox" parent="." instance=ExtResource("7_lufw8")]
-collision_layer = 16
-collision_mask = 8
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-shape = SubResource("CircleShape2D_e7hgq")
-
 [node name="WeaponHandler" parent="." instance=ExtResource("9_pa5tq")]
 muzzle_distance = 16.0
 collision_data = SubResource("Resource_x2ktd")
@@ -165,8 +193,35 @@ shape = SubResource("CircleShape2D_8o1mv")
 [node name="PriorityCheck" type="Timer" parent="Autoshooter"]
 autostart = true
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-32, -32, 64, 64)
+
+[node name="Burst" type="GPUParticles2D" parent="."]
+modulate = Color(0.890196, 0, 0.207843, 1)
+emitting = false
+amount = 75
+process_material = SubResource("ParticleProcessMaterial_fnrnh")
+texture = ExtResource("15_u5yt6")
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+
+[node name="Hurt" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_n7rge")
+volume_db = 10.0
+max_polyphony = 5
+bus = &"sound"
+
+[node name="Die" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_2ewyn")
+volume_db = 10.0
+bus = &"sound"
+
+[connection signal="has_died" from="Health" to="StateMachine/Die" method="_on_health_has_died"]
+[connection signal="has_died" from="Health" to="Autoshooter" method="_on_health_has_died"]
 [connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
 [connection signal="knocked_back" from="Hurtbox" to="." method="_on_hurtbox_knocked_back"]
 [connection signal="body_entered" from="Autoshooter" to="Autoshooter" method="_on_body_entered"]
 [connection signal="body_exited" from="Autoshooter" to="Autoshooter" method="_on_body_exited"]
 [connection signal="timeout" from="Autoshooter/PriorityCheck" to="Autoshooter" method="_on_priority_check_timeout"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="StateMachine/Die" method="_on_visible_on_screen_notifier_2d_screen_exited"]

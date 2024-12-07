@@ -14,6 +14,8 @@ signal died()
 @export var hit_coll: CollisionShape2D
 @export var trail: GPUParticles2D
 @export var health: Health
+@export var hurt_sound: AudioStreamPlayer
+@export var die_sound: AudioStreamPlayer
 
 var player: Player
 
@@ -62,6 +64,7 @@ func draw_engine() -> void:
 
 func _on_hurtbox_hurt(hitbox: Hitbox, damage: int, invinc_time: float) -> void:
 	health.hurt(damage)
+	hurt_sound.play()
 	
 	color = Color.YELLOW
 	trail.modulate = color

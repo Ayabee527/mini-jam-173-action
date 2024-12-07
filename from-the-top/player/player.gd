@@ -10,16 +10,21 @@ extends RigidBody2D
 @export_group("Inner Dependencies")
 @export var coll_shape: CollisionShape2D
 @export var health: Health
-@export var hitbox_coll: CollisionShape2D
+@export var hurt_coll: CollisionShape2D
 @export var trail: GPUParticles2D
 @export var smoke: GPUParticles2D
+@export var hurt_sound: AudioStreamPlayer
+@export var die_sound: AudioStreamPlayer
 
 var grapple_point: Vector2
 
 var dashing: bool = false
+var intro: bool = true
 
 func _ready() -> void:
-	pass
+	await get_tree().create_timer(0.75, false).timeout
+	intro = false
+	coll_shape.set_deferred("disabled", false)
 
 func _process(delta: float) -> void:
 	queue_redraw()
@@ -29,7 +34,10 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 		state.linear_velocity = state.linear_velocity.limit_length(max_speed)
 
 func _physics_process(delta: float) -> void:
-	pass
+	if intro:
+		apply_central_force(
+			Vector2.DOWN * move_speed
+		)
 
 func _draw() -> void:
 	draw_shape()
@@ -63,6 +71,7 @@ func get_move_vector() -> Vector2:
 func _on_hurtbox_hurt(hitbox: Hitbox, damage: int, invinc_time: float) -> void:
 	MainCam.shake(10.0, 10.0, 5.0)
 	MainCam.hitstop(0.05, 0.5)
+	hurt_sound.play()
 	
 	health.hurt(damage)
 	trail.amount_ratio = health.get_health_percent() / 100.0

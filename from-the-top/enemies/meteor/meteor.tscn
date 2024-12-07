@@ -16,7 +16,7 @@ radius = 8.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_lgl8e"]
 radius = 8.0
 
-[node name="Meteor" type="RigidBody2D" node_paths=PackedStringArray("coll_shape", "hit_coll", "hurt_coll") groups=["enemies"]]
+[node name="Meteor" type="RigidBody2D" node_paths=PackedStringArray("coll_shape", "hit_coll", "hurt_coll")]
 collision_layer = 10
 collision_mask = 6
 mass = 5.0

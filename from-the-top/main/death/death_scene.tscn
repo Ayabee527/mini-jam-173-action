@@ -1,0 +1,637 @@
+[gd_scene load_steps=28 format=3 uid="uid://c4e81cs8v1jlu"]
+
+[ext_resource type="Script" path="res://main/bg.gd" id="1_d4fli"]
+[ext_resource type="Script" path="res://main/death/death_scene.gd" id="1_glthq"]
+[ext_resource type="Texture2D" uid="uid://cskb633sejnhj" path="res://assets/textures/light_bullet_turned.png" id="2_hixtd"]
+[ext_resource type="Script" path="res://main/death/drawer.gd" id="4_lpto6"]
+[ext_resource type="Shader" path="res://main/crt.gdshader" id="4_owlsb"]
+[ext_resource type="Texture2D" uid="uid://cqgaoh3so0ind" path="res://assets/textures/fat_bullet_in.png" id="5_q3w1g"]
+[ext_resource type="Script" path="res://main/death/ship.gd" id="5_t3ffo"]
+[ext_resource type="FontFile" uid="uid://dvw05mko8jwnq" path="res://assets/fonts/Not Jam Play 19.ttf" id="7_5irr3"]
+[ext_resource type="AudioStream" uid="uid://dilu8yrknum02" path="res://assets/sounds/fromthetop.wav" id="10_ff45l"]
+[ext_resource type="AudioStream" uid="uid://dcvcr25fjn08j" path="res://assets/sounds/fall.wav" id="10_u2snq"]
+[ext_resource type="AudioStream" uid="uid://p26kkvv51h33" path="res://assets/sounds/crash.wav" id="10_u7fuj"]
+[ext_resource type="AudioStream" uid="uid://b8rpfdhdl7pn0" path="res://assets/sounds/action.wav" id="11_qx5km"]
+[ext_resource type="AudioStream" uid="uid://cidjqxahrphjh" path="res://assets/sounds/slam.wav" id="12_5xqre"]
+[ext_resource type="AudioStream" uid="uid://dqbxgtrauvgee" path="res://assets/sounds/imminent.wav" id="12_dqbq5"]
+
+[sub_resource type="Animation" id="Animation_so2hl"]
+resource_name = "crash"
+length = 2.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Back/BG/MarginContainer/Border/Mask/Control/Ship:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0472]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Back/BG/MarginContainer/Border/Mask/Control/Ship:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-128, -128), Vector2(384, 384)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Fall:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Back/BG/MarginContainer/Border/Mask/Control/Ship/Smoke:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_k1b0x"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Back/BG/MarginContainer/Border/Mask/Control/Ship:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0472]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Back/BG/MarginContainer/Border/Mask/Control/Ship:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Back/BG/MarginContainer/Border/Mask/Control/Flash:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Action:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Control:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Front/Black:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Crash:playing")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Fall:playing")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Imminent:playing")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Control/PanelContainer/CenterContainer/Fromthetop:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Slam:playing")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Top:playing")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Back/BG/MarginContainer/Border/Mask/Control/Ship/Smoke:emitting")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_sp1ac"]
+resource_name = "flash"
+length = 5.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Back/BG/MarginContainer/Border/Mask/Control/Flash:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.2, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.25098), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(0.890196, 0, 0.207843, 0.25098)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"shake"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Crash:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1.2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Imminent:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_s2p2m"]
+resource_name = "reveal"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Control/PanelContainer/CenterContainer/Fromthetop:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Slam:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_mo5st"]
+resource_name = "cut"
+length = 3.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Front/Black:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Action:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"switch"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Slam:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Top:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.6),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hog6b"]
+_data = {
+"RESET": SubResource("Animation_k1b0x"),
+"crash": SubResource("Animation_so2hl"),
+"cut": SubResource("Animation_mo5st"),
+"flash": SubResource("Animation_sp1ac"),
+"reveal": SubResource("Animation_s2p2m")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p5rjs"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.890366, 0.785107, 0.207156, 1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_j68b0"]
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(128, 1, 1)
+direction = Vector3(-1, -5, 0)
+spread = 5.0
+initial_velocity_min = 250.0
+initial_velocity_max = 500.0
+gravity = Vector3(0, 0, 0)
+tangential_accel_min = -5.0
+tangential_accel_max = 5.0
+scale_min = 0.25
+
+[sub_resource type="Curve" id="Curve_1iovr"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_sccgb"]
+curve = SubResource("Curve_1iovr")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1ik0r"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(-12, 0, 0)
+emission_shape = 1
+emission_sphere_radius = 4.0
+angle_min = 1.07288e-05
+angle_max = 360.0
+inherit_velocity_ratio = 0.5
+direction = Vector3(-1, 0, 0)
+spread = 5.0
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, -500, 0)
+radial_accel_min = 100.0
+radial_accel_max = 100.0
+scale_min = 0.5
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_sccgb")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ukunu"]
+bg_color = Color(0, 0, 0, 0.501961)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2hkgg"]
+shader = ExtResource("4_owlsb")
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.2
+shader_parameter/scanlines_width = 0.15
+shader_parameter/grille_opacity = 0.3
+shader_parameter/resolution = Vector2(64, 64)
+shader_parameter/pixelate = false
+shader_parameter/roll = true
+shader_parameter/roll_speed = 1.0
+shader_parameter/roll_size = 15.0
+shader_parameter/roll_variation = 1.8
+shader_parameter/distort_intensity = 0.02
+shader_parameter/noise_opacity = 0.1
+shader_parameter/noise_speed = 5.0
+shader_parameter/static_noise_intensity = 0.03
+shader_parameter/aberration = 0.015
+shader_parameter/brightness = 2.0
+shader_parameter/discolor = true
+shader_parameter/warp_amount = 1.0
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/vignette_opacity = 0.5
+
+[node name="DeathScene" type="Node2D" node_paths=PackedStringArray("ship", "anim_player")]
+script = ExtResource("1_glthq")
+ship = NodePath("Back/BG/MarginContainer/Border/Mask/Control/Ship")
+anim_player = NodePath("AnimationPlayer")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_hog6b")
+}
+
+[node name="Back" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="BG" type="ColorRect" parent="Back"]
+custom_minimum_size = Vector2(256, 256)
+offset_right = 256.0
+offset_bottom = 256.0
+color = Color(0.0511875, 0.0281353, 0.160591, 1)
+script = ExtResource("1_d4fli")
+
+[node name="MarginContainer" type="MarginContainer" parent="Back/BG"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Border" type="Panel" parent="Back/BG/MarginContainer"]
+clip_contents = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_p5rjs")
+
+[node name="Mask" type="MarginContainer" parent="Back/BG/MarginContainer/Border"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="Control" type="Control" parent="Back/BG/MarginContainer/Border/Mask"]
+clip_contents = true
+layout_mode = 2
+
+[node name="Wind" type="GPUParticles2D" parent="Back/BG/MarginContainer/Border/Mask/Control"]
+modulate = Color(0.890366, 0.785107, 0.207156, 1)
+position = Vector2(110, 238)
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_j68b0")
+texture = ExtResource("2_hixtd")
+lifetime = 2.0
+preprocess = 2.0
+explosiveness = 0.1
+randomness = 1.0
+
+[node name="Flash" type="ColorRect" parent="Back/BG/MarginContainer/Border/Mask/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[node name="Ship" type="Node2D" parent="Back/BG/MarginContainer/Border/Mask/Control"]
+rotation = 1.0472
+scale = Vector2(1, 1)
+script = ExtResource("5_t3ffo")
+
+[node name="Smoke" type="GPUParticles2D" parent="Back/BG/MarginContainer/Border/Mask/Control/Ship"]
+modulate = Color(0.890196, 0, 0.207843, 1)
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_1ik0r")
+texture = ExtResource("5_q3w1g")
+randomness = 1.0
+
+[node name="Drawer" type="Node2D" parent="Back/BG/MarginContainer/Border/Mask/Control"]
+position = Vector2(-18, -18)
+script = ExtResource("4_lpto6")
+
+[node name="Control" type="Control" parent="."]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PanelContainer" type="PanelContainer" parent="Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ukunu")
+
+[node name="CenterContainer" type="CenterContainer" parent="Control/PanelContainer"]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+
+[node name="Fromthetop" type="RichTextLabel" parent="Control/PanelContainer/CenterContainer"]
+visible = false
+clip_contents = false
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("7_5irr3")
+theme_override_font_sizes/normal_font_size = 19
+bbcode_enabled = true
+text = "[center][wave]Press
+any button
+to take this
+[color=\"e3c835\"][shake]from the top..."
+fit_content = true
+autowrap_mode = 0
+
+[node name="Front" type="CanvasLayer" parent="."]
+
+[node name="Black" type="ColorRect" parent="Front"]
+visible = false
+custom_minimum_size = Vector2(256, 256)
+offset_right = 256.0
+offset_bottom = 256.0
+color = Color(0.0511875, 0.0281353, 0.160591, 1)
+
+[node name="CRT" type="ColorRect" parent="Front"]
+material = SubResource("ShaderMaterial_2hkgg")
+custom_minimum_size = Vector2(256, 256)
+offset_right = 256.0
+offset_bottom = 256.0
+
+[node name="Action" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_qx5km")
+bus = &"sound"
+
+[node name="Top" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_ff45l")
+bus = &"sound"
+
+[node name="Fall" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_u2snq")
+bus = &"sound"
+
+[node name="Crash" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_u7fuj")
+bus = &"sound"
+
+[node name="Slam" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_5xqre")
+bus = &"sound"
+
+[node name="Imminent" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_dqbq5")
+bus = &"sound"
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

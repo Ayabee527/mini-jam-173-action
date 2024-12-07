@@ -11,6 +11,7 @@ extends Area2D
 var enemies_in_range: Array[Node2D]
 
 var target: Node2D
+var disabled: bool = false
 
 func _ready() -> void:
 	var coll = CircleShape2D.new()
@@ -38,6 +39,9 @@ func _draw() -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
+	if disabled:
+		return
+	
 	if body.is_in_group("enemies"):
 		enemies_in_range.append(body)
 		reprioritize()
@@ -47,6 +51,9 @@ func _on_body_entered(body: Node2D) -> void:
 
 
 func _on_body_exited(body: Node2D) -> void:
+	if disabled:
+		return
+	
 	if body.is_in_group("enemies"):
 		enemies_in_range.erase(body)
 		
@@ -66,3 +73,8 @@ func reprioritize() -> void:
 
 func _on_priority_check_timeout() -> void:
 	reprioritize()
+
+
+func _on_health_has_died() -> void:
+	disabled = true
+	weapon_handler.firing = false
