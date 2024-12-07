@@ -43,9 +43,10 @@ one_shot = true
 one_shot = true
 
 [node name="Sound" type="AudioStreamPlayer2D" parent="."]
+volume_db = 10.0
 max_distance = 512.0
 max_polyphony = 10
-bus = &"sfx"
+bus = &"sound"
 
 [connection signal="timeout" from="FireTimer" to="." method="_on_fire_timer_timeout"]
 [connection signal="timeout" from="BurstTimer" to="." method="_on_burst_timer_timeout"]

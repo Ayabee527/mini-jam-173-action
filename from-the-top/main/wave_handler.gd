@@ -3,12 +3,14 @@ extends Node2D
 signal enemy_killed(enemy: Node2D)
 signal wave_cleared(size: int)
 
+const UFO = preload("res://enemies/ufo/ufo.tscn")
+
 const ENEMIES = {
-	
+	"UFO": UFO
 }
 
 const COSTS = {
-	
+	"UFO": 2
 }
 
 @export var active: bool = true
@@ -60,10 +62,7 @@ func spawn_wave() -> void:
 	for name: String in chosens:
 		var enemy: Node2D = ENEMIES[name].instantiate()
 		spawned_enemies.append(enemy)
-		enemy.global_position = Vector2(
-			randf_range(64.0, 256.0 - 64.0),
-			256.0
-		)
+		enemy.global_position = Vector2.from_angle(TAU * randf()) * 300.0
 		if enemy.has_signal("died"):
 			enemy.died.connect(kill_enemy.bind(enemy))
 		else:

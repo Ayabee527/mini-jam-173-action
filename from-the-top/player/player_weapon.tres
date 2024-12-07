@@ -1,0 +1,56 @@
+[gd_resource type="Resource" script_class="Weapon" load_steps=10 format=3 uid="uid://cobm6mn20u0v0"]
+
+[ext_resource type="Script" path="res://components/weapon/attack_data/projectile_data.gd" id="1_0c7nw"]
+[ext_resource type="Script" path="res://components/weapon/weapon.gd" id="1_j0a2u"]
+[ext_resource type="Script" path="res://components/weapon/attack_data/hitbox_data/hitbox_data.gd" id="1_tijk6"]
+[ext_resource type="PackedScene" uid="uid://c7aeni8wqem5v" path="res://components/weapon/attacks/projectile/projectile.tscn" id="1_v1uob"]
+[ext_resource type="AudioStream" uid="uid://duxeeiqk5mb1a" path="res://assets/sounds/shoot2.wav" id="4_narmd"]
+[ext_resource type="Texture2D" uid="uid://bcwhqdf5cjtys" path="res://assets/textures/light_bullet.png" id="5_weida"]
+
+[sub_resource type="Resource" id="Resource_4hvbw"]
+script = ExtResource("1_tijk6")
+damage = 1
+damage_cooldown = 0.1
+knockback_strength = 8.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_3xgql"]
+random_pitch = 2.0
+streams_count = 1
+stream_0/stream = ExtResource("4_narmd")
+
+[sub_resource type="Resource" id="Resource_nvnry"]
+script = ExtResource("1_0c7nw")
+attack = ExtResource("1_v1uob")
+life_time = 3.0
+start_speed = 256.0
+end_speed = 256.0
+accel_time = 0.0
+turn_speed = 0.0
+spin_speed = 0.0
+radius = 1.0
+max_pierces = 0.0
+homes = false
+targets = Array[String](["player"])
+start_home_speed = 360.0
+end_home_speed = 360.0
+home_accel_time = 0.0
+texture = ExtResource("5_weida")
+trail_visible = true
+hitbox_data = SubResource("Resource_4hvbw")
+sound = SubResource("AudioStreamRandomizer_3xgql")
+color = Color(1, 1, 1, 1)
+
+[resource]
+script = ExtResource("1_j0a2u")
+attack_data = SubResource("Resource_nvnry")
+spread = 0.0
+rotation_offset = 0.0
+shots_per_shot = 1
+shots_per_burst = 1
+angle_per_shot = 0.0
+angle_offset = 0.0
+shot_cooldown = 0.2
+burst_cooldown = 0.0
+camera_shake_shake = 5.0
+camera_shake_speed = 15.0
+camera_shake_decay = 15.0

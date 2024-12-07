@@ -1,0 +1,114 @@
+[gd_scene load_steps=16 format=3 uid="uid://2kybsu8y3n5p"]
+
+[ext_resource type="Script" path="res://components/health/health.gd" id="1_hlsch"]
+[ext_resource type="Script" path="res://enemies/ufo/ufo.gd" id="1_tyetn"]
+[ext_resource type="PackedScene" uid="uid://dvvktbgt1ayca" path="res://components/hurtbox/hurtbox.tscn" id="3_8uo1v"]
+[ext_resource type="Script" path="res://enemies/ufo/states/dash.gd" id="4_oib1y"]
+[ext_resource type="Script" path="res://enemies/ufo/states/die.gd" id="5_pmoc5"]
+[ext_resource type="Script" path="res://components/states/state_machine.gd" id="8_iqxap"]
+[ext_resource type="PackedScene" uid="uid://bd83v7x2q3o7f" path="res://components/hitbox/hitbox.tscn" id="11_rr7fh"]
+[ext_resource type="Texture2D" uid="uid://cqgaoh3so0ind" path="res://assets/textures/fat_bullet_in.png" id="12_ntnd8"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_m30yn"]
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cnlwu"]
+radius = 4.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_p7fwm"]
+radius = 12.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_klbm1"]
+radius = 6.0
+
+[sub_resource type="Curve" id="Curve_4ua05"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_sccgb"]
+curve = SubResource("Curve_4ua05")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nyj52"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(-12, 0, 0)
+emission_shape = 1
+emission_sphere_radius = 4.0
+angle_min = 1.07288e-05
+angle_max = 360.0
+inherit_velocity_ratio = 0.5
+direction = Vector3(0, -1, 0)
+spread = 5.0
+gravity = Vector3(0, -1000, 0)
+radial_accel_min = 100.0
+radial_accel_max = 100.0
+scale_min = 0.5
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_sccgb")
+
+[node name="UFO" type="RigidBody2D" node_paths=PackedStringArray("coll_shape", "hurt_coll", "hit_coll", "trail", "health") groups=["enemies"]]
+collision_layer = 10
+collision_mask = 4
+physics_material_override = SubResource("PhysicsMaterial_m30yn")
+gravity_scale = 0.0
+lock_rotation = true
+contact_monitor = true
+max_contacts_reported = 4
+linear_damp = 2.5
+angular_damp = 2.5
+script = ExtResource("1_tyetn")
+max_speed = 250.0
+coll_shape = NodePath("CollisionShape2D")
+hurt_coll = NodePath("Hurtbox/CollisionShape2D")
+hit_coll = NodePath("Hitbox/CollisionShape2D")
+trail = NodePath("Trail")
+health = NodePath("Health")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("1_hlsch")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("8_iqxap")
+initial_state = NodePath("Dash")
+
+[node name="Dash" type="Node" parent="StateMachine" node_paths=PackedStringArray("steering")]
+script = ExtResource("4_oib1y")
+steering = NodePath("../../Steering")
+
+[node name="Die" type="Node" parent="StateMachine"]
+script = ExtResource("5_pmoc5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_cnlwu")
+
+[node name="Hurtbox" parent="." instance=ExtResource("3_8uo1v")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_p7fwm")
+
+[node name="Hitbox" parent="." instance=ExtResource("11_rr7fh")]
+knockback_strength = 128.0
+height_based = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_klbm1")
+
+[node name="Trail" type="GPUParticles2D" parent="."]
+modulate = Color(0.890196, 0, 0, 1)
+z_index = -1
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_nyj52")
+texture = ExtResource("12_ntnd8")
+visibility_rect = Rect2(-256, -256, 512, 512)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-16, -16, 32, 32)
+
+[node name="Steering" type="Marker2D" parent="."]
+
+[connection signal="has_died" from="Health" to="StateMachine/Die" method="_on_health_has_died"]
+[connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
+[connection signal="knocked_back" from="Hurtbox" to="." method="_on_hurtbox_knocked_back"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="StateMachine/Dash" method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="StateMachine/Dash" method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="StateMachine/Die" method="_on_visible_on_screen_notifier_2d_screen_exited"]

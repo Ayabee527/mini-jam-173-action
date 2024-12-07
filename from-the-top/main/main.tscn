@@ -207,11 +207,10 @@ script = ExtResource("3_135qt")
 
 [node name="WaveHandler" type="Node2D" parent="Mask/Game"]
 script = ExtResource("6_s0fku")
-active = false
 time_before_start = 1.0
 
 [node name="Player" parent="Mask/Game" instance=ExtResource("4_dgrix")]
-position = Vector2(136, 154)
+position = Vector2(128, 128)
 
 [node name="Front" type="CanvasLayer" parent="."]
 
