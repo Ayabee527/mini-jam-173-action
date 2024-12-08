@@ -10,21 +10,20 @@
 		{
 			"uuid": "63a56ed3-4cf3-49b5-9e5b-8a24ccfe7357",
 			"title": "Todo",
-			"tasks": [
-				"1de76803-d650-453d-81c9-1141e9cc4dea"
-			]
+			"tasks": []
 		},
 		{
 			"uuid": "54cbe06c-4ccd-46f8-a375-7a440b78cd44",
 			"title": "Doing",
 			"tasks": [
-				"993769fc-ade0-4687-af6b-7a2e371ae960"
+				"1de76803-d650-453d-81c9-1141e9cc4dea"
 			]
 		},
 		{
 			"uuid": "a22bb0be-f755-4bc4-80a0-a8b7001bc925",
 			"title": "Done",
 			"tasks": [
+				"993769fc-ade0-4687-af6b-7a2e371ae960",
 				"2fd5d617-f82e-4b03-8cc9-8e158fa7d986",
 				"de7fcfeb-90e4-4cc2-8510-baa8710d175d",
 				"24e685c0-850b-4ba2-abcd-41a5614afa6c",

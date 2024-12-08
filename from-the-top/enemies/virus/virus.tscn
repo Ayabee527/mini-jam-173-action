@@ -1,17 +1,19 @@
-[gd_scene load_steps=21 format=3 uid="uid://cupfrlck1b6ue"]
+[gd_scene load_steps=27 format=3 uid="uid://cupfrlck1b6ue"]
 
 [ext_resource type="Script" path="res://enemies/virus/virus.gd" id="1_r0644"]
 [ext_resource type="Script" path="res://components/health/health.gd" id="2_13ggy"]
 [ext_resource type="Texture2D" uid="uid://cqgaoh3so0ind" path="res://assets/textures/fat_bullet_in.png" id="3_5ibjg"]
 [ext_resource type="Script" path="res://components/states/state_machine.gd" id="3_u4j5s"]
 [ext_resource type="PackedScene" uid="uid://dvvktbgt1ayca" path="res://components/hurtbox/hurtbox.tscn" id="4_l0kcn"]
-[ext_resource type="AudioStream" uid="uid://baqxxk85yhxr3" path="res://assets/sounds/ow3.wav" id="4_onj1l"]
 [ext_resource type="Script" path="res://enemies/virus/states/hunt.gd" id="4_v404r"]
 [ext_resource type="Script" path="res://enemies/virus/states/die.gd" id="5_kks46"]
 [ext_resource type="PackedScene" uid="uid://b1lcu4cgm3hjd" path="res://components/weapon/weapon_handler.tscn" id="6_r3huk"]
 [ext_resource type="Script" path="res://components/weapon/collision_data/collision_data.gd" id="7_jv5qp"]
 [ext_resource type="Script" path="res://components/weapon/weapon.gd" id="8_5ym2f"]
+[ext_resource type="AudioStream" uid="uid://cuqil2kfiff0" path="res://assets/sounds/spawn1.wav" id="8_f2q3k"]
+[ext_resource type="AudioStream" uid="uid://boxf0oryt1m2y" path="res://assets/sounds/boom4.wav" id="9_gvd6j"]
 [ext_resource type="Resource" uid="uid://chby5vjm1ml1c" path="res://enemies/virus/virus_pew.tres" id="9_h4sdj"]
+[ext_resource type="Texture2D" uid="uid://cskb633sejnhj" path="res://assets/textures/light_bullet_turned.png" id="14_yxf4j"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fpteg"]
 
@@ -46,15 +48,38 @@ radius = 2.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_cyaxj"]
 radius = 4.0
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vn1hj"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ij3kq"]
 random_pitch = 1.5
 streams_count = 1
-stream_0/stream = ExtResource("4_onj1l")
+stream_0/stream = ExtResource("8_f2q3k")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_47jw7"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("9_gvd6j")
 
 [sub_resource type="Resource" id="Resource_vee1c"]
 script = ExtResource("7_jv5qp")
 collision_layer = 32
 collision_mask = 4
+
+[sub_resource type="Curve" id="Curve_t71md"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_mps12"]
+curve = SubResource("Curve_t71md")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_oyb6p"]
+lifetime_randomness = 1.0
+particle_flag_align_y = true
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 100.0
+initial_velocity_max = 200.0
+gravity = Vector3(0, 0, 0)
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_mps12")
 
 [node name="Virus" type="RigidBody2D" node_paths=PackedStringArray("coll_shape", "hurt_coll", "trail", "health", "hurt_sound", "die_sound", "weapon_handler") groups=["enemies", "viruses"]]
 rotation = 1.5708
@@ -87,8 +112,9 @@ initial_state = NodePath("Hunt")
 script = ExtResource("4_v404r")
 steering = NodePath("../../Steering")
 
-[node name="Die" type="Node" parent="StateMachine"]
+[node name="Die" type="Node" parent="StateMachine" node_paths=PackedStringArray("burst")]
 script = ExtResource("5_kks46")
+burst = NodePath("../../Burst")
 
 [node name="Trail" type="GPUParticles2D" parent="."]
 modulate = Color(0.890196, 0, 0, 1)
@@ -111,12 +137,12 @@ shape = SubResource("CircleShape2D_cyaxj")
 rect = Rect2(-8, -8, 16, 16)
 
 [node name="Hurt" type="AudioStreamPlayer" parent="."]
-stream = SubResource("AudioStreamRandomizer_vn1hj")
-volume_db = 10.0
+stream = SubResource("AudioStreamRandomizer_ij3kq")
 max_polyphony = 5
 bus = &"sfx"
 
 [node name="Die" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_47jw7")
 volume_db = 10.0
 max_polyphony = 5
 bus = &"sfx"
@@ -127,6 +153,16 @@ collision_data = SubResource("Resource_vee1c")
 weapons = Array[ExtResource("8_5ym2f")]([ExtResource("9_h4sdj")])
 
 [node name="Steering" type="Marker2D" parent="."]
+
+[node name="Burst" type="GPUParticles2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+emitting = false
+amount = 75
+process_material = SubResource("ParticleProcessMaterial_oyb6p")
+texture = ExtResource("14_yxf4j")
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
 
 [connection signal="body_entered" from="." to="StateMachine/Hunt" method="_on_virus_body_entered"]
 [connection signal="has_died" from="Health" to="StateMachine/Die" method="_on_health_has_died"]

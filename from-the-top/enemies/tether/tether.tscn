@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c2361fcoth53d"]
+[gd_scene load_steps=24 format=3 uid="uid://c2361fcoth53d"]
 
 [ext_resource type="Script" path="res://enemies/tether/tether.gd" id="1_uacy6"]
 [ext_resource type="Script" path="res://components/health/health.gd" id="1_y4nng"]
@@ -7,9 +7,11 @@
 [ext_resource type="Script" path="res://enemies/tether/states/prep.gd" id="4_04c7t"]
 [ext_resource type="PackedScene" uid="uid://dvvktbgt1ayca" path="res://components/hurtbox/hurtbox.tscn" id="4_ubjsp"]
 [ext_resource type="Script" path="res://enemies/tether/states/tether.gd" id="5_fe6ny"]
-[ext_resource type="AudioStream" uid="uid://baqxxk85yhxr3" path="res://assets/sounds/ow3.wav" id="6_prnbs"]
 [ext_resource type="Script" path="res://enemies/tether/states/die.gd" id="6_u75yb"]
+[ext_resource type="AudioStream" uid="uid://cr4gb4toq2o0a" path="res://assets/sounds/boom1.wav" id="10_1nvg8"]
 [ext_resource type="PackedScene" uid="uid://bw8338ilrtcwc" path="res://components/trail/trail.tscn" id="10_rr7gu"]
+[ext_resource type="AudioStream" uid="uid://8um6g3rltm4m" path="res://assets/sounds/dash.wav" id="11_d8lef"]
+[ext_resource type="Texture2D" uid="uid://cskb633sejnhj" path="res://assets/textures/light_bullet_turned.png" id="12_50ots"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_6jjsl"]
 bounce = 1.0
@@ -45,10 +47,33 @@ scale_curve = SubResource("CurveTexture_yk31d")
 [sub_resource type="CircleShape2D" id="CircleShape2D_6bc56"]
 radius = 12.0
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_b234y"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_47cu8"]
 random_pitch = 1.5
 streams_count = 1
-stream_0/stream = ExtResource("6_prnbs")
+stream_0/stream = ExtResource("10_1nvg8")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_okh44"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("11_d8lef")
+
+[sub_resource type="Curve" id="Curve_ue8m3"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_evla7"]
+curve = SubResource("Curve_ue8m3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_eaf63"]
+lifetime_randomness = 1.0
+particle_flag_align_y = true
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 100.0
+initial_velocity_max = 200.0
+gravity = Vector3(0, 0, 0)
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_evla7")
 
 [node name="Tether" type="RigidBody2D" node_paths=PackedStringArray("coll_shape", "hurt_coll", "trail", "streak", "health", "hurt_sound", "die_sound") groups=["enemies"]]
 rotation = 1.5708
@@ -85,8 +110,9 @@ script = ExtResource("4_04c7t")
 script = ExtResource("5_fe6ny")
 tether_line = NodePath("../../Tetherline")
 
-[node name="Die" type="Node" parent="StateMachine"]
+[node name="Die" type="Node" parent="StateMachine" node_paths=PackedStringArray("burst")]
 script = ExtResource("6_u75yb")
+burst = NodePath("../../Burst")
 
 [node name="Streak" parent="." instance=ExtResource("10_rr7gu")]
 modulate = Color(1, 1, 0, 1)
@@ -116,13 +142,13 @@ shape = SubResource("CircleShape2D_6bc56")
 disabled = true
 
 [node name="Hurt" type="AudioStreamPlayer" parent="."]
-stream = SubResource("AudioStreamRandomizer_b234y")
-volume_db = 10.0
+stream = SubResource("AudioStreamRandomizer_47cu8")
 max_polyphony = 5
 bus = &"sfx"
 
 [node name="Die" type="AudioStreamPlayer" parent="."]
-volume_db = 10.0
+stream = SubResource("AudioStreamRandomizer_okh44")
+volume_db = 5.0
 max_polyphony = 5
 bus = &"sfx"
 
@@ -131,6 +157,16 @@ modulate = Color(1, 1, 1, 0)
 z_index = -1
 width = 2.0
 default_color = Color(1, 0.498039, 0.207843, 1)
+
+[node name="Burst" type="GPUParticles2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+emitting = false
+amount = 75
+process_material = SubResource("ParticleProcessMaterial_eaf63")
+texture = ExtResource("12_50ots")
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
 
 [connection signal="has_died" from="Health" to="StateMachine/Die" method="_on_health_has_died"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="StateMachine/Die" method="_on_visible_on_screen_notifier_2d_screen_exited"]
