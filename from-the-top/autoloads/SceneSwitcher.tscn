@@ -112,5 +112,6 @@ material = SubResource("ShaderMaterial_kr2sd")
 custom_minimum_size = Vector2(256, 256)
 offset_right = 256.0
 offset_bottom = 256.0
+mouse_filter = 2
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

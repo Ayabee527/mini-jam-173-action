@@ -10,7 +10,7 @@ func spawn_meteor() -> void:
 		Vector2.ONE * 128.0
 		+ Vector2.from_angle(TAU * randf()) * 256.0
 	)
-	add_child(meteor)
+	add_child.call_deferred(meteor)
 	var dir_to_player: Vector2 = meteor.global_position.direction_to(player.global_position)
 	meteor.apply_central_impulse(
 		dir_to_player * randf_range(16.0, 96.0)
@@ -21,4 +21,5 @@ func spawn_meteor() -> void:
 	meteor.tree_exited.connect(spawn_meteor)
 
 func _on_wave_handler_wave_cleared(size: int) -> void:
-	spawn_meteor()
+	if randf() <= 0.75:
+		spawn_meteor()

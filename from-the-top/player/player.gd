@@ -1,6 +1,8 @@
 class_name Player
 extends RigidBody2D
 
+signal died()
+
 @export var move_speed: float = 500.0
 @export var max_speed: float = 150.0
 
@@ -86,3 +88,7 @@ func _on_hurtbox_hurt(hitbox: Hitbox, damage: int, invinc_time: float) -> void:
 
 func _on_hurtbox_knocked_back(knockback: Vector2) -> void:
 	apply_central_impulse(knockback)
+
+
+func _on_health_has_died() -> void:
+	died.emit()

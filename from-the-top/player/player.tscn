@@ -219,6 +219,7 @@ stream = SubResource("AudioStreamRandomizer_2ewyn")
 volume_db = 10.0
 bus = &"sound"
 
+[connection signal="has_died" from="Health" to="." method="_on_health_has_died"]
 [connection signal="has_died" from="Health" to="StateMachine/Die" method="_on_health_has_died"]
 [connection signal="has_died" from="Health" to="Autoshooter" method="_on_health_has_died"]
 [connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]

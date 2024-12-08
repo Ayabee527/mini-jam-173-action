@@ -53,7 +53,7 @@ stream_0/stream = ExtResource("6_prnbs")
 [node name="Tether" type="RigidBody2D" node_paths=PackedStringArray("coll_shape", "hurt_coll", "trail", "streak", "health", "hurt_sound", "die_sound") groups=["enemies"]]
 rotation = 1.5708
 collision_layer = 8
-collision_mask = 8
+collision_mask = 4
 mass = 5.0
 physics_material_override = SubResource("PhysicsMaterial_6jjsl")
 gravity_scale = 0.0

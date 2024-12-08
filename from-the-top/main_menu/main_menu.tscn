@@ -1,0 +1,304 @@
+[gd_scene load_steps=28 format=3 uid="uid://csee6c1s8o8ir"]
+
+[ext_resource type="Script" path="res://main/bg.gd" id="1_2as3x"]
+[ext_resource type="Script" path="res://main_menu/main_menu.gd" id="1_q6hsi"]
+[ext_resource type="Texture2D" uid="uid://cskb633sejnhj" path="res://assets/textures/light_bullet_turned.png" id="2_5u4vh"]
+[ext_resource type="Script" path="res://main/planet.gd" id="3_ij2xf"]
+[ext_resource type="Script" path="res://main/death/drawer.gd" id="5_a240c"]
+[ext_resource type="AudioStream" uid="uid://doxbyj0mqc3x3" path="res://assets/music/under_the_stars.ogg" id="6_hfgg8"]
+[ext_resource type="FontFile" uid="uid://c5uoss2arncxu" path="res://assets/fonts/m6x11.ttf" id="6_letkp"]
+[ext_resource type="Script" path="res://main_menu/butts.gd" id="7_bvgsp"]
+[ext_resource type="FontFile" uid="uid://dujxw7jilwnxa" path="res://assets/fonts/NotJamScrawl12.ttf" id="8_efhtr"]
+[ext_resource type="AudioStream" uid="uid://c5214i2p5pvm4" path="res://assets/sounds/play.wav" id="10_7g5i1"]
+[ext_resource type="AudioStream" uid="uid://cidjqxahrphjh" path="res://assets/sounds/slam.wav" id="10_bp4f8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pr4qr"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.890366, 0.785107, 0.207156, 1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kt8vv"]
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(128, 1, 1)
+direction = Vector3(-1, -5, 0)
+spread = 5.0
+initial_velocity_min = 250.0
+initial_velocity_max = 500.0
+gravity = Vector3(0, 0, 0)
+tangential_accel_min = -5.0
+tangential_accel_max = 5.0
+scale_min = 0.25
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lgx1l"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_plg1b"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aebxj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i4gig"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hja0o"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_71swm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_153v6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ebmwg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pj3x5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mwuyc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ftwqd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nhrfo"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_dft6h"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("10_7g5i1")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_kjwou"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("10_bp4f8")
+
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("cut", "slam_sound", "music", "play_sound")]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_q6hsi")
+cut = NodePath("Back/Cut")
+slam_sound = NodePath("Slam")
+music = NodePath("Music")
+play_sound = NodePath("Play")
+
+[node name="Back" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="BG" type="ColorRect" parent="Back"]
+custom_minimum_size = Vector2(256, 256)
+offset_right = 256.0
+offset_bottom = 256.0
+color = Color(0.0511875, 0.0281353, 0.160591, 1)
+script = ExtResource("1_2as3x")
+
+[node name="MarginContainer" type="MarginContainer" parent="Back/BG"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Border" type="Panel" parent="Back/BG/MarginContainer"]
+clip_contents = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pr4qr")
+
+[node name="Mask" type="MarginContainer" parent="Back/BG/MarginContainer/Border"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="Control" type="Control" parent="Back/BG/MarginContainer/Border/Mask"]
+clip_contents = true
+layout_mode = 2
+
+[node name="Wind" type="GPUParticles2D" parent="Back/BG/MarginContainer/Border/Mask/Control"]
+modulate = Color(0.890366, 0.785107, 0.207156, 1)
+position = Vector2(110, 238)
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_kt8vv")
+texture = ExtResource("2_5u4vh")
+lifetime = 2.0
+preprocess = 2.0
+explosiveness = 0.1
+randomness = 1.0
+
+[node name="Planet" type="Node2D" parent="Back/BG/MarginContainer/Border/Mask/Control" node_paths=PackedStringArray("timer")]
+position = Vector2(-16, -16)
+script = ExtResource("3_ij2xf")
+time_to_crash = 30.0
+timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="Back/BG/MarginContainer/Border/Mask/Control/Planet"]
+
+[node name="Drawer" type="Node2D" parent="Back/BG/MarginContainer/Border/Mask/Control"]
+position = Vector2(-18, -18)
+script = ExtResource("5_a240c")
+
+[node name="MarginContainer" type="MarginContainer" parent="Back/BG/MarginContainer/Border/Mask/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 38
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="title" type="RichTextLabel" parent="Back/BG/MarginContainer/Border/Mask/Control/MarginContainer"]
+modulate = Color(0.890366, 0.785107, 0.207156, 1)
+clip_contents = false
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_shadow_color = Color(0.314316, 0.314316, 0.314316, 1)
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_offset_x = 2
+theme_override_fonts/normal_font = ExtResource("6_letkp")
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "[shake][wave amp=32.0 freq=4.0]STARDUST
+      CRUSADER!"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Butts" type="MarginContainer" parent="Back/BG/MarginContainer/Border/Mask/Control" node_paths=PackedStringArray("button")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+script = ExtResource("7_bvgsp")
+button = NodePath("VBoxContainer/play")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Back/BG/MarginContainer/Border/Mask/Control/Butts"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="play" type="Button" parent="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_fonts/font = ExtResource("8_efhtr")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lgx1l")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_plg1b")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_aebxj")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_i4gig")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_hja0o")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_71swm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_153v6")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_ebmwg")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_pj3x5")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mwuyc")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ftwqd")
+text = "PLAY!"
+alignment = 2
+
+[node name="leaderboard" type="Button" parent="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_fonts/font = ExtResource("8_efhtr")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxEmpty_nhrfo")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_plg1b")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_aebxj")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_i4gig")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_hja0o")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_71swm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_153v6")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_ebmwg")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_pj3x5")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mwuyc")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ftwqd")
+text = "LEADERBOARDS!"
+alignment = 2
+
+[node name="credits" type="Button" parent="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_fonts/font = ExtResource("8_efhtr")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxEmpty_nhrfo")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_plg1b")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_aebxj")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_i4gig")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_hja0o")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_71swm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_153v6")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_ebmwg")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_pj3x5")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mwuyc")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ftwqd")
+text = "CREDITS!"
+alignment = 2
+
+[node name="quit" type="Button" parent="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_fonts/font = ExtResource("8_efhtr")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxEmpty_nhrfo")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_plg1b")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_aebxj")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_i4gig")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_hja0o")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_71swm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_153v6")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_ebmwg")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_pj3x5")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mwuyc")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ftwqd")
+text = "QUIT!"
+alignment = 2
+
+[node name="Cut" type="ColorRect" parent="Back"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0511875, 0.0281353, 0.160591, 1)
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_hfgg8")
+pitch_scale = 0.01
+autoplay = true
+bus = &"music"
+
+[node name="Play" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_dft6h")
+bus = &"sound"
+
+[node name="Slam" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_kjwou")
+max_polyphony = 10
+bus = &"sound"
+
+[connection signal="focus_entered" from="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer/play" to="." method="_on_play_focus_entered"]
+[connection signal="pressed" from="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer/play" to="." method="_on_play_pressed"]
+[connection signal="focus_entered" from="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer/leaderboard" to="." method="_on_leaderboard_focus_entered"]
+[connection signal="pressed" from="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer/leaderboard" to="." method="_on_leaderboard_pressed"]
+[connection signal="focus_entered" from="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer/credits" to="." method="_on_credits_focus_entered"]
+[connection signal="pressed" from="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer/credits" to="." method="_on_credits_pressed"]
+[connection signal="focus_entered" from="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer/quit" to="." method="_on_quit_focus_entered"]
+[connection signal="pressed" from="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer/quit" to="." method="_on_quit_pressed"]
