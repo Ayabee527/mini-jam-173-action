@@ -4,17 +4,17 @@ extends RigidBody2D
 signal died()
 
 @export var sides: int = 3.0
-@export var radius: float = 8.0
-@export var spin_time: float = 0.1
+@export var radius: float = 4.0
+@export var spin_time: float = 1.0
 
 @export_group("Inner Dependencies")
 @export var coll_shape: CollisionShape2D
 @export var hurt_coll: CollisionShape2D
 @export var trail: GPUParticles2D
-@export var streak: Trail
 @export var health: Health
 @export var hurt_sound: AudioStreamPlayer
 @export var die_sound: AudioStreamPlayer
+@export var weapon_handler: WeaponHandler
 
 var player: Player
 
@@ -29,7 +29,9 @@ func _ready() -> void:
 	var coll := CircleShape2D.new()
 	coll.radius = radius
 	coll_shape.shape = coll
-	hurt_coll.shape = coll
+	var hurt_shape := CircleShape2D.new()
+	hurt_shape.radius = radius + 2.0
+	hurt_coll.shape = hurt_shape
 	
 	player = get_tree().get_first_node_in_group("player")
 
@@ -59,6 +61,7 @@ func draw_shape() -> void:
 	draw_polyline(
 		shape, color, 1.0
 	)
+	
 	draw_set_transform(Vector2.ZERO, -TAU * spin / spin_time, Vector2.ONE * draw_scale)
 	draw_colored_polygon(
 		outline, Util.BG_COLOR

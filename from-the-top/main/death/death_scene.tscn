@@ -661,27 +661,21 @@ color = Color(0.0511875, 0.0281353, 0.160591, 1)
 
 [node name="Action" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_qx5km")
-bus = &"sound"
 
 [node name="Top" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_ff45l")
-bus = &"sound"
 
 [node name="Fall" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_u2snq")
-bus = &"sound"
 
 [node name="Crash" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_u7fuj")
-bus = &"sound"
 
 [node name="Slam" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_5xqre")
-bus = &"sound"
 
 [node name="Imminent" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_dqbq5")
-bus = &"sound"
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("15_d721u")

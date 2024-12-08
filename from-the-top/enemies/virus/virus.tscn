@@ -1,19 +1,125 @@
-[gd_scene load_steps=4 format=3 uid="uid://cupfrlck1b6ue"]
+[gd_scene load_steps=21 format=3 uid="uid://cupfrlck1b6ue"]
 
 [ext_resource type="Script" path="res://enemies/virus/virus.gd" id="1_r0644"]
 [ext_resource type="Script" path="res://components/health/health.gd" id="2_13ggy"]
+[ext_resource type="Texture2D" uid="uid://cqgaoh3so0ind" path="res://assets/textures/fat_bullet_in.png" id="3_5ibjg"]
+[ext_resource type="Script" path="res://components/states/state_machine.gd" id="3_u4j5s"]
+[ext_resource type="PackedScene" uid="uid://dvvktbgt1ayca" path="res://components/hurtbox/hurtbox.tscn" id="4_l0kcn"]
+[ext_resource type="AudioStream" uid="uid://baqxxk85yhxr3" path="res://assets/sounds/ow3.wav" id="4_onj1l"]
+[ext_resource type="Script" path="res://enemies/virus/states/hunt.gd" id="4_v404r"]
+[ext_resource type="Script" path="res://enemies/virus/states/die.gd" id="5_kks46"]
+[ext_resource type="PackedScene" uid="uid://b1lcu4cgm3hjd" path="res://components/weapon/weapon_handler.tscn" id="6_r3huk"]
+[ext_resource type="Script" path="res://components/weapon/collision_data/collision_data.gd" id="7_jv5qp"]
+[ext_resource type="Script" path="res://components/weapon/weapon.gd" id="8_5ym2f"]
+[ext_resource type="Resource" uid="uid://chby5vjm1ml1c" path="res://enemies/virus/virus_pew.tres" id="9_h4sdj"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fpteg"]
 
-[node name="Virus" type="RigidBody2D"]
+[sub_resource type="Curve" id="Curve_ku3bw"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_q2qeh"]
+curve = SubResource("Curve_ku3bw")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gtj1x"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(-12, 0, 0)
+emission_shape = 1
+emission_sphere_radius = 4.0
+angle_min = 1.07288e-05
+angle_max = 360.0
+inherit_velocity_ratio = 0.5
+direction = Vector3(0, -1, 0)
+spread = 5.0
+gravity = Vector3(0, -1000, 0)
+radial_accel_min = 100.0
+radial_accel_max = 100.0
+scale_min = 0.5
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_q2qeh")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t5nb2"]
+radius = 2.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cyaxj"]
+radius = 4.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vn1hj"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("4_onj1l")
+
+[sub_resource type="Resource" id="Resource_vee1c"]
+script = ExtResource("7_jv5qp")
+collision_layer = 32
+collision_mask = 4
+
+[node name="Virus" type="RigidBody2D" node_paths=PackedStringArray("coll_shape", "hurt_coll", "trail", "health", "hurt_sound", "die_sound") groups=["enemies", "viruses"]]
+rotation = 1.5708
+collision_layer = 8
+collision_mask = 6
 mass = 0.1
 physics_material_override = SubResource("PhysicsMaterial_fpteg")
 gravity_scale = 0.0
+lock_rotation = true
+contact_monitor = true
+max_contacts_reported = 4
 linear_damp = 2.5
 script = ExtResource("1_r0644")
+coll_shape = NodePath("CollisionShape2D")
+hurt_coll = NodePath("CollisionShape2D")
+trail = NodePath("Trail")
+health = NodePath("Health")
+hurt_sound = NodePath("Hurt")
+die_sound = NodePath("Die")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("2_13ggy")
 max_health = 2
 
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_u4j5s")
+initial_state = NodePath("Hunt")
+
+[node name="Hunt" type="Node" parent="StateMachine"]
+script = ExtResource("4_v404r")
+
+[node name="Die" type="Node" parent="StateMachine"]
+script = ExtResource("5_kks46")
+
+[node name="Trail" type="GPUParticles2D" parent="."]
+modulate = Color(0.890196, 0, 0, 1)
+z_index = -1
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_gtj1x")
+texture = ExtResource("3_5ibjg")
+visibility_rect = Rect2(-256, -256, 512, 512)
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_t5nb2")
+
+[node name="Hurtbox" parent="." instance=ExtResource("4_l0kcn")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_cyaxj")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-8, -8, 16, 16)
+
+[node name="Hurt" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_vn1hj")
+volume_db = 10.0
+max_polyphony = 5
+bus = &"sfx"
+
+[node name="Die" type="AudioStreamPlayer" parent="."]
+volume_db = 10.0
+max_polyphony = 5
+bus = &"sfx"
+
+[node name="WeaponHandler" parent="." instance=ExtResource("6_r3huk")]
+muzzle_distance = 6.0
+collision_data = SubResource("Resource_vee1c")
+weapons = Array[ExtResource("8_5ym2f")]([ExtResource("9_h4sdj")])

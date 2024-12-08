@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://636cy22ryael"]
+[gd_scene load_steps=35 format=3 uid="uid://636cy22ryael"]
 
 [ext_resource type="Script" path="res://main/main.gd" id="1_7u45d"]
 [ext_resource type="Script" path="res://main/bg.gd" id="2_hh7fp"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cskb633sejnhj" path="res://assets/textures/light_bullet_turned.png" id="5_r0j82"]
 [ext_resource type="Script" path="res://main/wave_handler.gd" id="6_s0fku"]
 [ext_resource type="Script" path="res://main/meteor_spawner.gd" id="7_f7hff"]
+[ext_resource type="PackedScene" uid="uid://cupfrlck1b6ue" path="res://enemies/virus/virus.tscn" id="9_npo1b"]
 [ext_resource type="Script" path="res://main/pause_menu.gd" id="10_3ynmw"]
 [ext_resource type="FontFile" uid="uid://blnjetxm1amsv" path="res://assets/fonts/Not Jam Play 23.ttf" id="10_n34mk"]
 [ext_resource type="AudioStream" uid="uid://copj2gbi2c82i" path="res://assets/music/stardust_crusader.ogg" id="11_5hwod"]
@@ -226,6 +227,9 @@ script = ExtResource("6_s0fku")
 active = false
 time_before_start = 2.0
 
+[node name="Virus" parent="Mask/Game/WaveHandler" instance=ExtResource("9_npo1b")]
+position = Vector2(64, 64)
+
 [node name="Player" parent="Mask/Game" instance=ExtResource("4_dgrix")]
 position = Vector2(128, 0)
 
@@ -313,7 +317,7 @@ alignment = 2
 [node name="Slam" type="AudioStreamPlayer" parent="UI/PauseMenu"]
 stream = SubResource("AudioStreamRandomizer_05hbx")
 max_polyphony = 10
-bus = &"sound"
+bus = &"sfx"
 
 [node name="Musik" type="AudioStreamPlayer" parent="."]
 process_mode = 3

@@ -1,0 +1,169 @@
+[gd_scene load_steps=22 format=3 uid="uid://bs6yy37c2krmt"]
+
+[ext_resource type="FontFile" uid="uid://bpr437vu657" path="res://assets/fonts/NotJamScrawl9.ttf" id="1_ajern"]
+[ext_resource type="Script" path="res://main/online_prompt/online_prompt.gd" id="1_g6p8r"]
+[ext_resource type="FontFile" uid="uid://dujxw7jilwnxa" path="res://assets/fonts/NotJamScrawl12.ttf" id="2_c5pxo"]
+[ext_resource type="AudioStream" uid="uid://dbg3t1l65ekkq" path="res://assets/sounds/bigboom.wav" id="3_mmu2w"]
+[ext_resource type="AudioStream" uid="uid://c2lmfjic4musx" path="res://assets/sounds/thump1.wav" id="4_vkth5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qg50p"]
+bg_color = Color(0.0511875, 0.0281353, 0.160591, 1)
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_byjee"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.890196, 0.784314, 0.207843, 0.25098)
+border_width_bottom = 2
+border_color = Color(0.890366, 0.785107, 0.207156, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ya5qk"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.890196, 0.784314, 0.207843, 0.25098)
+draw_center = false
+border_color = Color(0.501961, 0.501961, 0.501961, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ui2jp"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+draw_center = false
+border_width_bottom = 2
+border_color = Color(0.890366, 0.785107, 0.207156, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6oieh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_trjdg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xbech"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g22jq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p523m"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vn21e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u2kst"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s55vt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r10gd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6c2yf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a4dsf"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wcpw8"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("3_mmu2w")
+
+[node name="OnlinePrompt" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g6p8r")
+
+[node name="BG" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_qg50p")
+
+[node name="CenterContainer" type="CenterContainer" parent="BG"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BG/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Info" type="RichTextLabel" parent="BG/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/line_separation = 8
+theme_override_fonts/normal_font = ExtResource("1_ajern")
+theme_override_font_sizes/normal_font_size = 9
+bbcode_enabled = true
+text = "[wave][center]ENTER A USERNAME TO JOIN
+[rainbow]THE LEADERBOARDS!"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Username" type="LineEdit" parent="BG/CenterContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_placeholder_color = Color(0.890196, 0.784314, 0.207843, 0.501961)
+theme_override_colors/font_uneditable_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_fonts/font = ExtResource("1_ajern")
+theme_override_font_sizes/font_size = 9
+theme_override_styles/focus = SubResource("StyleBoxFlat_byjee")
+theme_override_styles/read_only = SubResource("StyleBoxFlat_ya5qk")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ui2jp")
+placeholder_text = "USERNAME"
+alignment = 1
+max_length = 10
+expand_to_text_length = true
+context_menu_enabled = false
+selecting_enabled = false
+deselect_on_focus_loss_enabled = false
+caret_blink = true
+
+[node name="Status" type="RichTextLabel" parent="BG/CenterContainer/VBoxContainer"]
+clip_contents = false
+layout_mode = 2
+theme_override_constants/line_separation = 8
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+fit_content = true
+autowrap_mode = 0
+
+[node name="confirm" type="Button" parent="BG/CenterContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_fonts/font = ExtResource("2_c5pxo")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxEmpty_6oieh")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_trjdg")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_xbech")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_g22jq")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_p523m")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_vn21e")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_u2kst")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_s55vt")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_r10gd")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_6c2yf")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_a4dsf")
+text = "CONFIRM!"
+alignment = 2
+
+[node name="Info2" type="RichTextLabel" parent="BG/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/line_separation = 8
+theme_override_fonts/normal_font = ExtResource("1_ajern")
+theme_override_font_sizes/normal_font_size = 9
+bbcode_enabled = true
+text = "[wave][center]YOU CAN SET YOUR NAME
+LATER IN THE [color=yellow]MAIN MENU!"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Yay!" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_wcpw8")
+bus = &"sfx"
+
+[node name="Nuh!" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_vkth5")
+volume_db = -5.0
+bus = &"sfx"
+
+[connection signal="pressed" from="BG/CenterContainer/VBoxContainer/confirm" to="." method="_on_confirm_pressed"]

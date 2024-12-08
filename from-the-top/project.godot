@@ -13,6 +13,7 @@ config_version=5
 config/name="from the top"
 config/tags=PackedStringArray("jams")
 run/main_scene="res://main_menu/main_menu.tscn"
+config/use_custom_user_dir=true
 config/features=PackedStringArray("4.3", "GL Compatibility")
 boot_splash/bg_color=Color(0.0511875, 0.0281353, 0.160591, 1)
 boot_splash/image="res://assets/textures/original-large-color-edit.png"
@@ -23,6 +24,9 @@ config/icon="res://icon.svg"
 MainCam="*res://autoloads/MainCam.tscn"
 SceneSwitcher="*res://autoloads/SceneSwitcher.tscn"
 Util="*res://autoloads/Util.gd"
+SilentWolf="*res://addons/silent_wolf/SilentWolf.gd"
+Global="*res://autoloads/Global.gd"
+SaveHandler="*res://autoloads/SaveHandler.gd"
 
 [display]
 
@@ -34,7 +38,7 @@ window/stretch/mode="viewport"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/kanban_tasks/plugin.cfg")
+enabled=PackedStringArray("res://addons/kanban_tasks/plugin.cfg", "res://addons/silent_wolf/plugin.cfg")
 
 [file_customization]
 
@@ -51,6 +55,8 @@ folder_colors={
 
 player=""
 enemies=""
+meteors=""
+viruses=""
 
 [input]
 

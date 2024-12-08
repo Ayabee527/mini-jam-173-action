@@ -1,0 +1,50 @@
+[gd_scene load_steps=14 format=3 uid="uid://dosvh0m2w4f47"]
+
+[ext_resource type="FontFile" uid="uid://bpr437vu657" path="res://assets/fonts/NotJamScrawl9.ttf" id="1_gtb33"]
+[ext_resource type="Script" path="res://options/keybind_button.gd" id="2_2v5k0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nl0ak"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_86t2f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7ik8m"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qwpgu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n4d7l"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bo30q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l7iuh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5brvt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a101t"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kff6j"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ufyh2"]
+
+[node name="KeybindButton" type="Button"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_fonts/font = ExtResource("1_gtb33")
+theme_override_font_sizes/font_size = 9
+theme_override_styles/focus = SubResource("StyleBoxEmpty_nl0ak")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_86t2f")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_7ik8m")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_qwpgu")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_n4d7l")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_bo30q")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_l7iuh")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_5brvt")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_a101t")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_kff6j")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ufyh2")
+script = ExtResource("2_2v5k0")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

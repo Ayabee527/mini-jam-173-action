@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqglvflgeqgel"]
+
+[ext_resource type="Script" path="res://main_menu/stats/stats_holder/stats_holder.gd" id="1_bu7sn"]
+[ext_resource type="FontFile" uid="uid://bpr437vu657" path="res://assets/fonts/NotJamScrawl9.ttf" id="2_4qcsa"]
+
+[node name="StatsHolder" type="HBoxContainer" node_paths=PackedStringArray("place_label", "score_label")]
+size_flags_horizontal = 4
+theme_override_constants/separation = 16
+script = ExtResource("1_bu7sn")
+place_label = NodePath("Place")
+score_label = NodePath("Score")
+
+[node name="Place" type="RichTextLabel" parent="."]
+clip_contents = false
+layout_mode = 2
+theme_override_colors/default_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_fonts/normal_font = ExtResource("2_4qcsa")
+theme_override_font_sizes/normal_font_size = 9
+bbcode_enabled = true
+text = "1."
+fit_content = true
+autowrap_mode = 0
+
+[node name="Score" type="RichTextLabel" parent="."]
+clip_contents = false
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_colors/default_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_fonts/normal_font = ExtResource("2_4qcsa")
+theme_override_font_sizes/normal_font_size = 9
+bbcode_enabled = true
+text = "999999"
+fit_content = true
+autowrap_mode = 0

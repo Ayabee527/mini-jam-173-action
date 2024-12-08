@@ -30,4 +30,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 			restartable = true
 
 func switch() -> void:
-	SceneSwitcher.switch_to("res://main/main.tscn")
+	if not Global.online_prompted and Global.username.strip_edges().is_empty():
+		SceneSwitcher.switch_to("res://main/online_prompt/online_prompt.tscn")
+	else:
+		SceneSwitcher.switch_to("res://main/main.tscn")

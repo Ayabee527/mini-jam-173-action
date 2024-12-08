@@ -1,0 +1,263 @@
+[gd_scene load_steps=26 format=3 uid="uid://cmamu5udwoaqb"]
+
+[ext_resource type="Script" path="res://options/options_menu.gd" id="1_gffcx"]
+[ext_resource type="FontFile" uid="uid://bpr437vu657" path="res://assets/fonts/NotJamScrawl9.ttf" id="2_2ikts"]
+[ext_resource type="FontFile" uid="uid://dujxw7jilwnxa" path="res://assets/fonts/NotJamScrawl12.ttf" id="2_6v3v1"]
+[ext_resource type="PackedScene" uid="uid://d24cmkro7w3qy" path="res://options/volume_slider.tscn" id="2_7dklg"]
+[ext_resource type="AudioStream" uid="uid://cb5qb5emx8023" path="res://assets/sounds/playerboom.wav" id="5_po2gd"]
+[ext_resource type="FontFile" uid="uid://b67t7mxcknvs4" path="res://assets/fonts/NotJamFaithless9.ttf" id="5_qqvwy"]
+[ext_resource type="PackedScene" uid="uid://dosvh0m2w4f47" path="res://options/keybind_button.tscn" id="6_ar6q3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tw356"]
+bg_color = Color(0, 0, 0, 0.752941)
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mklqj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2flbk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fph4d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sns0f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xrjd6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1g2bd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xvspb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jn7b7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gueai"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oq0jc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_chv42"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kgbgt"]
+bg_color = Color(0.501961, 0.501961, 0.501961, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_483da"]
+bg_color = Color(0.74902, 0.74902, 0.74902, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ndmcl"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Theme" id="Theme_7nr54"]
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_kgbgt")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_483da")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_ndmcl")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_du0ll"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0blcx"]
+bg_color = Color(0, 0, 0, 0.878431)
+
+[node name="OptionsMenu" type="PanelContainer" node_paths=PackedStringArray("back_butt", "master_volume", "sound_volume", "keybind_buttons", "volume_sliders", "awaiting_input", "sound")]
+process_mode = 3
+custom_minimum_size = Vector2(256, 256)
+offset_right = 256.0
+offset_bottom = 256.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_tw356")
+script = ExtResource("1_gffcx")
+back_butt = NodePath("MarginContainer/VBoxContainer/back")
+master_volume = NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Master/VolumeSlider")
+sound_volume = NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Sound/VolumeSlider")
+keybind_buttons = [NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveUp/KeybindButton"), NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveLeft/KeybindButton"), NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveDown/KeybindButton"), NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveRight/KeybindButton")]
+volume_sliders = [NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Master/VolumeSlider"), NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Sound/VolumeSlider"), NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Music/VolumeSlider")]
+awaiting_input = NodePath("AwaitingInput")
+sound = NodePath("Sound")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="back" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_fonts/font = ExtResource("2_6v3v1")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxEmpty_mklqj")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_2flbk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_fph4d")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_sns0f")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_xrjd6")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_1g2bd")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_xvspb")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_jn7b7")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_gueai")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_oq0jc")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_chv42")
+text = "BACK"
+alignment = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(192, 128)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+theme = SubResource("Theme_7nr54")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_du0ll")
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="Master" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Master"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_fonts/font = ExtResource("2_2ikts")
+theme_override_font_sizes/font_size = 9
+text = "MASTER VOLUME"
+horizontal_alignment = 1
+
+[node name="VolumeSlider" parent="MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Master" instance=ExtResource("2_7dklg")]
+layout_mode = 2
+
+[node name="Sound" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Sound"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_fonts/font = ExtResource("2_2ikts")
+theme_override_font_sizes/font_size = 9
+text = "SOUND VOLUME"
+horizontal_alignment = 1
+
+[node name="VolumeSlider" parent="MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Sound" instance=ExtResource("2_7dklg")]
+layout_mode = 2
+bus_name = "sfx"
+
+[node name="Music" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Music"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_fonts/font = ExtResource("2_2ikts")
+theme_override_font_sizes/font_size = 9
+text = "MUSIC VOLUME"
+horizontal_alignment = 1
+
+[node name="VolumeSlider" parent="MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Music" instance=ExtResource("2_7dklg")]
+layout_mode = 2
+bus_name = "music"
+
+[node name="MoveUp" type="HBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveUp"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_fonts/font = ExtResource("2_2ikts")
+theme_override_font_sizes/font_size = 9
+text = "MOVE UP:"
+horizontal_alignment = 1
+
+[node name="KeybindButton" parent="MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveUp" instance=ExtResource("6_ar6q3")]
+layout_mode = 2
+size_flags_horizontal = 10
+input_action = "move_up"
+
+[node name="MoveLeft" type="HBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveLeft"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_fonts/font = ExtResource("2_2ikts")
+theme_override_font_sizes/font_size = 9
+text = "MOVE LEFT:"
+horizontal_alignment = 1
+
+[node name="KeybindButton" parent="MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveLeft" instance=ExtResource("6_ar6q3")]
+layout_mode = 2
+size_flags_horizontal = 10
+input_action = "move_left"
+
+[node name="MoveDown" type="HBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveDown"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_fonts/font = ExtResource("2_2ikts")
+theme_override_font_sizes/font_size = 9
+text = "MOVE DOWN:"
+horizontal_alignment = 1
+
+[node name="KeybindButton" parent="MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveDown" instance=ExtResource("6_ar6q3")]
+layout_mode = 2
+size_flags_horizontal = 10
+input_action = "move_down"
+
+[node name="MoveRight" type="HBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveRight"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_fonts/font = ExtResource("2_2ikts")
+theme_override_font_sizes/font_size = 9
+text = "MOVE RIGHT:"
+horizontal_alignment = 1
+
+[node name="KeybindButton" parent="MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveRight" instance=ExtResource("6_ar6q3")]
+layout_mode = 2
+size_flags_horizontal = 10
+input_action = "move_right"
+
+[node name="AwaitingInput" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0blcx")
+
+[node name="CenterContainer" type="CenterContainer" parent="AwaitingInput"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AwaitingInput/CenterContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_colors/font_shadow_color = Color(0.489888, 0.428266, 0.0852663, 1)
+theme_override_fonts/font = ExtResource("5_qqvwy")
+theme_override_font_sizes/font_size = 9
+text = "PRESS A BUTTON TO
+SET AS YOUR KEYBIND!"
+horizontal_alignment = 1
+
+[node name="Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_po2gd")
+volume_db = -5.0
+bus = &"sfx"
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

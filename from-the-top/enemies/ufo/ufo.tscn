@@ -119,12 +119,12 @@ rotation = -1.5708
 stream = SubResource("AudioStreamRandomizer_lqr55")
 volume_db = 10.0
 max_polyphony = 5
-bus = &"sound"
+bus = &"sfx"
 
 [node name="Die" type="AudioStreamPlayer" parent="."]
 volume_db = 10.0
 max_polyphony = 5
-bus = &"sound"
+bus = &"sfx"
 
 [connection signal="has_died" from="Health" to="StateMachine/Die" method="_on_health_has_died"]
 [connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]

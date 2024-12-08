@@ -1,0 +1,202 @@
+[gd_scene load_steps=23 format=3 uid="uid://ci6nldk5pf48q"]
+
+[ext_resource type="Script" path="res://main_menu/stats/stats_menu.gd" id="1_a1ms5"]
+[ext_resource type="PackedScene" uid="uid://bqglvflgeqgel" path="res://main_menu/stats/stats_holder/stats_holder.tscn" id="3_gm47h"]
+[ext_resource type="FontFile" uid="uid://bpr437vu657" path="res://assets/fonts/NotJamScrawl9.ttf" id="3_r0ipk"]
+[ext_resource type="FontFile" uid="uid://dujxw7jilwnxa" path="res://assets/fonts/NotJamScrawl12.ttf" id="4_wpuee"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tnlv3"]
+bg_color = Color(0, 0, 0, 0.752941)
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mjpwo"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0, 0, 0, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_color = Color(0.890366, 0.785107, 0.207156, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2kl5e"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+draw_center = false
+border_width_top = 2
+border_color = Color(0.890366, 0.785107, 0.207156, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7dx2o"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0, 0, 0, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_color = Color(0.890196, 0.784314, 0.207843, 0.501961)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qnsg6"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0, 0, 0, 1)
+draw_center = false
+border_color = Color(0.890366, 0.785107, 0.207156, 1)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_qruve"]
+color = Color(0.890366, 0.785107, 0.207156, 1)
+thickness = 2
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_blh1u"]
+color = Color(0.609334, 0.53394, 0.112829, 1)
+thickness = 2
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nxk0b"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k7xgc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tfwx2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6cvlf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6orjq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ooar8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ekrnd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ojj1b"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u3yq0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wg7hs"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qv7fr"]
+
+[node name="StatsMenu" type="PanelContainer" node_paths=PackedStringArray("endless_latest_holder", "endless_highscore_holder", "back_butt")]
+custom_minimum_size = Vector2(256, 256)
+offset_right = 256.0
+offset_bottom = 256.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_tnlv3")
+script = ExtResource("1_a1ms5")
+endless_latest_holder = NodePath("MarginContainer/VBoxContainer/TabContainer/Endless/VBoxContianer/Latest")
+endless_highscore_holder = NodePath("MarginContainer/VBoxContainer/TabContainer/Endless/VBoxContianer/Highscores")
+back_butt = NodePath("MarginContainer/VBoxContainer/back")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_unselected_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_colors/font_hovered_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_colors/font_selected_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_fonts/font = ExtResource("3_r0ipk")
+theme_override_font_sizes/font_size = 9
+theme_override_styles/tab_focus = SubResource("StyleBoxFlat_mjpwo")
+theme_override_styles/panel = SubResource("StyleBoxFlat_2kl5e")
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_mjpwo")
+theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_7dx2o")
+theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_qnsg6")
+current_tab = 0
+
+[node name="Endless" type="MarginContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+metadata/_tab_index = 0
+
+[node name="VBoxContianer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/Endless"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 8
+
+[node name="Latest" parent="MarginContainer/VBoxContainer/TabContainer/Endless/VBoxContianer" instance=ExtResource("3_gm47h")]
+layout_mode = 2
+place = "Latest:"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/TabContainer/Endless/VBoxContianer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_qruve")
+
+[node name="HIGHSCORES" type="RichTextLabel" parent="MarginContainer/VBoxContainer/TabContainer/Endless/VBoxContianer"]
+clip_contents = false
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_fonts/normal_font = ExtResource("3_r0ipk")
+theme_override_font_sizes/normal_font_size = 9
+bbcode_enabled = true
+text = "[wave][rainbow]HIGHSCORES"
+fit_content = true
+autowrap_mode = 0
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer/TabContainer/Endless/VBoxContianer"]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/separator = SubResource("StyleBoxLine_blh1u")
+
+[node name="Highscores" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/Endless/VBoxContianer"]
+custom_minimum_size = Vector2(176, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="StatsHolder" parent="MarginContainer/VBoxContainer/TabContainer/Endless/VBoxContianer/Highscores" instance=ExtResource("3_gm47h")]
+layout_mode = 2
+
+[node name="StatsHolder2" parent="MarginContainer/VBoxContainer/TabContainer/Endless/VBoxContianer/Highscores" instance=ExtResource("3_gm47h")]
+layout_mode = 2
+
+[node name="StatsHolder3" parent="MarginContainer/VBoxContainer/TabContainer/Endless/VBoxContianer/Highscores" instance=ExtResource("3_gm47h")]
+layout_mode = 2
+
+[node name="StatsHolder4" parent="MarginContainer/VBoxContainer/TabContainer/Endless/VBoxContianer/Highscores" instance=ExtResource("3_gm47h")]
+layout_mode = 2
+
+[node name="StatsHolder5" parent="MarginContainer/VBoxContainer/TabContainer/Endless/VBoxContianer/Highscores" instance=ExtResource("3_gm47h")]
+layout_mode = 2
+
+[node name="back" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_fonts/font = ExtResource("4_wpuee")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxEmpty_nxk0b")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_k7xgc")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_tfwx2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_6cvlf")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_6orjq")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_ooar8")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ekrnd")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_ojj1b")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_u3yq0")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_wg7hs")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_qv7fr")
+text = "BACK"
+alignment = 2
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/back" to="." method="_on_back_pressed"]

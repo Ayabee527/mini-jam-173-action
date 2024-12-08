@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://d24cmkro7w3qy"]
+
+[ext_resource type="Texture2D" uid="uid://bjl5sahk3obmm" path="res://assets/textures/small-empty-circle-yellow.png" id="1_enagu"]
+[ext_resource type="Script" path="res://options/volume_slider.gd" id="2_vop36"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yugl7"]
+content_margin_left = 8.0
+content_margin_top = 2.0
+content_margin_right = 8.0
+content_margin_bottom = 2.0
+bg_color = Color(0.56462, 0.494403, 0.102793, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8wmgy"]
+content_margin_left = 8.0
+content_margin_top = 2.0
+content_margin_right = 8.0
+content_margin_bottom = 2.0
+bg_color = Color(0.890366, 0.785107, 0.207156, 1)
+
+[node name="VolumeSlider" type="HSlider"]
+theme_override_icons/grabber = ExtResource("1_enagu")
+theme_override_styles/slider = SubResource("StyleBoxFlat_yugl7")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_8wmgy")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_8wmgy")
+max_value = 1.0
+step = 0.001
+script = ExtResource("2_vop36")
+
+[connection signal="drag_ended" from="." to="." method="_on_drag_ended"]
+[connection signal="value_changed" from="." to="." method="_on_value_changed"]

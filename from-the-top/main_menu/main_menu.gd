@@ -1,12 +1,14 @@
 extends Control
 
-const LEADERBOARD_API = "97LLX6KMs11oHRJNs7waM1Z7kY9mtEDD1EXe6d2j"
-const LEADERBOARD_ID = "stardustcrusader"
-
+@export var play_button: Button
 @export var cut: ColorRect
 @export var slam_sound: AudioStreamPlayer
 @export var music: AudioStreamPlayer
 @export var play_sound: AudioStreamPlayer
+
+@export var options_menu: OptionsMenu
+@export var online_menu: OnlineMenu
+@export var stats_menu: StatsMenu
 
 var quitting: bool = false
 
@@ -37,6 +39,7 @@ func _on_leaderboard_pressed() -> void:
 		return
 	
 	slam_sound.play()
+	online_menu.show()
 
 
 func _on_quit_pressed() -> void:
@@ -81,3 +84,42 @@ func _on_credits_pressed() -> void:
 
 func _on_credits_focus_entered() -> void:
 	slam_sound.play()
+
+
+func _on_options_pressed() -> void:
+	if quitting:
+		return
+	
+	slam_sound.play()
+	options_menu.show()
+
+
+func _on_options_focus_entered() -> void:
+	slam_sound.play()
+
+
+func _on_options_menu_confirmed() -> void:
+	options_menu.hide()
+	play_button.grab_focus()
+
+
+func _on_scores_pressed() -> void:
+	if quitting:
+		return
+	
+	slam_sound.play()
+	stats_menu.show()
+
+
+func _on_scores_focus_entered() -> void:
+	slam_sound.play()
+
+
+func _on_online_menu_back() -> void:
+	online_menu.hide()
+	play_button.grab_focus()
+
+
+func _on_stats_menu_back() -> void:
+	stats_menu.hide()
+	play_button.grab_focus()

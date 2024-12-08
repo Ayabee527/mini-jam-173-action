@@ -212,12 +212,12 @@ randomness = 1.0
 stream = SubResource("AudioStreamRandomizer_n7rge")
 volume_db = 10.0
 max_polyphony = 5
-bus = &"sound"
+bus = &"sfx"
 
 [node name="Die" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_2ewyn")
 volume_db = 10.0
-bus = &"sound"
+bus = &"sfx"
 
 [connection signal="has_died" from="Health" to="." method="_on_health_has_died"]
 [connection signal="has_died" from="Health" to="StateMachine/Die" method="_on_health_has_died"]
