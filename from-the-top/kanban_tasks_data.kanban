@@ -12,6 +12,7 @@
 			"title": "Todo",
 			"tasks": [
 				"88817fa9-46dc-481a-a1db-fc843972898b",
+				"d8327e68-00d4-42ca-aee6-f2dd05f964ca",
 				"d8d5e026-93d3-4914-9021-19850f37b57a"
 			]
 		},
@@ -119,6 +120,13 @@
 		{
 			"uuid": "de7fcfeb-90e4-4cc2-8510-baa8710d175d",
 			"title": "score handling",
+			"description": "",
+			"category": "993c00fd-4d42-43cc-9bda-15ee26b2ec0d",
+			"steps": []
+		},
+		{
+			"uuid": "d8327e68-00d4-42ca-aee6-f2dd05f964ca",
+			"title": "pause menu",
 			"description": "",
 			"category": "993c00fd-4d42-43cc-9bda-15ee26b2ec0d",
 			"steps": []

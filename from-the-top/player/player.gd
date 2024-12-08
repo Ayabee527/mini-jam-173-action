@@ -16,7 +16,7 @@ extends RigidBody2D
 @export var hurt_sound: AudioStreamPlayer
 @export var die_sound: AudioStreamPlayer
 
-var grapple_point: Vector2
+var color: Color = Color.WHITE
 
 var dashing: bool = false
 var intro: bool = true
@@ -54,7 +54,7 @@ func draw_shape() -> void:
 		outline, Util.BG_COLOR
 	)
 	draw_polyline(
-		shape, Color.WHITE, 1.0
+		shape, color, 1.0
 	)
 
 func draw_engine() -> void:
@@ -62,7 +62,7 @@ func draw_engine() -> void:
 		Vector2.LEFT * 6.0, 3.0, Util.BG_COLOR, true
 	)
 	draw_circle(
-		Vector2.LEFT * 6.0, 1.0, Color.WHITE, true
+		Vector2.LEFT * 6.0, 1.0, color, true
 	)
 
 func get_move_vector() -> Vector2:
@@ -72,6 +72,12 @@ func _on_hurtbox_hurt(hitbox: Hitbox, damage: int, invinc_time: float) -> void:
 	MainCam.shake(10.0, 10.0, 5.0)
 	MainCam.hitstop(0.05, 0.5)
 	hurt_sound.play()
+	
+	color = Color("e30035")
+	trail.modulate = color
+	await get_tree().create_timer(invinc_time, false).timeout
+	color = Color.WHITE
+	trail.modulate = Util.BORDER_COLOR
 	
 	health.hurt(damage)
 	trail.amount_ratio = health.get_health_percent() / 100.0

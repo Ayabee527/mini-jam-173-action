@@ -17,13 +17,15 @@ radius = 8.0
 radius = 8.0
 
 [node name="Meteor" type="RigidBody2D" node_paths=PackedStringArray("coll_shape", "hit_coll", "hurt_coll")]
-collision_layer = 10
+collision_layer = 2
 collision_mask = 6
 mass = 5.0
 physics_material_override = SubResource("PhysicsMaterial_3fxb6")
 gravity_scale = 0.0
 contact_monitor = true
 max_contacts_reported = 4
+linear_damp_mode = 1
+angular_damp_mode = 1
 script = ExtResource("1_quj7e")
 coll_shape = NodePath("CollisionShape2D")
 hit_coll = NodePath("Hitbox/CollisionShape2D")

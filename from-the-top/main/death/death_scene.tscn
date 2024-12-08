@@ -1,10 +1,9 @@
-[gd_scene load_steps=28 format=3 uid="uid://c4e81cs8v1jlu"]
+[gd_scene load_steps=26 format=3 uid="uid://c4e81cs8v1jlu"]
 
 [ext_resource type="Script" path="res://main/bg.gd" id="1_d4fli"]
 [ext_resource type="Script" path="res://main/death/death_scene.gd" id="1_glthq"]
 [ext_resource type="Texture2D" uid="uid://cskb633sejnhj" path="res://assets/textures/light_bullet_turned.png" id="2_hixtd"]
 [ext_resource type="Script" path="res://main/death/drawer.gd" id="4_lpto6"]
-[ext_resource type="Shader" path="res://main/crt.gdshader" id="4_owlsb"]
 [ext_resource type="Texture2D" uid="uid://cqgaoh3so0ind" path="res://assets/textures/fat_bullet_in.png" id="5_q3w1g"]
 [ext_resource type="Script" path="res://main/death/ship.gd" id="5_t3ffo"]
 [ext_resource type="FontFile" uid="uid://dvw05mko8jwnq" path="res://assets/fonts/Not Jam Play 19.ttf" id="7_5irr3"]
@@ -14,59 +13,6 @@
 [ext_resource type="AudioStream" uid="uid://b8rpfdhdl7pn0" path="res://assets/sounds/action.wav" id="11_qx5km"]
 [ext_resource type="AudioStream" uid="uid://cidjqxahrphjh" path="res://assets/sounds/slam.wav" id="12_5xqre"]
 [ext_resource type="AudioStream" uid="uid://dqbxgtrauvgee" path="res://assets/sounds/imminent.wav" id="12_dqbq5"]
-
-[sub_resource type="Animation" id="Animation_so2hl"]
-resource_name = "crash"
-length = 2.0
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Back/BG/MarginContainer/Border/Mask/Control/Ship:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0472]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Back/BG/MarginContainer/Border/Mask/Control/Ship:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(-128, -128), Vector2(384, 384)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Fall:playing")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Back/BG/MarginContainer/Border/Mask/Control/Ship/Smoke:emitting")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
 
 [sub_resource type="Animation" id="Animation_k1b0x"]
 length = 0.001
@@ -92,7 +38,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Vector2(0, -128)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -227,6 +173,126 @@ tracks/12/keys = {
 "values": [true]
 }
 
+[sub_resource type="Animation" id="Animation_so2hl"]
+resource_name = "crash"
+length = 2.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Back/BG/MarginContainer/Border/Mask/Control/Ship:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0472]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Back/BG/MarginContainer/Border/Mask/Control/Ship:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-128, -128), Vector2(384, 384)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Fall:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Back/BG/MarginContainer/Border/Mask/Control/Ship/Smoke:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_mo5st"]
+resource_name = "cut"
+length = 3.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Front/Black:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Action:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"switch"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Slam:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Top:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.6),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="Animation" id="Animation_sp1ac"]
 resource_name = "flash"
 length = 5.0
@@ -322,73 +388,6 @@ tracks/2/keys = {
 "values": [true]
 }
 
-[sub_resource type="Animation" id="Animation_mo5st"]
-resource_name = "cut"
-length = 3.0
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Front/Black:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Action:playing")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(2),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/2/type = "method"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(3),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"switch"
-}]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Slam:playing")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Top:playing")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0.6),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hog6b"]
 _data = {
 "RESET": SubResource("Animation_k1b0x"),
@@ -449,30 +448,6 @@ scale_curve = SubResource("CurveTexture_sccgb")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ukunu"]
 bg_color = Color(0, 0, 0, 0.501961)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2hkgg"]
-shader = ExtResource("4_owlsb")
-shader_parameter/overlay = true
-shader_parameter/scanlines_opacity = 0.2
-shader_parameter/scanlines_width = 0.15
-shader_parameter/grille_opacity = 0.3
-shader_parameter/resolution = Vector2(64, 64)
-shader_parameter/pixelate = false
-shader_parameter/roll = true
-shader_parameter/roll_speed = 1.0
-shader_parameter/roll_size = 15.0
-shader_parameter/roll_variation = 1.8
-shader_parameter/distort_intensity = 0.02
-shader_parameter/noise_opacity = 0.1
-shader_parameter/noise_speed = 5.0
-shader_parameter/static_noise_intensity = 0.03
-shader_parameter/aberration = 0.015
-shader_parameter/brightness = 2.0
-shader_parameter/discolor = true
-shader_parameter/warp_amount = 1.0
-shader_parameter/clip_warp = false
-shader_parameter/vignette_intensity = 0.4
-shader_parameter/vignette_opacity = 0.5
 
 [node name="DeathScene" type="Node2D" node_paths=PackedStringArray("ship", "anim_player")]
 script = ExtResource("1_glthq")
@@ -548,8 +523,8 @@ grow_vertical = 2
 color = Color(1, 1, 1, 0)
 
 [node name="Ship" type="Node2D" parent="Back/BG/MarginContainer/Border/Mask/Control"]
+position = Vector2(0, -128)
 rotation = 1.0472
-scale = Vector2(1, 1)
 script = ExtResource("5_t3ffo")
 
 [node name="Smoke" type="GPUParticles2D" parent="Back/BG/MarginContainer/Border/Mask/Control/Ship"]
@@ -603,12 +578,6 @@ custom_minimum_size = Vector2(256, 256)
 offset_right = 256.0
 offset_bottom = 256.0
 color = Color(0.0511875, 0.0281353, 0.160591, 1)
-
-[node name="CRT" type="ColorRect" parent="Front"]
-material = SubResource("ShaderMaterial_2hkgg")
-custom_minimum_size = Vector2(256, 256)
-offset_right = 256.0
-offset_bottom = 256.0
 
 [node name="Action" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_qx5km")

@@ -21,6 +21,7 @@ func _process(delta: float) -> void:
 	grow = fposmod(grow, time_to_crash)
 
 func _draw() -> void:
+	draw_set_transform(MainCam.offset)
 	var y_pos = 1024 - (grow * 2048.0 / time_to_crash)
 	var atm_color = Util.BORDER_COLOR
 	atm_color.a = 0.1

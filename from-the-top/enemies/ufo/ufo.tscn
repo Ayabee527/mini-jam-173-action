@@ -54,7 +54,7 @@ stream_0/stream = ExtResource("9_vmgyx")
 
 [node name="UFO" type="RigidBody2D" node_paths=PackedStringArray("coll_shape", "hurt_coll", "hit_coll", "trail", "health", "hurt_sound", "die_sound") groups=["enemies"]]
 collision_layer = 8
-collision_mask = 4
+collision_mask = 12
 physics_material_override = SubResource("PhysicsMaterial_m30yn")
 gravity_scale = 0.0
 lock_rotation = true
@@ -113,6 +113,7 @@ visibility_rect = Rect2(-256, -256, 512, 512)
 rect = Rect2(-16, -16, 32, 32)
 
 [node name="Steering" type="Marker2D" parent="."]
+rotation = -1.5708
 
 [node name="Hurt" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_lqr55")

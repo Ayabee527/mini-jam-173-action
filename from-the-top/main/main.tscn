@@ -1,6 +1,5 @@
-[gd_scene load_steps=19 format=3 uid="uid://636cy22ryael"]
+[gd_scene load_steps=17 format=3 uid="uid://636cy22ryael"]
 
-[ext_resource type="Shader" path="res://main/crt.gdshader" id="1_0ct5x"]
 [ext_resource type="Script" path="res://main/main.gd" id="1_7u45d"]
 [ext_resource type="Script" path="res://main/bg.gd" id="2_hh7fp"]
 [ext_resource type="Script" path="res://main/game.gd" id="3_135qt"]
@@ -44,30 +43,6 @@ normal = Vector2(0, 1)
 normal = Vector2(-1, 0)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ik24e"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_23rif"]
-shader = ExtResource("1_0ct5x")
-shader_parameter/overlay = true
-shader_parameter/scanlines_opacity = 0.2
-shader_parameter/scanlines_width = 0.15
-shader_parameter/grille_opacity = 0.3
-shader_parameter/resolution = Vector2(64, 64)
-shader_parameter/pixelate = false
-shader_parameter/roll = true
-shader_parameter/roll_speed = 1.0
-shader_parameter/roll_size = 15.0
-shader_parameter/roll_variation = 1.8
-shader_parameter/distort_intensity = 0.02
-shader_parameter/noise_opacity = 0.1
-shader_parameter/noise_speed = 5.0
-shader_parameter/static_noise_intensity = 0.03
-shader_parameter/aberration = 0.015
-shader_parameter/brightness = 2.0
-shader_parameter/discolor = true
-shader_parameter/warp_amount = 1.0
-shader_parameter/clip_warp = false
-shader_parameter/vignette_intensity = 0.4
-shader_parameter/vignette_opacity = 0.5
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_7u45d")
@@ -217,14 +192,6 @@ time_before_start = 1.0
 
 [node name="Player" parent="Mask/Game" instance=ExtResource("4_dgrix")]
 position = Vector2(128, 0)
-
-[node name="Front" type="CanvasLayer" parent="."]
-
-[node name="CRT" type="ColorRect" parent="Front"]
-material = SubResource("ShaderMaterial_23rif")
-custom_minimum_size = Vector2(256, 256)
-offset_right = 256.0
-offset_bottom = 256.0
 
 [node name="Musik" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_5hwod")

@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://nlf4lohsjgld"]
+[gd_scene load_steps=10 format=3 uid="uid://nlf4lohsjgld"]
 
 [ext_resource type="Shader" path="res://autoloads/scene_switch.gdshader" id="1_la747"]
 [ext_resource type="Script" path="res://autoloads/SceneSwitcher.gd" id="2_sejnh"]
+[ext_resource type="Shader" path="res://main/crt.gdshader" id="3_aoibc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hlaq1"]
 shader = ExtResource("1_la747")
@@ -62,6 +63,30 @@ _data = {
 "switch_out": SubResource("Animation_dsoq5")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kr2sd"]
+shader = ExtResource("3_aoibc")
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.2
+shader_parameter/scanlines_width = 0.15
+shader_parameter/grille_opacity = 0.3
+shader_parameter/resolution = Vector2(64, 64)
+shader_parameter/pixelate = false
+shader_parameter/roll = true
+shader_parameter/roll_speed = 1.0
+shader_parameter/roll_size = 15.0
+shader_parameter/roll_variation = 1.8
+shader_parameter/distort_intensity = 0.02
+shader_parameter/noise_opacity = 0.1
+shader_parameter/noise_speed = 5.0
+shader_parameter/static_noise_intensity = 0.03
+shader_parameter/aberration = 0.015
+shader_parameter/brightness = 2.0
+shader_parameter/discolor = true
+shader_parameter/warp_amount = 1.0
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/vignette_opacity = 0.5
+
 [node name="SceneSwitcher" type="CanvasLayer" node_paths=PackedStringArray("color_rect", "animation_player")]
 layer = 100
 script = ExtResource("2_sejnh")
@@ -75,11 +100,17 @@ offset_right = 40.0
 offset_bottom = 40.0
 pivot_offset = Vector2(128, 128)
 mouse_filter = 2
-color = Color(0, 0, 0, 1)
+color = Color(0.0511875, 0.0281353, 0.160591, 1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_48hl2")
 }
+
+[node name="CRT" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_kr2sd")
+custom_minimum_size = Vector2(256, 256)
+offset_right = 256.0
+offset_bottom = 256.0
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

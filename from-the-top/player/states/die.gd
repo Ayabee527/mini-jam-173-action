@@ -14,7 +14,10 @@ func enter(_msg:={}) -> void:
 		self, "speed", -100.0, 5.0
 	).from(25.0)
 
-func physics_update(_delta: float) -> void:
+func physics_update(delta: float) -> void:
+	var new_transform = player.global_transform.looking_at(player.global_position + Vector2.DOWN)
+	player.global_transform = player.global_transform.interpolate_with(new_transform, 5.0 * delta)
+	
 	player.apply_central_force(
 		Vector2.DOWN * speed
 	)

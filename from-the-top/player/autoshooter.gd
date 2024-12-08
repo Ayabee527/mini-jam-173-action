@@ -72,7 +72,8 @@ func reprioritize() -> void:
 	target = closest_target
 
 func _on_priority_check_timeout() -> void:
-	reprioritize()
+	if not disabled:
+		reprioritize()
 
 
 func _on_health_has_died() -> void:
