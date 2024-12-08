@@ -9,6 +9,8 @@ extends Control
 @export var options_menu: OptionsMenu
 @export var online_menu: OnlineMenu
 @export var stats_menu: StatsMenu
+@export var credits_menu: PanelContainer
+@export var credit_back_butt: Button
 @export var quit_butt: Button
 
 var quitting: bool = false
@@ -86,6 +88,10 @@ func _on_quit_focus_entered() -> void:
 func _on_credits_pressed() -> void:
 	if quitting:
 		return
+	
+	slam_sound.play()
+	credits_menu.show()
+	credit_back_butt.grab_focus()
 
 
 func _on_credits_focus_entered() -> void:
@@ -128,4 +134,21 @@ func _on_online_menu_back() -> void:
 
 func _on_stats_menu_back() -> void:
 	stats_menu.hide()
+	play_button.grab_focus()
+
+
+func _on_goals_pressed() -> void:
+	if quitting:
+		return
+	
+	slam_sound.play()
+
+
+func _on_goals_focus_entered() -> void:
+	slam_sound.play()
+
+
+func _on_back_pressed() -> void:
+	credits_menu.hide()
+	slam_sound.play()
 	play_button.grab_focus()

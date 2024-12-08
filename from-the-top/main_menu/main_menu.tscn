@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://csee6c1s8o8ir"]
+[gd_scene load_steps=33 format=3 uid="uid://csee6c1s8o8ir"]
 
 [ext_resource type="Script" path="res://main/bg.gd" id="1_2as3x"]
 [ext_resource type="Script" path="res://main_menu/main_menu.gd" id="1_q6hsi"]
@@ -14,6 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://c5214i2p5pvm4" path="res://assets/sounds/play.wav" id="10_7g5i1"]
 [ext_resource type="AudioStream" uid="uid://cidjqxahrphjh" path="res://assets/sounds/slam.wav" id="10_bp4f8"]
 [ext_resource type="PackedScene" uid="uid://ci6nldk5pf48q" path="res://main_menu/stats/stats_menu.tscn" id="11_ihpyp"]
+[ext_resource type="FontFile" uid="uid://bpr437vu657" path="res://assets/fonts/NotJamScrawl9.ttf" id="12_x2srk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pr4qr"]
 draw_center = false
@@ -61,6 +62,9 @@ scale_min = 0.25
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nhrfo"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i5061"]
+bg_color = Color(0, 0, 0, 0.752941)
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_dft6h"]
 random_pitch = 1.5
 streams_count = 1
@@ -71,7 +75,7 @@ random_pitch = 1.5
 streams_count = 1
 stream_0/stream = ExtResource("10_bp4f8")
 
-[node name="MainMenu" type="Control" node_paths=PackedStringArray("play_button", "cut", "slam_sound", "music", "play_sound", "options_menu", "online_menu", "stats_menu")]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("play_button", "cut", "slam_sound", "music", "play_sound", "options_menu", "online_menu", "stats_menu", "credits_menu", "credit_back_butt", "quit_butt")]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_q6hsi")
@@ -83,6 +87,9 @@ play_sound = NodePath("Play")
 options_menu = NodePath("Front/OptionsMenu")
 online_menu = NodePath("Front/OnlineMenu")
 stats_menu = NodePath("Front/StatsMenu")
+credits_menu = NodePath("Front/Credits")
+credit_back_butt = NodePath("Front/Credits/MarginContainer/back")
+quit_butt = NodePath("Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer/HBoxContainer2/quit")
 
 [node name="Back" type="CanvasLayer" parent="."]
 layer = -1
@@ -262,7 +269,34 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_ftwqd")
 text = "LEADERBOARDS!"
 alignment = 2
 
-[node name="options" type="Button" parent="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="goals" type="Button" parent="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer/HBoxContainer3"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_disabled_color = Color(0.498595, 0.435975, 0.0873524, 1)
+theme_override_colors/font_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_fonts/font = ExtResource("8_efhtr")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxEmpty_nhrfo")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_plg1b")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_aebxj")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_i4gig")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_hja0o")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_71swm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_153v6")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_ebmwg")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_pj3x5")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mwuyc")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ftwqd")
+disabled = true
+text = "GOALS!"
+alignment = 2
+
+[node name="options" type="Button" parent="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_colors/font_color = Color(0.890366, 0.785107, 0.207156, 1)
@@ -349,6 +383,72 @@ offset_bottom = 256.0
 [node name="StatsMenu" parent="Front" instance=ExtResource("11_ihpyp")]
 visible = false
 
+[node name="Credits" type="PanelContainer" parent="Front"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_i5061")
+
+[node name="CenterContainer" type="CenterContainer" parent="Front/Credits"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Front/Credits/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="game" type="RichTextLabel" parent="Front/Credits/CenterContainer/VBoxContainer"]
+clip_contents = false
+layout_mode = 2
+theme_override_colors/default_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_fonts/normal_font = ExtResource("12_x2srk")
+theme_override_font_sizes/normal_font_size = 9
+bbcode_enabled = true
+text = "[wave]GAME BY [shake][color=purple]PIXEMISTI"
+fit_content = true
+autowrap_mode = 0
+
+[node name="music" type="RichTextLabel" parent="Front/Credits/CenterContainer/VBoxContainer"]
+clip_contents = false
+layout_mode = 2
+theme_override_colors/default_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_fonts/normal_font = ExtResource("12_x2srk")
+theme_override_font_sizes/normal_font_size = 9
+bbcode_enabled = true
+text = "[wave]MUSIC BY [shake][color=lightgray]AJSILVER"
+fit_content = true
+autowrap_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="Front/Credits"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="back" type="Button" parent="Front/Credits/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_fonts/font = ExtResource("8_efhtr")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxEmpty_nhrfo")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_plg1b")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_aebxj")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_i4gig")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_hja0o")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_71swm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_153v6")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_ebmwg")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_pj3x5")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mwuyc")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ftwqd")
+text = "QUIT!"
+alignment = 2
+
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_hfgg8")
 pitch_scale = 0.01
@@ -370,8 +470,10 @@ bus = &"sfx"
 [connection signal="pressed" from="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer/HBoxContainer/scores" to="." method="_on_scores_pressed"]
 [connection signal="focus_entered" from="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer/leaderboard" to="." method="_on_leaderboard_focus_entered"]
 [connection signal="pressed" from="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer/leaderboard" to="." method="_on_leaderboard_pressed"]
-[connection signal="focus_entered" from="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer/options" to="." method="_on_options_focus_entered"]
-[connection signal="pressed" from="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer/options" to="." method="_on_options_pressed"]
+[connection signal="focus_entered" from="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer/HBoxContainer3/goals" to="." method="_on_goals_focus_entered"]
+[connection signal="pressed" from="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer/HBoxContainer3/goals" to="." method="_on_goals_pressed"]
+[connection signal="focus_entered" from="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer/HBoxContainer3/options" to="." method="_on_options_focus_entered"]
+[connection signal="pressed" from="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer/HBoxContainer3/options" to="." method="_on_options_pressed"]
 [connection signal="focus_entered" from="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer/HBoxContainer2/credits" to="." method="_on_credits_focus_entered"]
 [connection signal="pressed" from="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer/HBoxContainer2/credits" to="." method="_on_credits_pressed"]
 [connection signal="focus_entered" from="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer/HBoxContainer2/quit" to="." method="_on_quit_focus_entered"]
@@ -379,3 +481,4 @@ bus = &"sfx"
 [connection signal="confirmed" from="Front/OptionsMenu" to="." method="_on_options_menu_confirmed"]
 [connection signal="back" from="Front/OnlineMenu" to="." method="_on_online_menu_back"]
 [connection signal="back" from="Front/StatsMenu" to="." method="_on_stats_menu_back"]
+[connection signal="pressed" from="Front/Credits/MarginContainer/back" to="." method="_on_back_pressed"]
