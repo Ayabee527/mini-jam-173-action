@@ -81,6 +81,7 @@ func _on_hurtbox_knocked_back(knockback: Vector2) -> void:
 func _on_hurtbox_hurt(hitbox: Hitbox, damage: int, invinc_time: float) -> void:
 	health.hurt(damage)
 	hurt_sound.play()
+	hurt.emit()
 	
 	color = Color.YELLOW
 	trail.modulate = color

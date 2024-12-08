@@ -361,6 +361,19 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_ftwqd")
 text = "QUIT!"
 alignment = 2
 
+[node name="version" type="RichTextLabel" parent="Back/BG/MarginContainer/Border/Mask/Control/Butts"]
+clip_contents = false
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_colors/default_color = Color(0.542471, 0.474809, 0.0976908, 1)
+theme_override_fonts/normal_font = ExtResource("12_x2srk")
+theme_override_font_sizes/normal_font_size = 9
+bbcode_enabled = true
+text = "[shake][wave]VERSION 1.0.0"
+fit_content = true
+autowrap_mode = 0
+
 [node name="Cut" type="ColorRect" parent="Back"]
 visible = false
 anchors_preset = 15

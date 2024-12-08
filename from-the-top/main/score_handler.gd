@@ -7,6 +7,12 @@ var score: int = 0:
 	set = set_score
 var last_score: int = 0
 
+var grazing: bool = false
+
+func _process(delta: float) -> void:
+	if grazing:
+		score += 1 * wave
+
 func _on_player_died() -> void:
 	Global.save_endless_score(score)
 
@@ -24,8 +30,29 @@ func increment_score(new_score: int):
 	score_label.text += str(new_score)
 
 func _on_wave_handler_enemy_killed(enemy: Node2D) -> void:
-	score += 100 * wave
+	score += 50 * wave
 
 
 func _on_wave_handler_wave_cleared(size: int) -> void:
 	wave += 1
+	score += 222 * wave
+
+
+func _on_wave_handler_enemy_hurt() -> void:
+	score += 10
+
+
+func _on_player_graze_start() -> void:
+	grazing = true
+
+
+func _on_player_graze_stop() -> void:
+	grazing = false
+
+
+func _on_player_shot() -> void:
+	score += 2
+
+
+func _on_player_hurt() -> void:
+	score *= 0.9

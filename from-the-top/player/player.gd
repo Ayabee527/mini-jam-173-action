@@ -1,8 +1,12 @@
 class_name Player
 extends RigidBody2D
 
+signal graze_start()
+signal graze_stop()
+
 signal died()
 signal shot()
+signal hurt()
 
 @export var move_speed: float = 500.0
 @export var max_speed: float = 150.0
@@ -23,6 +27,8 @@ var color: Color = Color.WHITE
 
 var dashing: bool = false
 var intro: bool = true
+
+var grazers: Array[Node2D]
 
 func _ready() -> void:
 	await get_tree().create_timer(0.75, false).timeout
@@ -75,6 +81,7 @@ func _on_hurtbox_hurt(hitbox: Hitbox, damage: int, invinc_time: float) -> void:
 	MainCam.shake(10.0, 10.0, 5.0)
 	MainCam.hitstop(0.05, 0.5)
 	hurt_sound.play()
+	hurt.emit()
 	
 	color = Color("e30035")
 	trail.modulate = color
@@ -93,3 +100,17 @@ func _on_hurtbox_knocked_back(knockback: Vector2) -> void:
 
 func _on_health_has_died() -> void:
 	died.emit()
+
+
+func _on_graze_body_entered(body: Node2D) -> void:
+	if body.is_in_group("enemies") or body.is_in_group("meteors"):
+		grazers.append(body)
+		if grazers.size() == 1:
+			graze_start.emit()
+
+
+func _on_graze_body_exited(body: Node2D) -> void:
+	if body.is_in_group("enemies") or body.is_in_group("meteors"):
+		grazers.erase(body)
+		if grazers.size() == 0:
+			graze_stop.emit()

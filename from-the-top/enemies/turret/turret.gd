@@ -1,0 +1,2 @@
+class_name EnemyTurret
+extends RigidBody2D

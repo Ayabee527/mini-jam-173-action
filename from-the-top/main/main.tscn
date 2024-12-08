@@ -325,12 +325,17 @@ stream = ExtResource("11_5hwod")
 autoplay = true
 bus = &"music"
 
+[connection signal="enemy_hurt" from="Mask/Game/WaveHandler" to="Mask/Game/ScoreHandler" method="_on_wave_handler_enemy_hurt"]
 [connection signal="enemy_killed" from="Mask/Game/WaveHandler" to="Mask/Game/ScoreHandler" method="_on_wave_handler_enemy_killed"]
 [connection signal="wave_cleared" from="Mask/Game/WaveHandler" to="Mask/Game/ScoreHandler" method="_on_wave_handler_wave_cleared"]
 [connection signal="wave_cleared" from="Mask/Game/WaveHandler" to="Mask/Game/MeteorSpawner" method="_on_wave_handler_wave_cleared"]
 [connection signal="died" from="Mask/Game/Player" to="." method="_on_player_died"]
 [connection signal="died" from="Mask/Game/Player" to="Mask/Game/ScoreHandler" method="_on_player_died"]
 [connection signal="died" from="Mask/Game/Player" to="UI/PauseMenu" method="_on_player_died"]
+[connection signal="graze_start" from="Mask/Game/Player" to="Mask/Game/ScoreHandler" method="_on_player_graze_start"]
+[connection signal="graze_stop" from="Mask/Game/Player" to="Mask/Game/ScoreHandler" method="_on_player_graze_stop"]
+[connection signal="hurt" from="Mask/Game/Player" to="Mask/Game/ScoreHandler" method="_on_player_hurt"]
+[connection signal="shot" from="Mask/Game/Player" to="Mask/Game/ScoreHandler" method="_on_player_shot"]
 [connection signal="focus_entered" from="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer/resume" to="UI/PauseMenu" method="_on_resume_focus_entered"]
 [connection signal="pressed" from="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer/resume" to="UI/PauseMenu" method="_on_resume_pressed"]
 [connection signal="focus_entered" from="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer/menu" to="UI/PauseMenu" method="_on_menu_focus_entered"]

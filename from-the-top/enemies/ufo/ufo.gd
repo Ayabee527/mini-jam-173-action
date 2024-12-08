@@ -66,6 +66,7 @@ func draw_engine() -> void:
 func _on_hurtbox_hurt(hitbox: Hitbox, damage: int, invinc_time: float) -> void:
 	health.hurt(damage)
 	hurt_sound.play()
+	hurt.emit()
 	
 	color = Color.YELLOW
 	trail.modulate = color

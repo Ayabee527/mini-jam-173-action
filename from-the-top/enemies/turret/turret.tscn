@@ -1,7 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://8jfdp6wmi8el"]
+[gd_scene load_steps=5 format=3 uid="uid://8jfdp6wmi8el"]
+
+[ext_resource type="Script" path="res://enemies/turret/turret.gd" id="1_yapru"]
+[ext_resource type="Script" path="res://components/health/health.gd" id="2_og0gh"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_sbwhp"]
 bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qbx64"]
+radius = 16.0
 
 [node name="Turret" type="RigidBody2D"]
 mass = 5.0
@@ -9,3 +15,11 @@ physics_material_override = SubResource("PhysicsMaterial_sbwhp")
 gravity_scale = 0.0
 linear_damp = 2.5
 angular_damp = 2.5
+script = ExtResource("1_yapru")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2_og0gh")
+max_health = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_qbx64")

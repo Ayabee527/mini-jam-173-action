@@ -19,14 +19,14 @@
 			"title": "Doing",
 			"tasks": [
 				"2fd5d617-f82e-4b03-8cc9-8e158fa7d986",
-				"993769fc-ade0-4687-af6b-7a2e371ae960",
-				"de7fcfeb-90e4-4cc2-8510-baa8710d175d"
+				"993769fc-ade0-4687-af6b-7a2e371ae960"
 			]
 		},
 		{
 			"uuid": "a22bb0be-f755-4bc4-80a0-a8b7001bc925",
 			"title": "Done",
 			"tasks": [
+				"de7fcfeb-90e4-4cc2-8510-baa8710d175d",
 				"24e685c0-850b-4ba2-abcd-41a5614afa6c",
 				"9e0c4c07-fb9a-4f0d-8f9f-7929e73b1044",
 				"267e251d-8f51-47ff-baac-41ad160a92bb",
@@ -175,7 +175,7 @@
 		},
 		{
 			"uuid": "1de76803-d650-453d-81c9-1141e9cc4dea",
-			"title": "export",
+			"title": "export 1.0.0",
 			"description": "",
 			"category": "993c00fd-4d42-43cc-9bda-15ee26b2ec0d",
 			"steps": []

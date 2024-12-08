@@ -1,6 +1,7 @@
 extends Node2D
 
 signal enemy_killed(enemy: Node2D)
+signal enemy_hurt()
 signal wave_cleared(size: int)
 
 const UFO = preload("res://enemies/ufo/ufo.tscn")
@@ -72,12 +73,17 @@ func spawn_wave() -> void:
 			Vector2.ONE * 128.0
 			+ Vector2.from_angle(TAU * randf()) * 256.0
 		)
+		if enemy.has_signal("hurt"):
+			enemy.hurt.connect(hurt_enemy)
 		if enemy.has_signal("died"):
 			enemy.died.connect(kill_enemy.bind(enemy))
 		else:
 			enemy.tree_exiting.connect(kill_enemy.bind(enemy))
 		add_child(enemy)
 		await get_tree().create_timer(0.1, false).timeout
+
+func hurt_enemy() -> void:
+	enemy_hurt.emit()
 
 func kill_enemy(enemy: Node2D) -> void:
 	spawned_enemies.erase(enemy)
