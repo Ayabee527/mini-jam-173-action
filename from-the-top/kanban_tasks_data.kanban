@@ -27,6 +27,7 @@
 			"uuid": "a22bb0be-f755-4bc4-80a0-a8b7001bc925",
 			"title": "Done",
 			"tasks": [
+				"24e685c0-850b-4ba2-abcd-41a5614afa6c",
 				"9e0c4c07-fb9a-4f0d-8f9f-7929e73b1044",
 				"267e251d-8f51-47ff-baac-41ad160a92bb",
 				"186aa6ce-357f-4b89-9b2f-a5a2ff7089eb",
@@ -175,6 +176,13 @@
 		{
 			"uuid": "1de76803-d650-453d-81c9-1141e9cc4dea",
 			"title": "export",
+			"description": "",
+			"category": "993c00fd-4d42-43cc-9bda-15ee26b2ec0d",
+			"steps": []
+		},
+		{
+			"uuid": "24e685c0-850b-4ba2-abcd-41a5614afa6c",
+			"title": "splash screen",
 			"description": "",
 			"category": "993c00fd-4d42-43cc-9bda-15ee26b2ec0d",
 			"steps": []

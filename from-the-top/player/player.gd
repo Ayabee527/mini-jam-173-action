@@ -2,6 +2,7 @@ class_name Player
 extends RigidBody2D
 
 signal died()
+signal shot()
 
 @export var move_speed: float = 500.0
 @export var max_speed: float = 150.0

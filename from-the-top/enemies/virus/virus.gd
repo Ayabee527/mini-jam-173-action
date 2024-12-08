@@ -2,6 +2,7 @@ class_name EnemyVirus
 extends RigidBody2D
 
 signal died()
+signal hurt()
 
 @export var sides: int = 3.0
 @export var radius: float = 4.0

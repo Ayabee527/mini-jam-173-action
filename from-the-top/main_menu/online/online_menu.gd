@@ -152,7 +152,7 @@ func validate_username(username: String) -> void:
 	if username.is_empty():
 		Global.username = ""
 		SaveHandler.save_key("username", Global.username)
-		update_status("[wave]SIGNED OUT", "gray")
+		update_status("[wave]SIGNED OUT", "dimgray")
 		username_input.editable = true
 		return
 	
@@ -164,7 +164,7 @@ func validate_username(username: String) -> void:
 	else:
 		username_input.editable = true
 	
-	update_status("[wave]processing", "gray")
+	update_status("[wave]PROCESSING", "dimgray")
 	print("\n")
 	var user_exists = await is_user_real(username)
 	print("User Exists?: ", user_exists)

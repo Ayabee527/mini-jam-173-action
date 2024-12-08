@@ -20,6 +20,7 @@ func _ready() -> void:
 	await get_tree().process_frame
 	SaveHandler.load_config()
 	
+	MainCam.min_shake_stength = 2.0
 	var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(
 		music, "pitch_scale", 1.0, 2.0

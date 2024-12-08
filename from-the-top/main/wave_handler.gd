@@ -16,7 +16,7 @@ const ENEMIES = {
 const COSTS = {
 	"UFO": 2,
 	"TETHER": 4,
-	"VIRUS": 1,
+	"VIRUS": 2,
 }
 
 @export var active: bool = true

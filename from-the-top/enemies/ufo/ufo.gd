@@ -2,6 +2,7 @@ class_name EnemyUFO
 extends RigidBody2D
 
 signal died()
+signal hurt()
 
 @export var max_speed: float = 150.0
 

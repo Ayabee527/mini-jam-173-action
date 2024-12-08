@@ -2,6 +2,7 @@ class_name EnemyTether
 extends RigidBody2D
 
 signal died()
+signal hurt()
 
 @export var sides: int = 4
 @export var radius: float = 4.0

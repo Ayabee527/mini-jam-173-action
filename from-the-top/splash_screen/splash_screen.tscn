@@ -1,0 +1,312 @@
+[gd_scene load_steps=18 format=3 uid="uid://cw201n544ldaf"]
+
+[ext_resource type="Script" path="res://splash_screen/splash_screen.gd" id="1_blo7d"]
+[ext_resource type="Texture2D" uid="uid://6ynqxi5yevus" path="res://assets/textures/original-large-color-edit.png" id="1_scnae"]
+[ext_resource type="Texture2D" uid="uid://dq46g7dv5cqm6" path="res://assets/textures/splash-sheet.png" id="1_wmc8d"]
+[ext_resource type="AudioStream" uid="uid://di0saa2trcato" path="res://assets/sounds/pixemisti.wav" id="4_nellf"]
+[ext_resource type="AudioStream" uid="uid://bpilkksle55hg" path="res://assets/sounds/pixemisti2.wav" id="5_dx1og"]
+[ext_resource type="AudioStream" uid="uid://cidjqxahrphjh" path="res://assets/sounds/slam.wav" id="6_3rt7i"]
+[ext_resource type="AudioStream" uid="uid://c5214i2p5pvm4" path="res://assets/sounds/play.wav" id="7_5peqx"]
+
+[sub_resource type="Animation" id="Animation_jcndn"]
+resource_name = "off"
+length = 0.5
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_03tm3"]
+resource_name = "on"
+length = 0.5
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_whxl5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_spbx4"]
+_data = {
+"RESET": SubResource("Animation_whxl5"),
+"off": SubResource("Animation_jcndn"),
+"on": SubResource("Animation_03tm3")
+}
+
+[sub_resource type="Animation" id="Animation_smglu"]
+resource_name = "load"
+length = 6.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("godot:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.5, 2.5, 4, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("pixemisti:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(2.9),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D/AnimationPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("off", "on"),
+"times": PackedFloat32Array(0, 2.9)
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ColorRect:color")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 4.4, 5.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0.0511875, 0.0281353, 0.160591, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("slam:playing")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(2.9),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("yay:playing")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(2.9),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_h13l3"]
+length = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("godot:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("pixemisti:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ColorRect:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("slam:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("yay:playing")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cpcjt"]
+_data = {
+"RESET": SubResource("Animation_h13l3"),
+"load": SubResource("Animation_smglu")
+}
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_rxfci"]
+random_pitch = 1.1
+streams_count = 2
+stream_0/stream = ExtResource("4_nellf")
+stream_1/stream = ExtResource("5_dx1og")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_dvotw"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("6_3rt7i")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_dr1k3"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("7_5peqx")
+
+[node name="SplashScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_blo7d")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0, 0, 0, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(128, 128)
+scale = Vector2(2, 2)
+texture = ExtResource("1_wmc8d")
+hframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_spbx4")
+}
+
+[node name="godot" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_scnae")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_cpcjt")
+}
+autoplay = "load"
+
+[node name="pixemisti" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_rxfci")
+volume_db = -20.0
+bus = &"sfx"
+
+[node name="slam" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_dvotw")
+volume_db = -10.0
+bus = &"sfx"
+
+[node name="yay" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_dr1k3")
+volume_db = -10.0
+bus = &"sfx"
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
