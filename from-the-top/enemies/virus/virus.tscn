@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cupfrlck1b6ue"]
+
+[ext_resource type="Script" path="res://enemies/virus/virus.gd" id="1_r0644"]
+[ext_resource type="Script" path="res://components/health/health.gd" id="2_13ggy"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fpteg"]
+
+[node name="Virus" type="RigidBody2D"]
+mass = 0.1
+physics_material_override = SubResource("PhysicsMaterial_fpteg")
+gravity_scale = 0.0
+linear_damp = 2.5
+script = ExtResource("1_r0644")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2_13ggy")
+max_health = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]

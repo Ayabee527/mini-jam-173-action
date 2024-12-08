@@ -21,7 +21,7 @@ radius = 4.0
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_sccgb"]
+[sub_resource type="CurveTexture" id="CurveTexture_q2qeh"]
 curve = SubResource("Curve_y00jj")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_60upm"]
@@ -40,7 +40,7 @@ radial_accel_min = 100.0
 radial_accel_max = 100.0
 scale_min = 0.5
 scale_max = 2.0
-scale_curve = SubResource("CurveTexture_sccgb")
+scale_curve = SubResource("CurveTexture_q2qeh")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6bc56"]
 radius = 12.0
