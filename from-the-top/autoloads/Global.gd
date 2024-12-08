@@ -29,7 +29,7 @@ func save_endless_score(new_score: int) -> void:
 			username, latest_endless_score, "endless_weekly"
 		)
 	
-	SaveHandler.save_key("latest_score", latest_endless_score)
+	SaveHandler.save_key("latest_endless_score", latest_endless_score)
 	SaveHandler.save_key("endless_highscores", endless_highscores)
 
 func order_endless_highscores() -> void:

@@ -250,4 +250,5 @@ layout_mode = 2
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/back" to="." method="_on_back_pressed"]
 [connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer/Username" to="." method="_on_username_focus_entered"]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer/Username" to="." method="_on_username_text_changed"]
 [connection signal="text_submitted" from="MarginContainer/VBoxContainer/HBoxContainer/Username" to="." method="_on_username_text_submitted"]

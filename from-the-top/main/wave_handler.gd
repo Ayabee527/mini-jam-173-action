@@ -5,6 +5,7 @@ signal wave_cleared(size: int)
 
 const UFO = preload("res://enemies/ufo/ufo.tscn")
 const TETHER = preload("res://enemies/tether/tether.tscn")
+const VIRUS = preload("res://enemies/virus/virus.tscn")
 
 const ENEMIES = {
 	"UFO": UFO,

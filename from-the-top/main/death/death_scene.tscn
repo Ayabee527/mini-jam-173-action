@@ -189,7 +189,7 @@ tracks/13/keys = {
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("Back/BG/MarginContainer/Border/Mask/Control/MarginContainer2/thetop:visible")
+tracks/14/path = NodePath("Back/BG/MarginContainer/Border/Mask/Control/MarginContainer2/VBoxContainer/thetop:visible")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
@@ -197,6 +197,18 @@ tracks/14/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("Back/BG/MarginContainer/Border/Mask/Control/MarginContainer2/VBoxContainer/score:modulate")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.890196, 0.784314, 0.207843, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_so2hl"]
@@ -421,6 +433,18 @@ tracks/6/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Back/BG/MarginContainer/Border/Mask/Control/MarginContainer2/VBoxContainer/score:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 1.2, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_s2p2m"]
 resource_name = "reveal"
@@ -440,7 +464,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Back/BG/MarginContainer/Border/Mask/Control/MarginContainer2/thetop:visible")
+tracks/1/path = NodePath("Back/BG/MarginContainer/Border/Mask/Control/MarginContainer2/VBoxContainer/thetop:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -508,10 +532,11 @@ scale_min = 0.5
 scale_max = 2.0
 scale_curve = SubResource("CurveTexture_tc08x")
 
-[node name="DeathScene" type="Node2D" node_paths=PackedStringArray("ship", "anim_player")]
+[node name="DeathScene" type="Node2D" node_paths=PackedStringArray("ship", "anim_player", "score_label")]
 script = ExtResource("1_glthq")
 ship = NodePath("Back/BG/MarginContainer/Border/Mask/Control/Ship")
 anim_player = NodePath("AnimationPlayer")
+score_label = NodePath("Back/BG/MarginContainer/Border/Mask/Control/MarginContainer2/VBoxContainer/score")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -636,7 +661,24 @@ theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
 
-[node name="thetop" type="RichTextLabel" parent="Back/BG/MarginContainer/Border/Mask/Control/MarginContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Back/BG/MarginContainer/Border/Mask/Control/MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_constants/separation = 8
+
+[node name="score" type="RichTextLabel" parent="Back/BG/MarginContainer/Border/Mask/Control/MarginContainer2/VBoxContainer"]
+modulate = Color(0.890196, 0.784314, 0.207843, 0)
+clip_contents = false
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("8_relp0")
+theme_override_font_sizes/normal_font_size = 9
+bbcode_enabled = true
+text = "[right][wave][shake][color=\"e3c835\"]SCORE: 42069"
+fit_content = true
+autowrap_mode = 0
+
+[node name="thetop" type="RichTextLabel" parent="Back/BG/MarginContainer/Border/Mask/Control/MarginContainer2/VBoxContainer"]
 visible = false
 clip_contents = false
 layout_mode = 2

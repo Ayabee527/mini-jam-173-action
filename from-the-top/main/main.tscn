@@ -8,8 +8,8 @@
 [ext_resource type="Script" path="res://main/planet.gd" id="4_dqm6x"]
 [ext_resource type="Texture2D" uid="uid://cskb633sejnhj" path="res://assets/textures/light_bullet_turned.png" id="5_r0j82"]
 [ext_resource type="Script" path="res://main/wave_handler.gd" id="6_s0fku"]
+[ext_resource type="Script" path="res://main/score_handler.gd" id="7_2csk5"]
 [ext_resource type="Script" path="res://main/meteor_spawner.gd" id="7_f7hff"]
-[ext_resource type="PackedScene" uid="uid://cupfrlck1b6ue" path="res://enemies/virus/virus.tscn" id="9_npo1b"]
 [ext_resource type="Script" path="res://main/pause_menu.gd" id="10_3ynmw"]
 [ext_resource type="FontFile" uid="uid://blnjetxm1amsv" path="res://assets/fonts/Not Jam Play 23.ttf" id="10_n34mk"]
 [ext_resource type="AudioStream" uid="uid://copj2gbi2c82i" path="res://assets/music/stardust_crusader.ogg" id="11_5hwod"]
@@ -171,7 +171,7 @@ theme_override_constants/shadow_offset_x = 1
 theme_override_fonts/normal_font = ExtResource("3_qb8u1")
 theme_override_font_sizes/normal_font_size = 16
 bbcode_enabled = true
-text = "[wave][shake]SCORE: 42069"
+text = "[shake][wave][center]SCORE: 0"
 fit_content = true
 autowrap_mode = 0
 
@@ -218,17 +218,17 @@ offset_bottom = 236.0
 position = Vector2(-20, -20)
 script = ExtResource("3_135qt")
 
+[node name="ScoreHandler" type="Node" parent="Mask/Game" node_paths=PackedStringArray("score_label")]
+script = ExtResource("7_2csk5")
+score_label = NodePath("../../../Back/BG/MarginContainer/Border/MarginContainer/Score")
+
 [node name="MeteorSpawner" type="Node2D" parent="Mask/Game" node_paths=PackedStringArray("player")]
 script = ExtResource("7_f7hff")
 player = NodePath("../Player")
 
 [node name="WaveHandler" type="Node2D" parent="Mask/Game"]
 script = ExtResource("6_s0fku")
-active = false
 time_before_start = 2.0
-
-[node name="Virus" parent="Mask/Game/WaveHandler" instance=ExtResource("9_npo1b")]
-position = Vector2(64, 64)
 
 [node name="Player" parent="Mask/Game" instance=ExtResource("4_dgrix")]
 position = Vector2(128, 0)
@@ -325,8 +325,11 @@ stream = ExtResource("11_5hwod")
 autoplay = true
 bus = &"music"
 
+[connection signal="enemy_killed" from="Mask/Game/WaveHandler" to="Mask/Game/ScoreHandler" method="_on_wave_handler_enemy_killed"]
+[connection signal="wave_cleared" from="Mask/Game/WaveHandler" to="Mask/Game/ScoreHandler" method="_on_wave_handler_wave_cleared"]
 [connection signal="wave_cleared" from="Mask/Game/WaveHandler" to="Mask/Game/MeteorSpawner" method="_on_wave_handler_wave_cleared"]
 [connection signal="died" from="Mask/Game/Player" to="." method="_on_player_died"]
+[connection signal="died" from="Mask/Game/Player" to="Mask/Game/ScoreHandler" method="_on_player_died"]
 [connection signal="died" from="Mask/Game/Player" to="UI/PauseMenu" method="_on_player_died"]
 [connection signal="focus_entered" from="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer/resume" to="UI/PauseMenu" method="_on_resume_focus_entered"]
 [connection signal="pressed" from="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer/resume" to="UI/PauseMenu" method="_on_resume_pressed"]

@@ -9,16 +9,22 @@ extends Control
 @export var options_menu: OptionsMenu
 @export var online_menu: OnlineMenu
 @export var stats_menu: StatsMenu
+@export var quit_butt: Button
 
 var quitting: bool = false
 
 func _ready() -> void:
 	SceneSwitcher.switch_in()
 	await get_tree().process_frame
+	SaveHandler.load_config()
+	
 	var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(
 		music, "pitch_scale", 1.0, 2.0
 	).from( 0.0 )
+	
+	if OS.has_feature("web"):
+		quit_butt.hide()
 
 
 func _on_play_pressed() -> void:

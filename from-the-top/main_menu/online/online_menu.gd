@@ -147,7 +147,7 @@ func _on_back_pressed() -> void:
 	back.emit()
 
 func validate_username(username: String) -> void:
-	username = username.to_lower()
+	username = username.to_upper()
 	
 	if username.is_empty():
 		Global.username = ""
@@ -188,7 +188,7 @@ func validate_username(username: String) -> void:
 	print("\n")
 
 func _on_username_text_submitted(new_text: String) -> void:
-	if new_text.to_lower() == Global.username:
+	if new_text.to_upper() == Global.username:
 		return
 	
 	if not refreshing:
@@ -238,3 +238,8 @@ func _on_visibility_changed() -> void:
 func _on_username_focus_entered() -> void:
 	if not username_input.editable:
 		username_input.release_focus()
+
+
+func _on_username_text_changed(new_text: String) -> void:
+	username_input.text = ""
+	username_input.insert_text_at_caret(new_text.to_upper())

@@ -66,7 +66,7 @@ func _on_confirm_pressed():
 	if not all_good:
 		confirm_butt.disabled = true
 		confirm_butt.release_focus()
-		await check_status(username_input.text.to_lower().strip_edges())
+		await check_status(username_input.text.to_upper().strip_edges())
 		
 		if all_good:
 			Global.online_prompted = true
@@ -75,3 +75,8 @@ func _on_confirm_pressed():
 			SceneSwitcher.switch_to("res://main_menu/main_menu.tscn")
 		else:
 			confirm_butt.disabled = false
+
+
+func _on_username_text_changed(new_text: String) -> void:
+	username_input.text = ""
+	username_input.insert_text_at_caret(new_text.to_upper())

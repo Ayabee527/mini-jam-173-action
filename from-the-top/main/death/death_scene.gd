@@ -3,6 +3,8 @@ extends Node2D
 @export var ship: Node2D
 @export var anim_player: AnimationPlayer
 
+@export var score_label: RichTextLabel
+
 var restartable: bool = false
 
 func _input(event: InputEvent) -> void:
@@ -14,6 +16,7 @@ func _ready() -> void:
 	MainCam.min_shake_stength = 2.0
 	await get_tree().create_timer(1.0, false).timeout
 	anim_player.play("crash")
+	score_label.text = "[right][wave][shake][color='e3c835']SCORE: " + str(Global.latest_endless_score)
 
 func shake() -> void:
 	MainCam.shake(20.0, 10.0, 5.0)

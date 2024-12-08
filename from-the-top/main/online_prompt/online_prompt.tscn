@@ -64,7 +64,7 @@ random_pitch = 1.5
 streams_count = 1
 stream_0/stream = ExtResource("3_mmu2w")
 
-[node name="OnlinePrompt" type="Control"]
+[node name="OnlinePrompt" type="Control" node_paths=PackedStringArray("username_input", "status", "confirm_butt", "yay_sound", "nuh_sound")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -72,6 +72,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_g6p8r")
+username_input = NodePath("BG/CenterContainer/VBoxContainer/Username")
+status = NodePath("BG/CenterContainer/VBoxContainer/Status")
+confirm_butt = NodePath("BG/CenterContainer/VBoxContainer/confirm")
+yay_sound = NodePath("Yay!")
+nuh_sound = NodePath("Nuh!")
 
 [node name="BG" type="PanelContainer" parent="."]
 custom_minimum_size = Vector2(256, 256)
@@ -121,7 +126,8 @@ caret_blink = true
 clip_contents = false
 layout_mode = 2
 theme_override_constants/line_separation = 8
-theme_override_font_sizes/normal_font_size = 8
+theme_override_fonts/normal_font = ExtResource("1_ajern")
+theme_override_font_sizes/normal_font_size = 9
 bbcode_enabled = true
 fit_content = true
 autowrap_mode = 0
@@ -166,4 +172,5 @@ stream = ExtResource("4_vkth5")
 volume_db = -5.0
 bus = &"sfx"
 
+[connection signal="text_changed" from="BG/CenterContainer/VBoxContainer/Username" to="." method="_on_username_text_changed"]
 [connection signal="pressed" from="BG/CenterContainer/VBoxContainer/confirm" to="." method="_on_confirm_pressed"]

@@ -80,9 +80,9 @@ cut = NodePath("Back/Cut")
 slam_sound = NodePath("Slam")
 music = NodePath("Music")
 play_sound = NodePath("Play")
-options_menu = NodePath("OptionsMenu")
-online_menu = NodePath("OnlineMenu")
-stats_menu = NodePath("StatsMenu")
+options_menu = NodePath("Front/OptionsMenu")
+online_menu = NodePath("Front/OnlineMenu")
+stats_menu = NodePath("Front/StatsMenu")
 
 [node name="Back" type="CanvasLayer" parent="."]
 layer = -1
@@ -336,19 +336,18 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.0511875, 0.0281353, 0.160591, 1)
 
-[node name="OptionsMenu" parent="." instance=ExtResource("9_qnlda")]
-visible = false
-layout_mode = 0
+[node name="Front" type="CanvasLayer" parent="."]
 
-[node name="OnlineMenu" parent="." instance=ExtResource("10_3id7j")]
+[node name="OptionsMenu" parent="Front" instance=ExtResource("9_qnlda")]
 visible = false
-layout_mode = 0
+
+[node name="OnlineMenu" parent="Front" instance=ExtResource("10_3id7j")]
+visible = false
 offset_right = 256.0
 offset_bottom = 256.0
 
-[node name="StatsMenu" parent="." instance=ExtResource("11_ihpyp")]
+[node name="StatsMenu" parent="Front" instance=ExtResource("11_ihpyp")]
 visible = false
-layout_mode = 0
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_hfgg8")
@@ -377,6 +376,6 @@ bus = &"sfx"
 [connection signal="pressed" from="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer/HBoxContainer2/credits" to="." method="_on_credits_pressed"]
 [connection signal="focus_entered" from="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer/HBoxContainer2/quit" to="." method="_on_quit_focus_entered"]
 [connection signal="pressed" from="Back/BG/MarginContainer/Border/Mask/Control/Butts/VBoxContainer/HBoxContainer2/quit" to="." method="_on_quit_pressed"]
-[connection signal="confirmed" from="OptionsMenu" to="." method="_on_options_menu_confirmed"]
-[connection signal="back" from="OnlineMenu" to="." method="_on_online_menu_back"]
-[connection signal="back" from="StatsMenu" to="." method="_on_stats_menu_back"]
+[connection signal="confirmed" from="Front/OptionsMenu" to="." method="_on_options_menu_confirmed"]
+[connection signal="back" from="Front/OnlineMenu" to="." method="_on_online_menu_back"]
+[connection signal="back" from="Front/StatsMenu" to="." method="_on_stats_menu_back"]
