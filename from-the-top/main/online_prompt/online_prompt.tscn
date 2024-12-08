@@ -173,4 +173,5 @@ volume_db = -5.0
 bus = &"sfx"
 
 [connection signal="text_changed" from="BG/CenterContainer/VBoxContainer/Username" to="." method="_on_username_text_changed"]
+[connection signal="text_submitted" from="BG/CenterContainer/VBoxContainer/Username" to="." method="_on_username_text_submitted"]
 [connection signal="pressed" from="BG/CenterContainer/VBoxContainer/confirm" to="." method="_on_confirm_pressed"]

@@ -21,9 +21,9 @@ stream_0/stream = ExtResource("4_5rq8e")
 [sub_resource type="Resource" id="Resource_sbndm"]
 script = ExtResource("3_6g0v4")
 attack = ExtResource("1_1j0jt")
-life_time = 2.0
-start_speed = 128.0
-end_speed = 128.0
+life_time = 4.0
+start_speed = 256.0
+end_speed = 256.0
 accel_time = 0.0
 turn_speed = 0.0
 spin_speed = 0.0
@@ -38,7 +38,7 @@ texture = ExtResource("5_vn0yr")
 trail_visible = true
 hitbox_data = SubResource("Resource_4bd1b")
 sound = SubResource("AudioStreamRandomizer_fg8jt")
-color = Color(1, 0, 0, 1)
+color = Color(1, 0.498039, 0.207843, 1)
 
 [resource]
 script = ExtResource("1_qqw1v")
@@ -49,7 +49,7 @@ shots_per_shot = 1
 shots_per_burst = 1
 angle_per_shot = 0.0
 angle_offset = 0.0
-shot_cooldown = 1.0
+shot_cooldown = 1.5
 burst_cooldown = 0.0
 camera_shake_shake = 5.0
 camera_shake_speed = 15.0

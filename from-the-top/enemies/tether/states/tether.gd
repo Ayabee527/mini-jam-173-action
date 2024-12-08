@@ -16,6 +16,9 @@ func enter(_msg:={}) -> void:
 	tween.tween_property(
 		tether_line, "modulate:a", 1.0, 1.0
 	).from(0.0)
+	tween.tween_property(
+		enemy, "color", Color.RED, 1.0
+	).from(Color.YELLOW)
 	await tween.finished
 	enemy.trail.show()
 	enemy.streak.hide()

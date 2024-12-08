@@ -10,11 +10,13 @@ const VIRUS = preload("res://enemies/virus/virus.tscn")
 const ENEMIES = {
 	"UFO": UFO,
 	"TETHER": TETHER,
+	"VIRUS": VIRUS,
 }
 
 const COSTS = {
 	"UFO": 2,
-	"TETHER": 4
+	"TETHER": 4,
+	"VIRUS": 1,
 }
 
 @export var active: bool = true

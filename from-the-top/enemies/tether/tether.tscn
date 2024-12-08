@@ -89,7 +89,7 @@ tether_line = NodePath("../../Tetherline")
 script = ExtResource("6_u75yb")
 
 [node name="Streak" parent="." instance=ExtResource("10_rr7gu")]
-modulate = Color(1, 0, 0, 1)
+modulate = Color(1, 1, 0, 1)
 z_index = -1
 width = 4.0
 length = 32
@@ -99,9 +99,9 @@ shape = SubResource("CircleShape2D_b80bp")
 
 [node name="Trail" type="GPUParticles2D" parent="."]
 visible = false
-modulate = Color(0.890196, 0, 0, 1)
+modulate = Color(1, 1, 0, 1)
 z_index = -1
-amount = 100
+amount = 25
 process_material = SubResource("ParticleProcessMaterial_60upm")
 texture = ExtResource("3_q0t8f")
 visibility_rect = Rect2(-256, -256, 512, 512)
@@ -130,7 +130,7 @@ bus = &"sfx"
 modulate = Color(1, 1, 1, 0)
 z_index = -1
 width = 2.0
-default_color = Color(1, 0, 0, 1)
+default_color = Color(1, 0.498039, 0.207843, 1)
 
 [connection signal="has_died" from="Health" to="StateMachine/Die" method="_on_health_has_died"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="StateMachine/Die" method="_on_visible_on_screen_notifier_2d_screen_exited"]

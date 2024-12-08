@@ -154,14 +154,14 @@ disabled = true
 [node name="Trail" type="GPUParticles2D" parent="."]
 modulate = Color(0.890366, 0.785107, 0.207156, 1)
 z_index = -1
-amount = 100
+amount = 25
 process_material = SubResource("ParticleProcessMaterial_lkbo8")
 texture = ExtResource("6_gy2fa")
 
 [node name="Smoke" type="GPUParticles2D" parent="."]
 modulate = Color(0.890196, 0, 0.207843, 1)
 z_index = -1
-amount = 100
+amount = 25
 amount_ratio = 0.0
 process_material = SubResource("ParticleProcessMaterial_tkhu0")
 texture = ExtResource("6_gy2fa")

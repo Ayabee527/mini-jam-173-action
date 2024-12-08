@@ -56,7 +56,7 @@ script = ExtResource("7_jv5qp")
 collision_layer = 32
 collision_mask = 4
 
-[node name="Virus" type="RigidBody2D" node_paths=PackedStringArray("coll_shape", "hurt_coll", "trail", "health", "hurt_sound", "die_sound") groups=["enemies", "viruses"]]
+[node name="Virus" type="RigidBody2D" node_paths=PackedStringArray("coll_shape", "hurt_coll", "trail", "health", "hurt_sound", "die_sound", "weapon_handler") groups=["enemies", "viruses"]]
 rotation = 1.5708
 collision_layer = 8
 collision_mask = 6
@@ -74,17 +74,18 @@ trail = NodePath("Trail")
 health = NodePath("Health")
 hurt_sound = NodePath("Hurt")
 die_sound = NodePath("Die")
+weapon_handler = NodePath("WeaponHandler")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("2_13ggy")
-max_health = 2
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("3_u4j5s")
 initial_state = NodePath("Hunt")
 
-[node name="Hunt" type="Node" parent="StateMachine"]
+[node name="Hunt" type="Node" parent="StateMachine" node_paths=PackedStringArray("steering")]
 script = ExtResource("4_v404r")
+steering = NodePath("../../Steering")
 
 [node name="Die" type="Node" parent="StateMachine"]
 script = ExtResource("5_kks46")
@@ -92,7 +93,7 @@ script = ExtResource("5_kks46")
 [node name="Trail" type="GPUParticles2D" parent="."]
 modulate = Color(0.890196, 0, 0, 1)
 z_index = -1
-amount = 100
+amount = 25
 process_material = SubResource("ParticleProcessMaterial_gtj1x")
 texture = ExtResource("3_5ibjg")
 visibility_rect = Rect2(-256, -256, 512, 512)
@@ -123,3 +124,11 @@ bus = &"sfx"
 muzzle_distance = 6.0
 collision_data = SubResource("Resource_vee1c")
 weapons = Array[ExtResource("8_5ym2f")]([ExtResource("9_h4sdj")])
+
+[node name="Steering" type="Marker2D" parent="."]
+
+[connection signal="body_entered" from="." to="StateMachine/Hunt" method="_on_virus_body_entered"]
+[connection signal="has_died" from="Health" to="StateMachine/Die" method="_on_health_has_died"]
+[connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
+[connection signal="knocked_back" from="Hurtbox" to="." method="_on_hurtbox_knocked_back"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="StateMachine/Die" method="_on_visible_on_screen_notifier_2d_screen_exited"]

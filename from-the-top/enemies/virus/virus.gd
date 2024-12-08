@@ -42,7 +42,7 @@ func _process(delta: float) -> void:
 	spin = fposmod(spin, spin_time)
 
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
-	state.linear_velocity = state.linear_velocity.limit_length(300.0)
+	state.linear_velocity = state.linear_velocity.limit_length(50.0)
 
 func _draw() -> void:
 	draw_shape()
@@ -53,7 +53,7 @@ func draw_shape() -> void:
 		sides, radius, true
 	)
 	var outline: PackedVector2Array = Util.generate_polygon(
-		sides, radius + 4.0, true
+		sides, radius + 2.0, true
 	)
 	draw_colored_polygon(
 		outline, Util.BG_COLOR
@@ -63,9 +63,9 @@ func draw_shape() -> void:
 	)
 	
 	draw_set_transform(Vector2.ZERO, -TAU * spin / spin_time, Vector2.ONE * draw_scale)
-	draw_colored_polygon(
-		outline, Util.BG_COLOR
-	)
+	#draw_colored_polygon(
+		#outline, Util.BG_COLOR
+	#)
 	draw_polyline(
 		shape, color, 1.0
 	)

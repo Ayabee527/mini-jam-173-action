@@ -18,7 +18,7 @@ signal died()
 
 var player: Player
 
-var color: Color = Color.RED
+var color: Color = Color.YELLOW
 var draw_scale: float = 1.0
 
 var spin: float = 0.0

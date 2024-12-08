@@ -11,16 +11,17 @@ var all_good: bool = false
 
 func _ready() -> void:
 	MainCam.min_shake_stength = 0.0
+	username_input.grab_focus()
 
 func update_status(text: String, color: String) -> void:
 	status.text = "[center][wave][color=" + color + "]" + text
 
 func check_status(username: String) -> void:
-	update_status("[wave]PROCESSING...", "gray")
+	update_status("[wave]PROCESSING...", "dimgray")
 	if username.is_empty():
 		Global.username = ""
 		SaveHandler.save_key("username", Global.username)
-		update_status("NOT SIGNED IN...", "gray")
+		update_status("NOT SIGNED IN...", "dimgray")
 		username_input.clear()
 		all_good = true
 		return
@@ -80,3 +81,18 @@ func _on_confirm_pressed():
 func _on_username_text_changed(new_text: String) -> void:
 	username_input.text = ""
 	username_input.insert_text_at_caret(new_text.to_upper())
+
+
+func _on_username_text_submitted(new_text: String) -> void:
+	if not all_good:
+		confirm_butt.disabled = true
+		confirm_butt.release_focus()
+		await check_status(new_text.to_upper().strip_edges())
+		
+		if all_good:
+			Global.online_prompted = true
+			SaveHandler.save_key("online_prompted", Global.online_prompted)
+			await get_tree().create_timer(2.0, false).timeout
+			SceneSwitcher.switch_to("res://main_menu/main_menu.tscn")
+		else:
+			confirm_butt.disabled = false

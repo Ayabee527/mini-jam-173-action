@@ -104,7 +104,7 @@ shape = SubResource("CircleShape2D_klbm1")
 [node name="Trail" type="GPUParticles2D" parent="."]
 modulate = Color(0.890196, 0, 0, 1)
 z_index = -1
-amount = 100
+amount = 25
 process_material = SubResource("ParticleProcessMaterial_nyj52")
 texture = ExtResource("12_ntnd8")
 visibility_rect = Rect2(-256, -256, 512, 512)
