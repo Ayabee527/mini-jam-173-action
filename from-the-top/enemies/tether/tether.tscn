@@ -1,0 +1,138 @@
+[gd_scene load_steps=18 format=3 uid="uid://c2361fcoth53d"]
+
+[ext_resource type="Script" path="res://enemies/tether/tether.gd" id="1_uacy6"]
+[ext_resource type="Script" path="res://components/health/health.gd" id="1_y4nng"]
+[ext_resource type="Script" path="res://components/states/state_machine.gd" id="3_k4ynh"]
+[ext_resource type="Texture2D" uid="uid://cqgaoh3so0ind" path="res://assets/textures/fat_bullet_in.png" id="3_q0t8f"]
+[ext_resource type="Script" path="res://enemies/tether/states/prep.gd" id="4_04c7t"]
+[ext_resource type="PackedScene" uid="uid://dvvktbgt1ayca" path="res://components/hurtbox/hurtbox.tscn" id="4_ubjsp"]
+[ext_resource type="Script" path="res://enemies/tether/states/tether.gd" id="5_fe6ny"]
+[ext_resource type="AudioStream" uid="uid://baqxxk85yhxr3" path="res://assets/sounds/ow3.wav" id="6_prnbs"]
+[ext_resource type="Script" path="res://enemies/tether/states/die.gd" id="6_u75yb"]
+[ext_resource type="PackedScene" uid="uid://bw8338ilrtcwc" path="res://components/trail/trail.tscn" id="10_rr7gu"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_6jjsl"]
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_b80bp"]
+radius = 4.0
+
+[sub_resource type="Curve" id="Curve_y00jj"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_sccgb"]
+curve = SubResource("Curve_y00jj")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_60upm"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(-12, 0, 0)
+emission_shape = 1
+emission_sphere_radius = 4.0
+angle_min = 1.07288e-05
+angle_max = 360.0
+inherit_velocity_ratio = 0.5
+direction = Vector3(0, -1, 0)
+spread = 5.0
+gravity = Vector3(0, -1000, 0)
+radial_accel_min = 100.0
+radial_accel_max = 100.0
+scale_min = 0.5
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_sccgb")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6bc56"]
+radius = 12.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_b234y"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("6_prnbs")
+
+[node name="Tether" type="RigidBody2D" node_paths=PackedStringArray("coll_shape", "hurt_coll", "trail", "streak", "health", "hurt_sound", "die_sound") groups=["enemies"]]
+rotation = 1.5708
+collision_layer = 8
+collision_mask = 8
+mass = 5.0
+physics_material_override = SubResource("PhysicsMaterial_6jjsl")
+gravity_scale = 0.0
+lock_rotation = true
+linear_damp = 2.5
+angular_damp = 2.5
+script = ExtResource("1_uacy6")
+radius = 6.0
+coll_shape = NodePath("CollisionShape2D")
+hurt_coll = NodePath("Hurtbox/CollisionShape2D")
+trail = NodePath("Trail")
+streak = NodePath("Streak")
+health = NodePath("Health")
+hurt_sound = NodePath("Hurt")
+die_sound = NodePath("Die")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("1_y4nng")
+max_health = 10
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_k4ynh")
+initial_state = NodePath("Prep")
+
+[node name="Prep" type="Node" parent="StateMachine"]
+script = ExtResource("4_04c7t")
+
+[node name="Tether" type="Node" parent="StateMachine" node_paths=PackedStringArray("tether_line")]
+script = ExtResource("5_fe6ny")
+tether_line = NodePath("../../Tetherline")
+
+[node name="Die" type="Node" parent="StateMachine"]
+script = ExtResource("6_u75yb")
+
+[node name="Streak" parent="." instance=ExtResource("10_rr7gu")]
+modulate = Color(1, 0, 0, 1)
+z_index = -1
+width = 4.0
+length = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_b80bp")
+
+[node name="Trail" type="GPUParticles2D" parent="."]
+visible = false
+modulate = Color(0.890196, 0, 0, 1)
+z_index = -1
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_60upm")
+texture = ExtResource("3_q0t8f")
+visibility_rect = Rect2(-256, -256, 512, 512)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-16, -16, 32, 32)
+
+[node name="Hurtbox" parent="." instance=ExtResource("4_ubjsp")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_6bc56")
+disabled = true
+
+[node name="Hurt" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_b234y")
+volume_db = 10.0
+max_polyphony = 5
+bus = &"sound"
+
+[node name="Die" type="AudioStreamPlayer" parent="."]
+volume_db = 10.0
+max_polyphony = 5
+bus = &"sound"
+
+[node name="Tetherline" type="Line2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+z_index = -1
+width = 2.0
+default_color = Color(1, 0, 0, 1)
+
+[connection signal="has_died" from="Health" to="StateMachine/Die" method="_on_health_has_died"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="StateMachine/Die" method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
+[connection signal="knocked_back" from="Hurtbox" to="." method="_on_hurtbox_knocked_back"]

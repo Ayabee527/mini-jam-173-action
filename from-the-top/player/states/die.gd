@@ -11,7 +11,7 @@ func enter(_msg:={}) -> void:
 	player.hurt_coll.set_deferred("disabled", true)
 	var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(
-		self, "speed", -100.0, 5.0
+		self, "speed", -1000.0, 5.0
 	).from(25.0)
 
 func physics_update(delta: float) -> void:

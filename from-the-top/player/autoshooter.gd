@@ -26,13 +26,13 @@ func _physics_process(delta: float) -> void:
 		weapon_handler.look_at(target.global_position)
 
 func _draw() -> void:
-	return
+	#return
 	
-	draw_circle(
-		Vector2.ZERO, radius - 2.0, Color(0.25, 0.25, 0.25, 0.1), true
-	)
+	#draw_circle(
+		#Vector2.ZERO, radius - 2.0, Color(0.25, 0.25, 0.25, 0.1), true
+	#)
 	var out_color := Util.BORDER_COLOR
-	out_color.a = 0.25
+	out_color.a = 0.1
 	draw_circle(
 		Vector2.ZERO, radius, out_color, false, 1.0
 	)

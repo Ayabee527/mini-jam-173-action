@@ -4,13 +4,16 @@ signal enemy_killed(enemy: Node2D)
 signal wave_cleared(size: int)
 
 const UFO = preload("res://enemies/ufo/ufo.tscn")
+const TETHER = preload("res://enemies/tether/tether.tscn")
 
 const ENEMIES = {
-	"UFO": UFO
+	"UFO": UFO,
+	"TETHER": TETHER,
 }
 
 const COSTS = {
-	"UFO": 2
+	"UFO": 2,
+	"TETHER": 4
 }
 
 @export var active: bool = true

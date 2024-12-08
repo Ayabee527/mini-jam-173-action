@@ -25,8 +25,8 @@ func physics_update(delta: float) -> void:
 	) and not offscreen:
 		var new_transform = steering.global_transform.looking_at(enemy.global_position + Vector2.DOWN)
 		steering.global_transform = steering.global_transform.interpolate_with(new_transform, 0.5 * turn_speed * delta)
-		if chase_speed != -300.0:
-			chase_speed = -300.0
+		if chase_speed != -500.0:
+			chase_speed = -500.0
 	
 	enemy.apply_central_force(
 		Vector2.from_angle(steering.global_rotation) * chase_speed

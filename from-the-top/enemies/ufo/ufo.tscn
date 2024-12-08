@@ -26,7 +26,7 @@ radius = 6.0
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_sccgb"]
+[sub_resource type="CurveTexture" id="CurveTexture_03avi"]
 curve = SubResource("Curve_4ua05")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nyj52"]
@@ -45,7 +45,7 @@ radial_accel_min = 100.0
 radial_accel_max = 100.0
 scale_min = 0.5
 scale_max = 2.0
-scale_curve = SubResource("CurveTexture_sccgb")
+scale_curve = SubResource("CurveTexture_03avi")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lqr55"]
 random_pitch = 1.5
