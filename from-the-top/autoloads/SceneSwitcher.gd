@@ -18,6 +18,8 @@ func switch_out() -> void:
 	animation_player.play("switch_out")
 
 func switch_in() -> void:
+	get_tree().paused = false
+	Engine.time_scale = 1.0
 	color_rect.rotation = PI
 	animation_player.play("switch_in")
 

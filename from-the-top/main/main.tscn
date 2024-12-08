@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://636cy22ryael"]
+[gd_scene load_steps=34 format=3 uid="uid://636cy22ryael"]
 
 [ext_resource type="Script" path="res://main/main.gd" id="1_7u45d"]
 [ext_resource type="Script" path="res://main/bg.gd" id="2_hh7fp"]
@@ -12,6 +12,8 @@
 [ext_resource type="Script" path="res://main/pause_menu.gd" id="10_3ynmw"]
 [ext_resource type="FontFile" uid="uid://blnjetxm1amsv" path="res://assets/fonts/Not Jam Play 23.ttf" id="10_n34mk"]
 [ext_resource type="AudioStream" uid="uid://copj2gbi2c82i" path="res://assets/music/stardust_crusader.ogg" id="11_5hwod"]
+[ext_resource type="FontFile" uid="uid://dujxw7jilwnxa" path="res://assets/fonts/NotJamScrawl12.ttf" id="12_hvqh8"]
+[ext_resource type="AudioStream" uid="uid://cidjqxahrphjh" path="res://assets/sounds/slam.wav" id="13_l4seh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pfaio"]
 draw_center = false
@@ -48,6 +50,33 @@ normal = Vector2(-1, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0p7df"]
 bg_color = Color(0, 0, 0, 0.501961)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e6v3l"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fsoqc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1a5tg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lv0i7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_odjnv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qjalc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d086s"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qp8it"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yhwcf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_42mhl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_23uon"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_05hbx"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("13_l4seh")
 
 [node name="Main" type="Node2D" node_paths=PackedStringArray("musik")]
 script = ExtResource("1_7u45d")
@@ -201,7 +230,7 @@ position = Vector2(128, 0)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="PauseMenu" type="PanelContainer" parent="UI" node_paths=PackedStringArray("music")]
+[node name="PauseMenu" type="PanelContainer" parent="UI" node_paths=PackedStringArray("music", "slam_sound", "resume_butt")]
 process_mode = 3
 visible = false
 anchors_preset = 15
@@ -212,6 +241,8 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_0p7df")
 script = ExtResource("10_3ynmw")
 music = NodePath("../../Musik")
+slam_sound = NodePath("Slam")
+resume_butt = NodePath("CenterContainer/VBoxContainer/HBoxContainer/resume")
 
 [node name="CenterContainer" type="CenterContainer" parent="UI/PauseMenu"]
 layout_mode = 2
@@ -229,12 +260,59 @@ theme_override_constants/shadow_offset_x = 2
 theme_override_fonts/normal_font = ExtResource("10_n34mk")
 theme_override_font_sizes/normal_font_size = 46
 bbcode_enabled = true
-text = "[rainbow sat=0.5][wave]paused!"
+text = "[center][rainbow sat=0.5][wave]paused!"
 fit_content = true
 autowrap_mode = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/PauseMenu/CenterContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/PauseMenu/CenterContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="resume" type="Button" parent="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_fonts/font = ExtResource("12_hvqh8")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxEmpty_e6v3l")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_fsoqc")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_1a5tg")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_lv0i7")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_odjnv")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_qjalc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_d086s")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_qp8it")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_yhwcf")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_42mhl")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_23uon")
+text = "RESUME!"
+alignment = 2
+
+[node name="menu" type="Button" parent="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_color = Color(0.890366, 0.785107, 0.207156, 1)
+theme_override_fonts/font = ExtResource("12_hvqh8")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxEmpty_e6v3l")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_fsoqc")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_1a5tg")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_lv0i7")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_odjnv")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_qjalc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_d086s")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_qp8it")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_yhwcf")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_42mhl")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_23uon")
+text = "MAIN MENU!"
+alignment = 2
+
+[node name="Slam" type="AudioStreamPlayer" parent="UI/PauseMenu"]
+stream = SubResource("AudioStreamRandomizer_05hbx")
+max_polyphony = 10
+bus = &"sound"
 
 [node name="Musik" type="AudioStreamPlayer" parent="."]
 process_mode = 3
@@ -245,3 +323,7 @@ bus = &"music"
 [connection signal="wave_cleared" from="Mask/Game/WaveHandler" to="Mask/Game/MeteorSpawner" method="_on_wave_handler_wave_cleared"]
 [connection signal="died" from="Mask/Game/Player" to="." method="_on_player_died"]
 [connection signal="died" from="Mask/Game/Player" to="UI/PauseMenu" method="_on_player_died"]
+[connection signal="focus_entered" from="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer/resume" to="UI/PauseMenu" method="_on_resume_focus_entered"]
+[connection signal="pressed" from="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer/resume" to="UI/PauseMenu" method="_on_resume_pressed"]
+[connection signal="focus_entered" from="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer/menu" to="UI/PauseMenu" method="_on_menu_focus_entered"]
+[connection signal="pressed" from="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer/menu" to="UI/PauseMenu" method="_on_menu_pressed"]

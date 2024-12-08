@@ -6,14 +6,15 @@
 [ext_resource type="Script" path="res://main/death/drawer.gd" id="4_lpto6"]
 [ext_resource type="Texture2D" uid="uid://cqgaoh3so0ind" path="res://assets/textures/fat_bullet_in.png" id="5_q3w1g"]
 [ext_resource type="Script" path="res://main/death/ship.gd" id="5_t3ffo"]
-[ext_resource type="FontFile" uid="uid://dvw05mko8jwnq" path="res://assets/fonts/Not Jam Play 19.ttf" id="7_5irr3"]
 [ext_resource type="FontFile" uid="uid://blnjetxm1amsv" path="res://assets/fonts/Not Jam Play 23.ttf" id="7_bt2kr"]
+[ext_resource type="FontFile" uid="uid://bpr437vu657" path="res://assets/fonts/NotJamScrawl9.ttf" id="8_relp0"]
 [ext_resource type="AudioStream" uid="uid://dilu8yrknum02" path="res://assets/sounds/fromthetop.wav" id="10_ff45l"]
 [ext_resource type="AudioStream" uid="uid://dcvcr25fjn08j" path="res://assets/sounds/fall.wav" id="10_u2snq"]
 [ext_resource type="AudioStream" uid="uid://p26kkvv51h33" path="res://assets/sounds/crash.wav" id="10_u7fuj"]
 [ext_resource type="AudioStream" uid="uid://b8rpfdhdl7pn0" path="res://assets/sounds/action.wav" id="11_qx5km"]
 [ext_resource type="AudioStream" uid="uid://cidjqxahrphjh" path="res://assets/sounds/slam.wav" id="12_5xqre"]
 [ext_resource type="AudioStream" uid="uid://dqbxgtrauvgee" path="res://assets/sounds/imminent.wav" id="12_dqbq5"]
+[ext_resource type="AudioStream" uid="uid://dc35kqi2fuhbb" path="res://assets/music/try_again.ogg" id="15_d721u"]
 
 [sub_resource type="Animation" id="Animation_k1b0x"]
 length = 0.001
@@ -68,19 +69,19 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Control:modulate")
+tracks/4/path = NodePath("Front/Black:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
+"update": 1,
+"values": [false]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Front/Black:visible")
+tracks/5/path = NodePath("Crash:playing")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -92,7 +93,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("Crash:playing")
+tracks/6/path = NodePath("Fall:playing")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -104,7 +105,7 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("Fall:playing")
+tracks/7/path = NodePath("Imminent:playing")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -116,7 +117,7 @@ tracks/7/keys = {
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("Imminent:playing")
+tracks/8/path = NodePath("Slam:playing")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -128,7 +129,7 @@ tracks/8/keys = {
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("Control/PanelContainer/CenterContainer/Fromthetop:visible")
+tracks/9/path = NodePath("Top:playing")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
@@ -140,50 +141,62 @@ tracks/9/keys = {
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("Slam:playing")
+tracks/10/path = NodePath("Back/BG/MarginContainer/Border/Mask/Control/Ship/Smoke:emitting")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [true]
 }
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("Top:playing")
+tracks/11/path = NodePath("Back/BG/MarginContainer/Border/Mask/Control/MarginContainer/gameover:modulate")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [Color(0.890196, 0.784314, 0.207843, 0)]
 }
 tracks/12/type = "value"
 tracks/12/imported = false
 tracks/12/enabled = true
-tracks/12/path = NodePath("Back/BG/MarginContainer/Border/Mask/Control/Ship/Smoke:emitting")
+tracks/12/path = NodePath("Music:pitch_scale")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
+"update": 0,
+"values": [1.0]
 }
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("Back/BG/MarginContainer/Border/Mask/Control/MarginContainer/gameover:modulate")
+tracks/13/path = NodePath("Music:playing")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.890196, 0.784314, 0.207843, 0)]
+"update": 1,
+"values": [false]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("Back/BG/MarginContainer/Border/Mask/Control/MarginContainer2/thetop:visible")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_so2hl"]
@@ -305,6 +318,18 @@ tracks/4/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Music:pitch_scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.01]
+}
 
 [sub_resource type="Animation" id="Animation_sp1ac"]
 resource_name = "flash"
@@ -372,6 +397,30 @@ tracks/4/keys = {
 "update": 0,
 "values": [Color(0.890196, 0.784314, 0.207843, 0), Color(0.890196, 0.784314, 0.207843, 0), Color(0.890196, 0.784314, 0.207843, 1)]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Music:pitch_scale")
+tracks/5/interp = 2
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1.2, 1.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.01, 1.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Music:playing")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(1.2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_s2p2m"]
 resource_name = "reveal"
@@ -379,34 +428,22 @@ length = 3.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Control:modulate")
+tracks/0/path = NodePath("Slam:playing")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(1, 2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Control/PanelContainer/CenterContainer/Fromthetop:visible")
+tracks/1/path = NodePath("Back/BG/MarginContainer/Border/Mask/Control/MarginContainer2/thetop:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Slam:playing")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
 "times": PackedFloat32Array(2),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -470,9 +507,6 @@ radial_accel_max = 100.0
 scale_min = 0.5
 scale_max = 2.0
 scale_curve = SubResource("CurveTexture_tc08x")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ukunu"]
-bg_color = Color(0, 0, 0, 0.501961)
 
 [node name="DeathScene" type="Node2D" node_paths=PackedStringArray("ship", "anim_player")]
 script = ExtResource("1_glthq")
@@ -590,35 +624,29 @@ text = "[wave]GAME
 fit_content = true
 autowrap_mode = 0
 
-[node name="Control" type="Control" parent="."]
-modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(256, 256)
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="MarginContainer2" type="MarginContainer" parent="Back/BG/MarginContainer/Border/Mask/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
 
-[node name="PanelContainer" type="PanelContainer" parent="Control"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_ukunu")
-
-[node name="CenterContainer" type="CenterContainer" parent="Control/PanelContainer"]
-custom_minimum_size = Vector2(256, 256)
-layout_mode = 2
-
-[node name="Fromthetop" type="RichTextLabel" parent="Control/PanelContainer/CenterContainer"]
+[node name="thetop" type="RichTextLabel" parent="Back/BG/MarginContainer/Border/Mask/Control/MarginContainer2"]
 visible = false
 clip_contents = false
 layout_mode = 2
-theme_override_fonts/normal_font = ExtResource("7_5irr3")
-theme_override_font_sizes/normal_font_size = 19
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_fonts/normal_font = ExtResource("8_relp0")
+theme_override_font_sizes/normal_font_size = 9
 bbcode_enabled = true
-text = "[center][wave]Press
-any button
-to take this
-[color=\"e3c835\"][shake]from the top..."
+text = "[right][shake][wave]Press any button
+to take this [color=\"e3c835\"]from the top..."
 fit_content = true
 autowrap_mode = 0
 
@@ -654,5 +682,9 @@ bus = &"sound"
 [node name="Imminent" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_dqbq5")
 bus = &"sound"
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_d721u")
+bus = &"music"
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

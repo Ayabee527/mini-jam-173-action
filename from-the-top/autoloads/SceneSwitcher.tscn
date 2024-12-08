@@ -88,6 +88,7 @@ shader_parameter/vignette_intensity = 0.4
 shader_parameter/vignette_opacity = 0.5
 
 [node name="SceneSwitcher" type="CanvasLayer" node_paths=PackedStringArray("color_rect", "animation_player")]
+process_mode = 3
 layer = 100
 script = ExtResource("2_sejnh")
 color_rect = NodePath("ColorRect")
