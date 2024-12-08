@@ -7,17 +7,20 @@ signal wave_cleared(size: int)
 const UFO = preload("res://enemies/ufo/ufo.tscn")
 const TETHER = preload("res://enemies/tether/tether.tscn")
 const VIRUS = preload("res://enemies/virus/virus.tscn")
+const TURRET = preload("res://enemies/turret/turret.tscn")
 
 const ENEMIES = {
 	"UFO": UFO,
 	"TETHER": TETHER,
 	"VIRUS": VIRUS,
+	"TURRET": TURRET
 }
 
 const COSTS = {
 	"UFO": 2,
 	"TETHER": 4,
 	"VIRUS": 2,
+	"TURRET": 8
 }
 
 @export var active: bool = true

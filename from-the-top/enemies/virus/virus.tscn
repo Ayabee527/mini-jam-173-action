@@ -19,7 +19,7 @@
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_q2qeh"]
+[sub_resource type="CurveTexture" id="CurveTexture_6y1um"]
 curve = SubResource("Curve_ku3bw")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gtj1x"]
@@ -38,7 +38,7 @@ radial_accel_min = 100.0
 radial_accel_max = 100.0
 scale_min = 0.5
 scale_max = 2.0
-scale_curve = SubResource("CurveTexture_q2qeh")
+scale_curve = SubResource("CurveTexture_6y1um")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_t5nb2"]
 radius = 2.0
@@ -59,7 +59,7 @@ collision_mask = 4
 [node name="Virus" type="RigidBody2D" node_paths=PackedStringArray("coll_shape", "hurt_coll", "trail", "health", "hurt_sound", "die_sound", "weapon_handler") groups=["enemies", "viruses"]]
 rotation = 1.5708
 collision_layer = 8
-collision_mask = 6
+collision_mask = 12
 mass = 0.1
 physics_material_override = SubResource("PhysicsMaterial_fpteg")
 gravity_scale = 0.0
@@ -102,6 +102,7 @@ visibility_rect = Rect2(-256, -256, 512, 512)
 shape = SubResource("CircleShape2D_t5nb2")
 
 [node name="Hurtbox" parent="." instance=ExtResource("4_l0kcn")]
+collision_mask = 208
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource("CircleShape2D_cyaxj")

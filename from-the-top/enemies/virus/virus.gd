@@ -24,8 +24,6 @@ var draw_scale: float = 1.0
 
 var spin: float = 0.0
 
-var prepping: bool = true
-
 func _ready() -> void:
 	var coll := CircleShape2D.new()
 	coll.radius = radius
@@ -54,7 +52,7 @@ func draw_shape() -> void:
 		sides, radius, true
 	)
 	var outline: PackedVector2Array = Util.generate_polygon(
-		sides, radius + 2.0, true
+		sides, radius + 4.0, true
 	)
 	draw_colored_polygon(
 		outline, Util.BG_COLOR

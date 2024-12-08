@@ -10,6 +10,7 @@ var restartable: bool = false
 func _input(event: InputEvent) -> void:
 	if restartable and event.is_pressed():
 		restartable = false
+		anim_player.stop()
 		anim_player.play("cut")
 
 func _ready() -> void:
@@ -27,10 +28,11 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		"crash":
 			anim_player.play("flash")
 			MainCam.min_shake_stength = 0.0
+			restartable = true
 		"flash":
 			anim_player.play("reveal")
 		"reveal":
-			restartable = true
+			pass
 
 func switch() -> void:
 	if not Global.online_prompted and Global.username.strip_edges().is_empty():

@@ -73,7 +73,7 @@ func _on_confirm_pressed():
 			Global.online_prompted = true
 			SaveHandler.save_key("online_prompted", Global.online_prompted)
 			await get_tree().create_timer(2.0, false).timeout
-			SceneSwitcher.switch_to("res://main_menu/main_menu.tscn")
+			SceneSwitcher.switch_to("res://main/main.tscn")
 		else:
 			confirm_butt.disabled = false
 
@@ -93,6 +93,6 @@ func _on_username_text_submitted(new_text: String) -> void:
 			Global.online_prompted = true
 			SaveHandler.save_key("online_prompted", Global.online_prompted)
 			await get_tree().create_timer(2.0, false).timeout
-			SceneSwitcher.switch_to("res://main_menu/main_menu.tscn")
+			SceneSwitcher.switch_to("res://main/main.tscn")
 		else:
 			confirm_butt.disabled = false

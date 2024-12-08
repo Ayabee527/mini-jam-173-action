@@ -135,6 +135,7 @@ die_sound = NodePath("Die")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("2_lqdup")
+max_health = 10
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_xjmny")
