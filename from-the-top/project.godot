@@ -11,13 +11,16 @@ config_version=5
 [application]
 
 config/name="Stardust Crusader"
+config/version="1.0.0"
 config/tags=PackedStringArray("jams")
 run/main_scene="res://splash_screen/splash_screen.tscn"
 config/use_custom_user_dir=true
 config/features=PackedStringArray("4.3", "GL Compatibility")
+run/max_fps=60
 boot_splash/bg_color=Color(0.0511875, 0.0281353, 0.160591, 1)
 boot_splash/image="res://assets/textures/original-large-color-edit.png"
 config/icon="res://assets/textures/game_icon.png"
+config/windows_native_icon="res://assets/textures/game_icon.ico"
 
 [autoload]
 
